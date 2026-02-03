@@ -42,76 +42,46 @@ export default function ChatInterface({ matchId, isOpen, onToggle }: ChatInterfa
     };
 
     // Text to Speech
-    const speak = useCallback((text: string, force: boolean = false) => {
-        console.log("[SPEAK] Intento de hablar:", text.substring(0, 30) + "...", "Force:", force, "Enabled:", isVoiceEnabled);
+    // Text to Speech (Backend Edge TTS)
+    const speak = useCallback(async (text: string, force: boolean = false) => {
+        if (!force && !isVoiceEnabled) return;
 
-        if (!force && !isVoiceEnabled) {
-            console.log("[SPEAK] Salida: Voz desactivada y no forzada.");
-            return;
-        }
-        if (typeof window === "undefined" || !window.speechSynthesis) {
-            console.error("[SPEAK] Error: speechSynthesis no disponible en este navegador.");
-            return;
-        }
+        try {
+            // Limpieza básica de Markdown para que no lea asteriscos
+            const cleanText = text
+                .replace(/\*\*/g, "")
+                .replace(/\*/g, "")
+                .replace(/_/g, "")
+                .replace(/#/g, "")
+                .replace(/[`~]/g, "")
+                .trim();
 
-        window.speechSynthesis.cancel();
+            if (!cleanText) return;
 
-        const cleanText = text
-            .replace(/\*\*/g, "")
-            .replace(/\*/g, "")
-            .replace(/_/g, "")
-            .replace(/#/g, "")
-            .replace(/\//g, " ")
-            .replace(/[`~]/g, "")
-            .replace(/\s+/g, " ")
-            .trim();
+            console.log("[TTS] Requesting audio for:", cleanText.substring(0, 20) + "...");
 
-        console.log("[SPEAK] Texto limpio:", cleanText);
+            const response = await axios.post(`${API_BASE}/tts`, {
+                text: cleanText
+            }, {
+                responseType: 'blob'
+            });
 
-        const utterance = new SpeechSynthesisUtterance(cleanText);
-        utterance.lang = "es-ES";
-        utterance.rate = 1.0;
-        utterance.pitch = 1.1;
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const audio = new Audio(url);
 
-        utterance.onstart = () => console.log("[SPEAK] Evento onstart: El navegador ha empezado a hablar.");
-        utterance.onerror = (e) => console.error("[SPEAK] Evento onerror: Error de síntesis:", e);
-        utterance.onend = () => console.log("[SPEAK] Evento onend: El navegador ha terminado de hablar.");
+            audio.onplay = () => console.log("[TTS] Playing audio...");
+            audio.onended = () => console.log("[TTS] Finished playing.");
+            audio.onerror = (e) => console.error("[TTS] Audio playback error:", e);
 
-        const performSpeak = () => {
-            const voices = window.speechSynthesis.getVoices();
-            console.log("[SPEAK] Cantidad de voces disponibles:", voices.length);
+            await audio.play();
 
-            const femaleVoice = voices.find(v =>
-                v.lang.startsWith("es") &&
-                (v.name.toLowerCase().includes("google") ||
-                    v.name.toLowerCase().includes("helena") ||
-                    v.name.toLowerCase().includes("young"))
-            ) || voices.find(v => v.lang.startsWith("es"));
-
-            if (femaleVoice) {
-                console.log("[SPEAK] Voz seleccionada:", femaleVoice.name);
-                utterance.voice = femaleVoice;
-            } else {
-                console.warn("[SPEAK] No se encontró ninguna voz en español (es-ES).");
-            }
-
-            window.speechSynthesis.speak(utterance);
-        };
-
-        if (typeof window !== "undefined") {
-            (window as any).oracleSpeak = (t: string) => speak(t, true);
-        }
-
-        if (window.speechSynthesis.getVoices().length === 0) {
-            console.log("[SPEAK] Esperando a que las voces carguen...");
-            window.speechSynthesis.onvoiceschanged = () => {
-                performSpeak();
-                window.speechSynthesis.onvoiceschanged = null;
-            };
-        } else {
-            performSpeak();
+        } catch (error) {
+            console.error("[TTS] Error generating/playing audio:", error);
         }
     }, [isVoiceEnabled]);
+
+
+    // Removed local speechSynthesis initialization logic as we now use server-side TTS
 
     useEffect(() => {
         if (isOpen) {

@@ -1,15 +1,16 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
-import opendota_service
-import firebase_service
-from ai_coach import oracle
+from services import opendota_service
+from services import firebase_service
+from services import tts_service
+from services.ai_coach import oracle
 import os
 
 load_dotenv()
 
-app = FastAPI(title="OracleDota Backend", version="1.1.0")
+app = FastAPI(title="OracleDota Backend", version="1.2.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,7 +32,21 @@ class ChatResponse(BaseModel):
 class ChatHistoryResponse(BaseModel):
     history: list
 
+class TTSRequest(BaseModel):
+    text: str
+
 # --- ROUTES ---
+
+@app.post("/tts")
+async def text_to_speech(request: TTSRequest):
+    """Generates audio for the given text using Edge TTS (Streaming)"""
+    try:
+        audio_bytes = await tts_service.generate_audio_stream(request.text)
+        return Response(content=audio_bytes, media_type="audio/mpeg")
+    except Exception as e:
+        print(f"[TTS] Error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 def quick_answer_router(data: dict, query: str) -> str | None:
     """

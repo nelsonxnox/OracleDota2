@@ -17,3 +17,7 @@ openai
 
 # Database & Cloud
 firebase-admin
+
+# TTS (Voice)
+edge-tts
+aiofiles

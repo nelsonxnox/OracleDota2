@@ -9,11 +9,18 @@ db = None
 def get_db():
     global db
     if db is None:
-        # Check if we have a service account file in env
+        # Check for credentials in Env Var (JSON content) - Best for Cloud (Render/Vercel)
+        cred_json = os.getenv("FIREBASE_CREDENTIALS_JSON")
         cred_path = os.getenv("FIREBASE_CREDENTIALS")
         
         try:
-            if cred_path and os.path.exists(cred_path):
+            if cred_json:
+                print("[FIREBASE] Initializing with CREDENTIALS_JSON env var...")
+                import json
+                cred_dict = json.loads(cred_json)
+                cred = credentials.Certificate(cred_dict)
+                firebase_admin.initialize_app(cred)
+            elif cred_path and os.path.exists(cred_path):
                 print(f"[FIREBASE] Initializing with credentials from {cred_path}")
                 cred = credentials.Certificate(cred_path)
                 firebase_admin.initialize_app(cred)
