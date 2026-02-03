@@ -12,13 +12,23 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase with safety for build time
-const isConfigValid = !!firebaseConfig.apiKey && firebaseConfig.apiKey !== "undefined";
+const isConfigValid = !!firebaseConfig.apiKey &&
+    !!firebaseConfig.projectId &&
+    firebaseConfig.apiKey !== "undefined" &&
+    firebaseConfig.projectId !== "undefined";
 
-const app = getApps().length > 0 
-    ? getApp() 
-    : (isConfigValid 
-        ? initializeApp(firebaseConfig) 
-        : initializeApp({ apiKey: "BUILD_PLACEHOLDER" })); // Prevent crash during build
+const app = getApps().length > 0
+    ? getApp()
+    : (isConfigValid
+        ? initializeApp(firebaseConfig)
+        : initializeApp({
+            apiKey: "BUILD_PLACEHOLDER",
+            projectId: "build-placeholder",
+            authDomain: "build-placeholder.firebaseapp.com",
+            storageBucket: "build-placeholder.appspot.com",
+            messagingSenderId: "000000000000",
+            appId: "1:000000000000:web:000000000000"
+        }));
 
 const auth = getAuth(app);
 const db = getFirestore(app);
