@@ -1,0 +1,16 @@
+# OracleDota Backend Dependencies
+
+# Web Framework
+fastapi
+uvicorn[standard]
+gunicorn
+
+# HTTP Requests
+requests
+axios
+
+# Environment Variables
+python-dotenv
+
+# AI & LLM (DeepSeek via OpenRouter)
+openai
