@@ -18,9 +18,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/health")
-async def health_check():
-    return {"status": "ok", "version": "1.0.0"}
 
 match_cache = {}
 chat_cache = {}
@@ -148,10 +145,13 @@ async def chat_with_oracle(request: ChatRequest):
 
 @app.get("/health")
 def health_check():
+    from ai_coach import oracle
     return {
         "status": "healthy",
+        "ai_ready": oracle.openrouter_client is not None,
         "cached_matches": len(match_cache),
-        "cached_chat_queries": len(chat_cache)
+        "cached_chat_queries": len(chat_cache),
+        "version": "1.0.1"
     }
 
 @app.post("/analyze/{match_id}", response_model=ChatResponse)
