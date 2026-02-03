@@ -11,8 +11,15 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-// Initialize Firebase
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+// Initialize Firebase with safety for build time
+const isConfigValid = !!firebaseConfig.apiKey && firebaseConfig.apiKey !== "undefined";
+
+const app = getApps().length > 0 
+    ? getApp() 
+    : (isConfigValid 
+        ? initializeApp(firebaseConfig) 
+        : initializeApp({ apiKey: "BUILD_PLACEHOLDER" })); // Prevent crash during build
+
 const auth = getAuth(app);
 const db = getFirestore(app);
 
