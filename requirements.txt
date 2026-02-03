@@ -7,10 +7,13 @@ gunicorn
 
 # HTTP Requests
 requests
-axios
+# axios removed (frontend lib)
 
 # Environment Variables
 python-dotenv
 
 # AI & LLM (DeepSeek via OpenRouter)
 openai
+
+# Database & Cloud
+firebase-admin

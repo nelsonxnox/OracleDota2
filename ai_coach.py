@@ -49,11 +49,12 @@ class OracleCoach:
 TU MISIÓN: Analizar la partida usando DATOS CONCRETOS (Daño, NW, Healing, KDA) para dar lecciones magistrales. 
 
 REGLAS DE ORO:
-1. USA LOS DATOS: No especules. Si el contexto dice que Ember Spirit hizo 50k de daño, úsalo. No digas "apuesto a que hizo más", di "Ember arrasó con 50k de daño".
-2. CERO TECNICISMOS SIN EXPLICAR: Si usas palabras como "Timing", "Space" o "NW", explícalas (ej: "tiempo clave", "espacio", "valor neto").
-3. FLUIDEZ NARRATIVA: Escribe párrafos conectados, no solo listas de balas.
-4. CAUSA Y EFECTO: Explica el "por qué". Si perdieron, vincula el error (ej: bajo daño a torres o falta de BKB) con el resultado.
-5. ESTRUCTURA:
+1. NUNCA USES MARKDOWN: Prohibido usar asteriscos (**), almohadillas (#) o guiones bajos (_). El texto debe ser 100% plano y limpio para ser leído.
+2. USA LOS DATOS: No especules. Si el contexto dice que Ember Spirit hizo 50k de daño, úsalo. No digas "apuesto a que hizo más", di "Ember arrasó con 50k de daño".
+3. CERO TECNICISMOS SIN EXPLICAR: Si usas palabras como "Timing", "Space" o "NW", explícalas (ej: "tiempo clave", "espacio", "valor neto").
+4. FLUIDEZ NARRATIVA: Escribe párrafos conectados, no solo listas de balas.
+5. CAUSA Y EFECTO: Explica el "por qué". Si perdieron, vincula el error (ej: bajo daño a torres o falta de BKB) con el resultado.
+6. ESTRUCTURA:
    - Resumen: ¿Qué pasó realmente?
    - Análisis de Impacto: Quién hizo el daño real vs quién solo farmeó.
    - Lección Inmortal: Un consejo táctico definitivo.
@@ -62,7 +63,7 @@ IMPORTANTE: Los datos de Daño a Héroes, Torres y Curación están en el CONTEX
 """
         self.histories_by_match: Dict[str, List[Dict[str, str]]] = {}
 
-    def ask_oracle(self, context: str, user_question: str, match_id: Optional[str] = None, debug: bool = False) -> str:
+    def ask_oracle(self, context: str, user_question: str, match_id: Optional[str] = None, debug: bool = False, external_history: List[Dict] = None) -> str:
         """
         Sends context and question to DeepSeek via OpenRouter.
         RAG se ejecuta SIEMPRE en cada mensaje (no se guarda en historial).
@@ -94,14 +95,22 @@ IMPORTANTE: Los datos de Daño a Héroes, Torres y Curación están en el CONTEX
         messages = [{"role": "system", "content": self.system_instruction}]
         
         # ===== HISTORIAL DE CONVERSACIÓN =====
-        # Solo últimos 4 turnos (user + assistant)
-        # IMPORTANTE: El historial NO incluye el conocimiento RAG para ahorrar tokens
-        if match_id and match_id in self.histories_by_match:
+        # Usamos historial externo si existe (desde Firestore), sino memoria local (fallback)
+        if external_history:
+             # El historial externo viene como lista de dicts: [{'role': 'user', 'content': '...'}, ...]
+             # Tomamos los últimos 4 para ahorrar contexto
+             messages.extend(external_history[-4:])
+             if debug:
+                 print(f"[HISTORY] Usando {len(external_history[-4:])} mensajes del historial externo")
+        elif match_id and match_id in self.histories_by_match:
             history = self.histories_by_match[match_id][-4:]  # Últimos 4 mensajes
             messages.extend(history)
             
             if debug:
-                print(f"[HISTORY] Usando {len(history)} mensajes del historial")
+                print(f"[HISTORY] Usando {len(history)} mensajes del historial local")
+        
+        # Mensaje actual (CON conocimiento RAG inyectado)
+        messages.append({"role": "user", "content": prompt})
         
         # Mensaje actual (CON conocimiento RAG inyectado)
         messages.append({"role": "user", "content": prompt})
