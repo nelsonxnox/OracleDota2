@@ -10,7 +10,9 @@ import { motion } from "framer-motion";
 import { auth } from "@/lib/firebase";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
-export default function LoginPage() {
+import { Suspense } from "react";
+
+function LoginContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [method, setMethod] = useState<"email" | "dota_id">("email");
@@ -225,5 +227,17 @@ export default function LoginPage() {
                 </p>
             </div>
         </main>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-black flex items-center justify-center text-zinc-500 font-bold uppercase tracking-widest text-xs animate-pulse">
+                Cargando Portal...
+            </div>
+        }>
+            <LoginContent />
+        </Suspense>
     );
 }
