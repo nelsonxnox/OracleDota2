@@ -23,6 +23,6 @@ edge-tts
 aiofiles
 
 # RAG 2.0 (Vector DB)
-faiss-cpu
-sentence-transformers
+# faiss-cpu (removed for memory)
+# sentence-transformers (removed for memory)
 numpy
