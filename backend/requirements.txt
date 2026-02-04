@@ -21,3 +21,8 @@ firebase-admin
 # TTS (Voice)
 edge-tts
 aiofiles
+
+# RAG 2.0 (Vector DB)
+faiss-cpu
+sentence-transformers
+numpy

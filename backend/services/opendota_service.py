@@ -143,7 +143,9 @@ def process_match_data(match_data: Dict) -> Dict:
         "dire_score": match_data.get("dire_score", 0),
         "gold_advantage": match_data.get("radiant_gold_adv", []),
         "xp_advantage": match_data.get("radiant_xp_adv", []),
-        "partial_data": match_data.get("partial_data", False)
+        "partial_data": match_data.get("partial_data", False),
+        "picks_bans": match_data.get("picks_bans", []),
+        "objectives": match_data.get("objectives", [])
     }
 
     # 2. Player Performance
@@ -250,7 +252,13 @@ def process_match_data(match_data: Dict) -> Dict:
             "runes_collected": len(p.get("runes_log", [])),
             "xp_at_10": p.get("xp_t", [0]*11)[10] if p.get("xp_t") and len(p.get("xp_t")) > 10 else 0,
             "multi_kills": p.get("multi_kills", {}),
+            "deaths_log": p.get("deaths_log", []),
         }
+        
+        # Laning Efficiency Calculation (Approx 82 creeps at 10 min)
+        total_possible_lh = 82 if pos_guess != 2 else 100 # Mid usually has more
+        stats["laning_efficiency"] = round((stats["lh_at_10"] / total_possible_lh) * 100, 1) if total_possible_lh > 0 else 0
+
         
         # Item timings from purchase_log (Full log)
         stats["full_item_log"] = []
@@ -309,6 +317,38 @@ def process_match_data(match_data: Dict) -> Dict:
 
         stats["obs_details"] = process_ward_log("obs_log")
         stats["sen_details"] = process_ward_log("sen_log")
+
+        # 3.5 Death Vision Analysis
+        # Check if teammate wards were active near death location
+        stats["deaths_with_vision"] = []
+        team_obs = []
+        for other_p in players:
+            if (other_p.get("player_slot", 0) < 128) == is_radiant:
+                team_obs.extend(other_p.get("obs_log", []))
+        
+        for d in stats["deaths_log"]:
+            d_time = d.get("time", 0)
+            d_x = d.get("x", 0)
+            d_y = d.get("y", 0)
+            
+            has_vision = False
+            for ward in team_obs:
+                w_time = ward.get("time", 0)
+                # Observer ward duration is 6 mins (360s)
+                if w_time <= d_time <= w_time + 360:
+                    # Euclidean distance check (approx 1600 units is ward vision range)
+                    # OpenDota coordinates are 64-192 or so, map is 128x128
+                    dist = ((ward.get("x", 0) - d_x)**2 + (ward.get("y", 0) - d_y)**2)**0.5
+                    if dist < 20: # Rough estimate for "near" in OpenDota units
+                        has_vision = True
+                        break
+            
+            stats["deaths_with_vision"].append({
+                "time": d_time // 60,
+                "has_vision": has_vision,
+                "victim_x": d_x,
+                "victim_y": d_y
+            })
         
         # 4. Movement History (lane_pos)
         # OpenDota provides lane_pos as { "0": {x,y}, "1": {x,y}... }
@@ -405,6 +445,7 @@ def generate_ai_context(data: Dict, deep_mode: bool = False) -> str:
 
     meta = data["metadata"]
     is_partial = meta.get("partial_data", False)
+    hero_names = get_hero_names()
     
     radiant_heroes = [p["hero_name"] for p in data["players"] if p["team"] == "Radiant"]
     dire_heroes = [p["hero_name"] for p in data["players"] if p["team"] == "Dire"]
@@ -451,11 +492,20 @@ def generate_ai_context(data: Dict, deep_mode: bool = False) -> str:
             sen_log_str = ", ".join([f"Min {w['time']}(x:{w['x']},y:{w['y']})" for w in p.get('sen_details', [])])
             if not sen_log_str: sen_log_str = "Ninguno"
 
+            # Death Vision Summary
+            deaths_vision_summary = "Muertes sin visión: "
+            no_vision_list = [f"{d['time']}m" for d in p.get('deaths_with_vision', []) if not d['has_vision']]
+            if no_vision_list:
+                deaths_vision_summary += ", ".join(no_vision_list)
+            else:
+                deaths_vision_summary += "Ninguna (Buen posicionamiento/visión)"
+
             deep_info = [
                 f"  > Combat Extra: {p['stuns']}s stun, {p['buybacks']} buybacks, Wards: {p['obs_placed']}/{p['sen_placed']}",
-                f"  > Líneas (10m): {p['lh_at_10']} LH, {p['dn_at_10']} DN, {p['gold_at_10']} Oro",
+                f"  > Líneas (10m): {p['lh_at_10']} LH, {p['dn_at_10']} DN, {p['gold_at_10']} Oro | Eficiencia: {p['laning_efficiency']}%",
                 f"  > Timings Clave: {timing_summary}",
                 f"  > Visión Detallada (Minuto/Coord): Obs [{obs_log_str}] | Sen [{sen_log_str}]",
+                f"  > {deaths_vision_summary}",
                 f"  > Habilidades (1-10): {', '.join(p['ability_build'][:10])}"
             ]
             context.append("\n".join(deep_info))
@@ -484,6 +534,24 @@ def generate_ai_context(data: Dict, deep_mode: bool = False) -> str:
                 tf_summary += f" | Habilidades Clave: {', '.join(abilities_in_fight)}"
                 
             context.append(tf_summary)
+
+    # 4. Draft & Objectives (New sections)
+    if deep_mode:
+        context.append("\n--- DRAFT (Picks & Bans) ---")
+        picks_bans = meta.get("picks_bans", [])
+        for pb in picks_bans:
+            action = "PICK" if pb.get("is_pick") else "BAN"
+            hero_info = hero_names.get(pb.get("hero_id"), {})
+            h_name = hero_info.get("localized_name", f"Hero {pb.get('hero_id')}")
+            context.append(f"  > {action}: {h_name} (Order: {pb.get('order')})")
+
+        context.append("\n--- OBJETIVOS ---")
+        objectives = meta.get("objectives", [])
+        for obj in objectives:
+            o_type = obj.get("type", "unknown")
+            o_time = obj.get("time", 0) // 60
+            if o_type in ["CHAT_MESSAGE_ROSHAN_KILL", "CHAT_MESSAGE_TOWER_KILL", "building_kill"]:
+                context.append(f"  > {o_type.replace('CHAT_MESSAGE_', '')} @ {o_time}m")
 
     return "\n".join(context)
 

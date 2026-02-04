@@ -6,6 +6,7 @@ from services import opendota_service
 from services import firebase_service
 from services import tts_service
 from services.ai_coach import oracle
+from services.stratz_service import stratz
 import os
 
 # Load .env from project root
@@ -199,7 +200,15 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
     
     # 5. AI Call
     # Generate context from match data
-    context = opendota_service.generate_ai_context(data, deep_mode=is_complex)
+    context_list = [opendota_service.generate_ai_context(data, deep_mode=is_complex)]
+    
+    # 5.5 Advanced Stratz Context (if complex and key exists)
+    if is_complex and os.getenv("STRATZ_API_KEY"):
+        stratz_data = stratz.get_match_laning_data(match_id)
+        if stratz_data:
+            context_list.append(stratz.format_stratz_context(stratz_data))
+            
+    context = "\n".join(context_list)
     
     # Call Oracle with history
     response = oracle.ask_oracle(context, query, match_id=match_id, external_history=history)
@@ -245,7 +254,14 @@ async def analyze_match(match_id: str, user_id: str = "guest"): # Optional user_
     firebase_service.save_chat_message(user_id, match_id, "user", query)
     
     # AI Process
-    context = opendota_service.generate_ai_context(data, deep_mode=True)
+    context_list = [opendota_service.generate_ai_context(data, deep_mode=True)]
+    
+    # Add Stratz for full analysis
+    if os.getenv("STRATZ_API_KEY"):
+        stratz_data = stratz.get_match_laning_data(match_id)
+        context_list.append(stratz.format_stratz_context(stratz_data))
+        
+    context = "\n".join(context_list)
     history = firebase_service.get_chat_history(user_id, match_id)
     answer = oracle.ask_oracle(context, query, match_id=match_id, external_history=history)
     

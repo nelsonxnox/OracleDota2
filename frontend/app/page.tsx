@@ -11,14 +11,12 @@ import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import AuthModal from "@/components/AuthModal";
 import { User as UserIcon } from "lucide-react";
 
 export default function Home() {
   const [searchId, setSearchId] = useState("");
   const router = useRouter();
   const { user, loading } = useAuth();
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const handleSearch = () => {
     if (!searchId) return;
@@ -78,29 +76,26 @@ export default function Home() {
               </div>
             ) : (
               <>
-                <Button
-                  onClick={() => setIsAuthModalOpen(true)}
-                  variant="ghost"
-                  className="text-zinc-400 hover:text-white hover:bg-white/5 font-bold uppercase tracking-widest text-[10px]"
-                >
-                  Panel de Cuenta
-                </Button>
-                <Button
-                  onClick={() => setIsAuthModalOpen(true)}
-                  className="bg-white text-black hover:bg-zinc-200 font-black uppercase tracking-widest text-[10px] px-6 h-9 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.2)]"
-                >
-                  Registrarse
-                </Button>
+                <Link href="/login">
+                  <Button
+                    variant="ghost"
+                    className="text-zinc-400 hover:text-white hover:bg-white/5 font-bold uppercase tracking-widest text-[10px]"
+                  >
+                    Iniciar Sesión
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button
+                    className="bg-white text-black hover:bg-zinc-200 font-black uppercase tracking-widest text-[10px] px-6 h-9 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                  >
+                    Registrarse
+                  </Button>
+                </Link>
               </>
             )
           )}
         </div>
       </nav>
-
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-      />
 
       {/* Hero Section */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-6 text-center max-w-6xl mx-auto w-full mt-10 md:mt-0">
@@ -185,8 +180,11 @@ export default function Home() {
               {user ? "Ya tienes acceso al análisis completo de tu cuenta." : "Desbloquea el análisis completo de tu cuenta, historial y evolución registrándote."}
             </p>
 
-            <Link href={user ? "/dashboard" : "/register"} className="w-full">
-              <Button variant="outline" className="w-full border-zinc-700 hover:border-teal-500 hover:text-teal-400 bg-transparent text-[10px] font-bold uppercase tracking-widest h-8">
+            <Link href={user ? "/dashboard" : "/register"} className="block w-full">
+              <Button
+                variant="outline"
+                className="w-full border-zinc-700 hover:border-teal-500 hover:text-teal-400 bg-transparent text-[10px] font-bold uppercase tracking-widest h-8"
+              >
                 {user ? "Ver mi Perfil" : "Crear Cuenta"}
               </Button>
             </Link>

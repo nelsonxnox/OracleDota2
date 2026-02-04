@@ -115,6 +115,16 @@ ABBREVIATIONS = {
 }
 
 
+# ====== DYNAMIC META INTEGRATION ======
+try:
+    from services.meta_service import get_real_time_meta
+    DYNAMIC_META_AVAILABLE = True
+except ImportError:
+    DYNAMIC_META_AVAILABLE = False
+
+DYNAMIC_META_CACHE = {"data": None, "timestamp": 0}
+
+import time
 import re
 
 # ====== SINÓNIMOS Y VARIANTES (Tolerancia a errores) ======
@@ -232,7 +242,21 @@ def get_relevant_knowledge(query: str, hero_names: list = None, debug: bool = Fa
     # 6. Errores comunes (SIEMPRE incluir, es corto y crítico)
     relevant_sections.append(f"ERRORES COMUNES A DETECTAR: {COMMON_MISTAKES}")
     
-    # 7. Si NO se detectó nada, dar resumen ejecutivo
+    # 7. Inyección de Meta Dinámico (Si está disponible)
+    if DYNAMIC_META_AVAILABLE:
+        # Update cache every 6 hours
+        now = time.time()
+        if not DYNAMIC_META_CACHE["data"] or (now - DYNAMIC_META_CACHE["timestamp"]) > 21600:
+            DYNAMIC_META_CACHE["data"] = get_real_time_meta()
+            DYNAMIC_META_CACHE["timestamp"] = now
+        
+        if DYNAMIC_META_CACHE["data"] and "error" not in DYNAMIC_META_CACHE["data"]:
+            meta = DYNAMIC_META_CACHE["data"]
+            top_heroes = ", ".join([f"{h['name']} ({h['wr']}% WR)" for h in meta.get("top_winrate", [])[:5]])
+            relevant_sections.append(f"REAL-TIME IMMORTAL META: Top Heroes: {top_heroes}. By Role: {meta.get('by_role', {})}")
+            detected_topics.append("Dynamic Meta")
+
+    # 8. Si NO se detectó nada, dar resumen ejecutivo
     if len(relevant_sections) == 1:  # Solo tiene errores comunes
         relevant_sections.insert(0, f"CONCEPTOS CORE: {PATCH_CORE_CONCEPTS}")
         relevant_sections.insert(1, f"TOP ITEMS: {list(TIER_S_ITEMS.keys())[:5]}")
