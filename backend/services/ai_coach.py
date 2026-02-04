@@ -111,9 +111,6 @@ IMPORTANTE: Los datos de Daño a Héroes, Torres y Curación están en el CONTEX
         
         # Mensaje actual (CON conocimiento RAG inyectado)
         messages.append({"role": "user", "content": prompt})
-        
-        # Mensaje actual (CON conocimiento RAG inyectado)
-        messages.append({"role": "user", "content": prompt})
 
         # ===== CONSULTA A DEEPSEEK (CON FALLBACKS) =====
         if not self.openrouter_client:

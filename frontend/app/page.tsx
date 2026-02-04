@@ -10,11 +10,15 @@ import { motion } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
+import LoadingScreen from "@/components/ui/LoadingScreen";
+import AuthModal from "@/components/AuthModal";
+import { User as UserIcon } from "lucide-react";
 
 export default function Home() {
   const [searchId, setSearchId] = useState("");
   const router = useRouter();
   const { user, loading } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const handleSearch = () => {
     if (!searchId) return;
@@ -24,6 +28,8 @@ export default function Home() {
   const handleLogout = async () => {
     await signOut(auth);
   };
+
+  if (loading) return <LoadingScreen progress={50} />;
 
   return (
     <main className="min-h-screen bg-black text-zinc-100 flex flex-col selection:bg-red-500/30 font-sans overflow-x-hidden">
@@ -51,33 +57,50 @@ export default function Home() {
         <div className="flex items-center gap-4">
           {!loading && (
             user ? (
-              <>
+              <div className="flex items-center gap-4">
                 <Link href="/dashboard">
                   <Button variant="ghost" className="text-zinc-400 hover:text-white hover:bg-white/5 font-bold uppercase tracking-widest text-[10px]">
-                    Dashboard
+                    Ir al Panel de Guerra
                   </Button>
                 </Link>
-                <Button onClick={handleLogout} variant="ghost" className="text-red-500 hover:text-red-400 hover:bg-red-500/5 font-bold uppercase tracking-widest text-[10px]">
-                  <LogOut className="h-3 w-3 mr-2" /> Salir
+                <div
+                  onClick={() => router.push("/dashboard")}
+                  className="flex items-center gap-3 bg-white/5 p-1 pr-4 rounded-full border border-white/10 hover:bg-white/10 cursor-pointer transition-all"
+                >
+                  <div className="h-7 w-7 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-900 flex items-center justify-center border border-white/10">
+                    <UserIcon className="h-3 w-3 text-zinc-400" />
+                  </div>
+                  <span className="text-[10px] font-black text-white uppercase tracking-widest">Mi Cuenta</span>
+                </div>
+                <Button onClick={handleLogout} variant="ghost" className="text-red-500 hover:text-red-400 hover:bg-red-500/5 font-bold uppercase tracking-widest text-[10px] px-2 h-8">
+                  <LogOut className="h-3.5 w-3.5" />
                 </Button>
-              </>
+              </div>
             ) : (
               <>
-                <Link href="/login">
-                  <Button variant="ghost" className="text-zinc-400 hover:text-white hover:bg-white/5 font-bold uppercase tracking-widest text-[10px]">
-                    Iniciar Sesión
-                  </Button>
-                </Link>
-                <Link href="/register">
-                  <Button className="bg-white text-black hover:bg-zinc-200 font-black uppercase tracking-widest text-[10px] px-6 h-9 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-                    Registrarse
-                  </Button>
-                </Link>
+                <Button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  variant="ghost"
+                  className="text-zinc-400 hover:text-white hover:bg-white/5 font-bold uppercase tracking-widest text-[10px]"
+                >
+                  Panel de Cuenta
+                </Button>
+                <Button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="bg-white text-black hover:bg-zinc-200 font-black uppercase tracking-widest text-[10px] px-6 h-9 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                >
+                  Registrarse
+                </Button>
               </>
             )
           )}
         </div>
       </nav>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
 
       {/* Hero Section */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-6 text-center max-w-6xl mx-auto w-full mt-10 md:mt-0">

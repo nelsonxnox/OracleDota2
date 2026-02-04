@@ -3,8 +3,9 @@ from firebase_admin import credentials, firestore
 import os
 from datetime import datetime
 
-# Singleton DB instance
+# Singleton DB instance and Cache
 db = None
+MATCH_CACHE = {} # Simple in-memory cache: {match_id: data}
 
 def get_db():
     global db
@@ -14,6 +15,9 @@ def get_db():
         cred_path = os.getenv("FIREBASE_CREDENTIALS")
         
         try:
+            print(f"[FIREBASE_DEBUG] Checking JSON Var... Present? {bool(cred_json)}")
+            print(f"[FIREBASE_DEBUG] Checking Path Var... Present? {bool(cred_path)}")
+            
             if cred_json:
                 print("[FIREBASE] Initializing with CREDENTIALS_JSON env var...")
                 import json
@@ -33,14 +37,21 @@ def get_db():
             print("[FIREBASE] Firestore connected successfully.")
         except ValueError:
              # Already initialized
-             db = firestore.client()
+             try:
+                 app = firebase_admin.get_app()
+                 db = firestore.client()
+             except Exception as inner_e:
+                 print(f"[FIREBASE] Error re-connecting: {inner_e}")
+                 db = None
         except Exception as e:
             print(f"[FIREBASE] Error connecting: {e}")
             db = None
     return db
 
 def save_match_to_db(match_id: str, data: dict):
-    """Saves match analysis data to Firestore"""
+    """Saves match analysis data to Firestore (and Cache)"""
+    MATCH_CACHE[str(match_id)] = data # Update Cache immediately
+    
     database = get_db()
     if not database: return
     
@@ -51,12 +62,18 @@ def save_match_to_db(match_id: str, data: dict):
             "data": data,
             "updated_at": datetime.now()
         })
-        print(f"[DB] Match {match_id} saved.")
+        print(f"[FIREBASE] Match {match_id} saved to DB.")
     except Exception as e:
-        print(f"[DB] Error saving match {match_id}: {e}")
+        print(f"[FIREBASE] Error saving match: {e}")
 
-def get_match_from_db(match_id: str) -> dict | None:
-    """Retrieves match analysis data from Firestore"""
+def get_match_from_db(match_id: str):
+    """Retrieves match analysis from Cache or Firestore"""
+    # 1. Check Cache first (Extremely fast)
+    if str(match_id) in MATCH_CACHE:
+        print(f"[CACHE] Match {match_id} retrieved from memory.")
+        return MATCH_CACHE[str(match_id)]
+
+    # 2. Check Firestore
     database = get_db()
     if not database: return None
     

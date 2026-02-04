@@ -142,7 +142,8 @@ def process_match_data(match_data: Dict) -> Dict:
         "radiant_score": match_data.get("radiant_score", 0),
         "dire_score": match_data.get("dire_score", 0),
         "gold_advantage": match_data.get("radiant_gold_adv", []),
-        "xp_advantage": match_data.get("radiant_xp_adv", [])
+        "xp_advantage": match_data.get("radiant_xp_adv", []),
+        "partial_data": match_data.get("partial_data", False)
     }
 
     # 2. Player Performance
@@ -226,28 +227,29 @@ def process_match_data(match_data: Dict) -> Dict:
             "player_slot": player_slot, # Needed for linking to teamfights
             "team": team,
             "kda": f"{p.get('kills', 0)}/{p.get('deaths', 0)}/{p.get('assists', 0)}",
-            "networth": p.get("total_gold", 0),
+            "networth": p.get("total_gold") or 0,
+            "hero_damage": p.get("hero_damage") or 0,
+            "tower_damage": p.get("tower_damage") or 0,
+            "hero_healing": p.get("hero_healing") or 0,
+            "lh_at_10": p.get("lh_t", [0])[min(10, len(p.get("lh_t", [0]))-1)] if p.get("lh_t") else 0,
+            "dn_at_10": p.get("dn_t", [0])[min(10, len(p.get("dn_t", [0]))-1)] if p.get("dn_t") else 0,
+            "gold_at_10": p.get("gold_t", [0])[min(10, len(p.get("gold_t", [0]))-1)] if p.get("gold_t") else 0,
+            "level": p.get("level", 1),
+            "stuns": round(p.get("stuns") or 0, 1),
+            "buybacks": p.get("buybacks") or 0,
+            "obs_placed": p.get("obs_placed") or 0,
+            "sen_placed": p.get("sen_placed") or 0,
+            "kill_streaks": p.get("kill_streaks", {}),
+            "player_slot": player_slot, # Needed for linking to teamfights
             "lh_dn": f"{p.get('last_hits', 0)}/{p.get('denies', 0)}",
             "gpm_xpm": f"{p.get('gold_per_min', 0)}/{p.get('xp_per_min', 0)}",
-            "hero_damage": p.get("hero_damage", 0),
-            "tower_damage": p.get("tower_damage", 0),
-            "hero_healing": p.get("hero_healing", 0),
-            "level": p.get("level", 0),
-            "obs_placed": p.get("obs_placed") or len(p.get("obs_log", [])),
-            "sen_placed": p.get("sen_placed") or len(p.get("sen_log", [])),
             "lane_role": lane_role, # 1=Safe, 2=Mid, 3=Off, 4=Jungle
             "pos_guess": pos_guess,
             "nw_rank": nw_rank,
             "camps_stacked": p.get("camps_stacked", 0),
             "runes_collected": len(p.get("runes_log", [])),
-            "stuns": p.get("stuns", 0),
-            "lh_at_10": p.get("lh_t", [0]*11)[10] if p.get("lh_t") and len(p.get("lh_t")) > 10 else 0,
-            "dn_at_10": p.get("dn_t", [0]*11)[10] if p.get("dn_t") and len(p.get("dn_t")) > 10 else 0,
-            "gold_at_10": p.get("gold_t", [0]*11)[10] if p.get("gold_t") and len(p.get("gold_t")) > 10 else 0,
             "xp_at_10": p.get("xp_t", [0]*11)[10] if p.get("xp_t") and len(p.get("xp_t")) > 10 else 0,
-            "buybacks": len(p.get("buyback_log", [])),
             "multi_kills": p.get("multi_kills", {}),
-            "kill_streaks": p.get("kill_streaks", {}),
         }
         
         # Item timings from purchase_log (Full log)
@@ -372,21 +374,25 @@ def process_match_data(match_data: Dict) -> Dict:
 
 def summarize_items(item_log: List[Dict]) -> str:
     """Summarizes item timings into conclusions to save tokens."""
-    if not item_log: return "Sin compras clave."
-    
-    # Identify key early/mid game items
-    key_items = ["Blink Dagger", "Black King Bar", "Battle Fury", "Maelstrom", "Radiance", "Dagon", "Orchid Malevolence", "Manta Style"]
-    summaries = []
-    for entry in item_log:
-        item = entry['item']
-        time = entry['time']
-        if item in key_items or time > 30: # Key items or late game additions
-            summaries.append(f"{item} ({time}m)")
-    
-    # If too many items, just show last 5 and key ones
-    if len(summaries) > 8:
-        return ", ".join(summaries[:3] + ["..."] + summaries[-3:])
-    return ", ".join(summaries)
+    try:
+        if not item_log: return "Sin compras clave."
+        
+        # Identify key early/mid game items
+        key_items = ["Blink Dagger", "Black King Bar", "Battle Fury", "Maelstrom", "Radiance", "Dagon", "Orchid Malevolence", "Manta Style"]
+        summaries = []
+        for entry in item_log:
+            item = entry.get('item', 'Item Unknown')
+            time = entry.get('time', 0)
+            if item in key_items or (isinstance(time, int) and time > 30): # Key items or late game additions
+                summaries.append(f"{item} ({time}m)")
+        
+        # If too many items, just show last 5 and key ones
+        if len(summaries) > 8:
+            return ", ".join(summaries[:3] + ["..."] + summaries[-3:])
+        return ", ".join(summaries)
+    except Exception as e:
+        print(f"[RECOVERY] summarize_items failed: {e}")
+        return "Resumen de items no disponible."
 
 def generate_ai_context(data: Dict, deep_mode: bool = False) -> str:
     """
@@ -398,13 +404,22 @@ def generate_ai_context(data: Dict, deep_mode: bool = False) -> str:
         return "No hay datos de la partida disponibles."
 
     meta = data["metadata"]
+    is_partial = meta.get("partial_data", False)
+    
     radiant_heroes = [p["hero_name"] for p in data["players"] if p["team"] == "Radiant"]
     dire_heroes = [p["hero_name"] for p in data["players"] if p["team"] == "Dire"]
 
-    context = [
+    context = []
+    
+    if is_partial:
+        context.append("⚠️ NOTA PARA EL COACH: Los datos extendidos (daño, visión, posiciones) no están disponibles en la API de OpenDota para esta partida específica. ")
+        context.append("Esto suele ocurrir en partidas muy antiguas (archivos expirados) o que aún no han sido procesadas. ")
+        context.append("NO menciones que los jugadores hicieron 0 daño como un error de juego; simplemente explica que esos datos no están disponibles en este momento. Enfócate en KDA y Oro.\n")
+
+    context.extend([
         f"PARTIDA #{meta['match_id']} | GANÓ: {meta['winner']} | DURACIÓN: {meta['duration_minutes']}m",
         f"EQUIPOS: Radiant ({', '.join(radiant_heroes)}) vs Dire ({', '.join(dire_heroes)})",
-    ]
+    ])
 
     if data.get("partial_data"):
         context.insert(0, "⚠️ ADVERTENCIA: PARTIDA NO PARSEADA COMPLETAMENTE (Datos de wards/vision limitados)")

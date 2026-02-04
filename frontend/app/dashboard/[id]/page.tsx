@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { Loader2, ArrowLeft, Trophy, Clock, AlertTriangle, Activity, Zap, Coins, Map as MapIcon, Users } from "lucide-react";
+import { Loader2, ArrowLeft, Trophy, Clock, AlertTriangle, Activity, Zap, Coins, Map as MapIcon, Users, Eye, Sparkles } from "lucide-react";
 import Link from "next/link";
 import axios from "axios";
 import { API_BASE } from "@/lib/api";
@@ -11,6 +11,9 @@ import HeroList from "@/components/HeroList";
 import NetWorthChart from "@/components/NetWorthChart";
 import LaneMap from "@/components/LaneMap";
 import MatchStats from "@/components/MatchStats";
+import LoadingScreen from "@/components/ui/LoadingScreen";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
     const params = useParams();
@@ -21,6 +24,22 @@ export default function DashboardPage() {
     // Estado para el slider de tiempo (minuto actual)
     const [currentMin, setCurrentMin] = useState<number>(-1);
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const [progress, setProgress] = useState(0);
+
+    // Simular progreso de carga
+    useEffect(() => {
+        if (loading) {
+            const timer = setInterval(() => {
+                setProgress((oldProgress) => {
+                    const diff = Math.random() * 10;
+                    return Math.min(oldProgress + diff, 98); // Se queda en 98 hasta que sea loading=false
+                });
+            }, 300);
+            return () => clearInterval(timer);
+        } else {
+            setProgress(100);
+        }
+    }, [loading]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,13 +56,8 @@ export default function DashboardPage() {
         if (matchId) fetchData();
     }, [matchId]);
 
-    // Pantallas de Carga / Error
-    if (loading) return (
-        <div className="min-h-screen bg-black flex flex-col items-center justify-center text-zinc-400 gap-4">
-            <Loader2 className="w-12 h-12 animate-spin text-red-600" />
-            <span className="font-mono text-xs uppercase tracking-widest animate-pulse">Sincronizando Neural Link...</span>
-        </div>
-    );
+    // Pantalla de Carga Premium
+    if (loading || progress < 100) return <LoadingScreen progress={Math.round(progress)} />;
 
     if (error || !data) return (
         <div className="min-h-screen bg-black flex flex-col items-center justify-center text-red-500 gap-4">
@@ -71,9 +85,28 @@ export default function DashboardPage() {
                             </div>
                         </Link>
                         <div>
-                            <h1 className="text-xl md:text-2xl font-black italic uppercase tracking-tighter text-white flex items-center gap-2">
-                                MATCH {matchId} <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30 not-italic tracking-widest">LIVE ANALYTICS</span>
-                            </h1>
+                            <div className="flex items-center gap-4">
+                                <h1 className="text-xl md:text-2xl font-black italic uppercase tracking-tighter text-white flex items-center gap-2">
+                                    MATCH {matchId}
+                                </h1>
+                                {metadata.partial_data && (
+                                    <div className="flex items-center gap-2 px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full text-amber-500 animate-pulse">
+                                        <AlertTriangle size={12} />
+                                        <span className="text-[10px] font-black uppercase tracking-widest">Sincronización Parcial</span>
+                                    </div>
+                                )}
+                                <button
+                                    onClick={() => {
+                                        setError(null);
+                                        // Re-fetch will be triggered by re-mounting or we can just call fetchData if we define it outside useEffect
+                                        window.location.reload();
+                                    }}
+                                    className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-all border border-white/5"
+                                    title="Actualizar Datos"
+                                >
+                                    <Activity size={16} />
+                                </button>
+                            </div>
                             <div className="flex items-center gap-4 text-[10px] font-bold text-zinc-500 uppercase tracking-widest mt-1">
                                 <span className="flex items-center gap-1"><Clock size={10} /> {metadata.duration_minutes} MIN</span>
                                 <span className="flex items-center gap-1 text-zinc-600">|</span>
@@ -125,11 +158,57 @@ export default function DashboardPage() {
                     </div>
                 </section>
 
-                {/* COLUMNA 2: REGISTROS DEL SISTEMA (CENTRO - ANCHO 5) */}
+                {/* COLUMNA 2: REGISTROS Y ORÁCULO (CENTRO - ANCHO 5) */}
                 <section className="col-span-1 lg:col-span-5 flex flex-col gap-6">
+
+                    {/* CENTRAL ORACLE EYE - HERO SECTION */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="relative bg-[#0c0c10]/40 border border-teal-500/20 rounded-[2.5rem] p-8 overflow-hidden group cursor-pointer hover:border-teal-500/50 transition-all duration-700 shadow-[0_0_50px_rgba(20,184,166,0.1)]"
+                        onClick={() => setIsChatOpen(true)}
+                    >
+                        {/* Ethereal backgrounds */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-teal-500/5 to-transparent opacity-50" />
+                        <div className="absolute -top-24 -left-24 w-64 h-64 bg-teal-500/10 blur-[100px] rounded-full group-hover:bg-teal-500/20 transition-all duration-1000" />
+                        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-purple-500/10 blur-[100px] rounded-full group-hover:bg-purple-500/20 transition-all duration-1000" />
+
+                        <div className="relative z-10 flex flex-col items-center text-center space-y-6">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-[9px] font-black uppercase tracking-[0.3em]">
+                                <Sparkles size={10} className="animate-pulse" /> Oracle Intelligence Ready
+                            </div>
+
+                            {/* THE BIG EYE */}
+                            <div className="relative">
+                                <div className="absolute inset-0 bg-teal-500 blur-[40px] opacity-20 group-hover:opacity-40 animate-pulse transition-opacity" />
+                                <div className="w-24 h-24 rounded-full bg-black/60 border-2 border-teal-500/30 flex items-center justify-center relative z-10 group-hover:scale-110 group-hover:border-teal-400 transition-all duration-500 shadow-2xl">
+                                    <Eye size={48} className="text-teal-400 group-hover:text-white transition-colors" />
+                                </div>
+                                {/* Ornamental rings */}
+                                <div className="absolute inset-[-10px] border border-teal-500/10 rounded-full animate-[spin_10s_linear_infinite]" />
+                                <div className="absolute inset-[-20px] border border-white/5 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+                            </div>
+
+                            <div className="space-y-2">
+                                <h2 className="text-2xl font-black italic uppercase tracking-tighter text-white">
+                                    Consultar al <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-white">Oráculo</span>
+                                </h2>
+                                <p className="text-zinc-500 text-xs font-medium max-w-sm mx-auto leading-relaxed">
+                                    Haz clic para iniciar el análisis profundo de los hilos del destino de esta batalla.
+                                </p>
+                            </div>
+
+                            <Button
+                                className="bg-teal-600 hover:bg-teal-500 text-white font-black uppercase tracking-widest text-[10px] h-10 px-8 rounded-full shadow-[0_0_20px_rgba(20,184,166,0.3)] group-hover:shadow-[0_0_30px_rgba(20,184,166,0.5)] transition-all"
+                            >
+                                Iniciar Chat de Guerra
+                            </Button>
+                        </div>
+                    </motion.div>
+
                     <div className="flex items-center gap-4 mb-2 opacity-60">
                         <div className="h-px flex-1 bg-gradient-to-r from-transparent to-teal-500/30" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">System Logs</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">Registros de Batalla</span>
                         <div className="h-px flex-1 bg-gradient-to-l from-transparent to-teal-500/30" />
                     </div>
 
@@ -191,6 +270,7 @@ export default function DashboardPage() {
                 matchId={matchId}
                 isOpen={isChatOpen}
                 onToggle={() => setIsChatOpen(!isChatOpen)}
+                hideButton={true}
             />
         </div>
     );

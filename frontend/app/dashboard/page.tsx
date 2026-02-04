@@ -9,11 +9,24 @@ import { Swords, Search, User as UserIcon, Gamepad2, Sparkles, LogOut, History, 
 import { motion } from "framer-motion";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 export default function DashboardPage() {
     const { user, userData, loading } = useAuth();
     const router = useRouter();
     const [searchId, setSearchId] = useState("");
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        if (loading) {
+            const timer = setInterval(() => {
+                setProgress(p => Math.min(p + Math.random() * 15, 95));
+            }, 300);
+            return () => clearInterval(timer);
+        } else {
+            setProgress(100);
+        }
+    }, [loading]);
 
     useEffect(() => {
         if (!loading && !user) {
@@ -32,12 +45,7 @@ export default function DashboardPage() {
         router.push("/");
     };
 
-    if (loading) return (
-        <div className="min-h-screen bg-black flex flex-col items-center justify-center space-y-4">
-            <div className="h-12 w-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
-            <p className="text-zinc-500 font-bold uppercase tracking-[0.2em] text-xs">Invocando el Oráculo...</p>
-        </div>
-    );
+    if (loading || progress < 100) return <LoadingScreen progress={Math.round(progress)} />;
 
     return (
         <main className="min-h-screen bg-black text-zinc-100 relative overflow-hidden font-sans">

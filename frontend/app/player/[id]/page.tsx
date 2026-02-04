@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { API_BASE } from "@/lib/api";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 interface PlayerInfo {
     account_id: string;
@@ -60,6 +61,18 @@ export default function PlayerProfile() {
     const [error, setError] = useState<string | null>(null);
     const [refreshing, setRefreshing] = useState(false);
     const [refreshMsg, setRefreshMsg] = useState("");
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        if (loading) {
+            const timer = setInterval(() => {
+                setProgress(p => Math.min(p + Math.random() * 20, 95));
+            }, 200);
+            return () => clearInterval(timer);
+        } else {
+            setProgress(100);
+        }
+    }, [loading]);
 
     const fetchData = async () => {
         try {
@@ -105,14 +118,7 @@ export default function PlayerProfile() {
         if (id) fetchData();
     }, [id]);
 
-    if (loading) {
-        return (
-            <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
-                <div className="h-16 w-16 border-4 border-red-600/20 border-t-red-600 rounded-full animate-spin mb-4" />
-                <p className="text-xs font-black uppercase tracking-[0.3em] animate-pulse">Consultando el Oráculo...</p>
-            </div>
-        );
-    }
+    if (loading) return <LoadingScreen progress={progress} />;
 
     if (error) {
         return (
