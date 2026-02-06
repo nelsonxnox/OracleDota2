@@ -28,7 +28,7 @@ app.add_middleware(
 )
 
 # Serve Executable
-dist_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dist')
+dist_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dist')
 os.makedirs(dist_path, exist_ok=True) # Ensure it exists
 app.mount("/download", StaticFiles(directory=dist_path), name="download")
 
