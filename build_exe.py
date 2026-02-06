@@ -28,27 +28,37 @@ def build_exe():
     
     os.makedirs(dist_path, exist_ok=True)
     
-    # PyInstaller command with enhanced collection
+    # PyInstaller command - Optimized for size + Binaries
     cmd = [
-        sys.executable,  # Use current Python interpreter
-        "-m", "PyInstaller",  # Run PyInstaller as module
+        sys.executable,
+        "-m", "PyInstaller",
         "--onefile",
         "--windowed",
         "--name", "OracleNeuralLink",
         "--icon", "NONE",
         "--add-data", "vosk-model-small-es-0.42;vosk-model-small-es-0.42",
-        # Collect ALL submodules for problematic packages
-        "--collect-all", "pyttsx3",
-        "--collect-all", "sounddevice",
-        "--collect-all", "vosk",
-        # Hidden imports
+        
+        # Collect binaries (DLLs) - CRITICAL for vosk/sounddevice
+        "--collect-binaries", "vosk",
+        "--collect-binaries", "sounddevice",
+        
+        # Specific hidden imports
+        "--hidden-import", "pyttsx3.drivers",
+        "--hidden-import", "pyttsx3.drivers.sapi5",
+        "--hidden-import", "win32com.client",
+        "--hidden-import", "pythoncom",
+        "--hidden-import", "sounddevice",
+        "--hidden-import", "vosk",
         "--hidden-import", "websockets",
         "--hidden-import", "tkinter",
         "--hidden-import", "queue",
         "--hidden-import", "winreg",
-        "--hidden-import", "win32com.client",
-        "--hidden-import", "pythoncom",
-        # Disable UPX compression
+        
+        # Exclude unnecessary heavy modules
+        "--exclude-module", "matplotlib",
+        "--exclude-module", "numpy",
+        "--exclude-module", "pandas",
+        
         "--noupx",
         "oracle_bridge.py"
     ]
