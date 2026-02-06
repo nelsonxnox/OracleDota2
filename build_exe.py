@@ -28,40 +28,54 @@ def build_exe():
     
     os.makedirs(dist_path, exist_ok=True)
     
-    # PyInstaller command
+    # PyInstaller command with enhanced collection
     cmd = [
-        "pyinstaller",
-        "--onefile",  # Single executable
-        "--windowed",  # No console window
+        sys.executable,  # Use current Python interpreter
+        "-m", "PyInstaller",  # Run PyInstaller as module
+        "--onefile",
+        "--windowed",
         "--name", "OracleNeuralLink",
-        "--icon", "NONE",  # Add icon path if you have one
-        "--add-data", "vosk-model-small-es-0.42;vosk-model-small-es-0.42",  # Include Vosk model
+        "--icon", "NONE",
+        "--add-data", "vosk-model-small-es-0.42;vosk-model-small-es-0.42",
+        # Collect ALL submodules for problematic packages
+        "--collect-all", "pyttsx3",
+        "--collect-all", "sounddevice",
+        "--collect-all", "vosk",
+        # Hidden imports
+        "--hidden-import", "websockets",
+        "--hidden-import", "tkinter",
+        "--hidden-import", "queue",
+        "--hidden-import", "winreg",
+        "--hidden-import", "win32com.client",
+        "--hidden-import", "pythoncom",
+        # Disable UPX compression
+        "--noupx",
         "oracle_bridge.py"
     ]
     
-    print(f"[BUILD] Running: {' '.join(cmd)}")
+    print(f"[BUILD] Running PyInstaller...")
     
     try:
-        result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+        result = subprocess.run(cmd, check=True, capture_output=True, text=True, encoding='utf-8', errors='replace')
         print(result.stdout)
-        print("\n✅ [BUILD] Compilation successful!")
-        print(f"📦 Executable created at: dist/OracleNeuralLink.exe")
-        print("\n🚀 Upload this file to your backend's 'dist/' folder for download.")
+        print("\n[BUILD] Compilation successful!")
+        print(f"[BUILD] Executable created at: dist/OracleNeuralLink.exe")
+        print("\n[BUILD] Upload this file to your backend's 'dist/' folder for download.")
         
     except subprocess.CalledProcessError as e:
-        print(f"❌ [BUILD] Error during compilation:")
+        print(f"[BUILD] Error during compilation:")
         print(e.stderr)
         sys.exit(1)
     except FileNotFoundError:
-        print("❌ [BUILD] PyInstaller not found. Install it with:")
-        print("   pip install pyinstaller")
+        print("[BUILD] PyInstaller not found. Install it with:")
+        print("   python -m pip install pyinstaller")
         sys.exit(1)
 
 if __name__ == "__main__":
     # Check if Vosk model exists
     vosk_path = "vosk-model-small-es-0.42"
     if not os.path.exists(vosk_path):
-        print(f"⚠️  [BUILD] WARNING: Vosk model not found at '{vosk_path}'")
+        print(f"[BUILD] WARNING: Vosk model not found at '{vosk_path}'")
         print("    The executable will work, but voice recognition won't function.")
         print("    Download from: https://alphacephei.com/vosk/models")
         response = input("\nContinue anyway? (y/n): ")
