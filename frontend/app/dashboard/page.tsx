@@ -116,38 +116,7 @@ export default function DashboardPage() {
                     <p className="text-zinc-400 font-medium tracking-wide">Analiza, aprende y asciende hacia el rango Inmortal.</p>
                 </motion.div>
 
-                {/* Access Key Section (New) */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.1 }}
-                    className="bg-gradient-to-r from-zinc-900/80 to-zinc-950/80 backdrop-blur-3xl border border-white/5 rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden"
-                >
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-red-600 to-transparent" />
 
-                    <div className="flex items-center gap-4">
-                        <div className="h-12 w-12 rounded-2xl bg-zinc-800/50 flex items-center justify-center text-red-500">
-                            <Key className="h-6 w-6" />
-                        </div>
-                        <div>
-                            <h4 className="text-xs font-black uppercase tracking-widest text-zinc-500">Tu Access Key Particular</h4>
-                            <p className="text-zinc-400 text-[10px] mt-1">Usa esta clave en el Oracle Neural Link (Bridge) para conectar tu cuenta.</p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 w-full md:w-auto">
-                        <div className="bg-black/60 border border-white/5 rounded-xl px-4 py-3 font-mono text-sm text-red-400 tracking-wider flex-1 md:w-64 overflow-hidden truncate">
-                            {user?.uid}
-                        </div>
-                        <Button
-                            onClick={copyToClipboard}
-                            className={`h-12 px-6 rounded-xl font-black uppercase tracking-widest transition-all ${copied ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}`}
-                        >
-                            {copied ? <Check className="h-5 w-5 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
-                            {copied ? "¡Copiado!" : "Copiar"}
-                        </Button>
-                    </div>
-                </motion.div>
 
                 <div className="grid md:grid-cols-2 gap-8">
 
@@ -177,6 +146,12 @@ export default function DashboardPage() {
 
                             {userData?.dota_id ? (
                                 <div className="space-y-6 pt-4">
+                                    <div className="bg-black/40 border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center space-y-2">
+                                        <span className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em]">Dota Friend ID</span>
+                                        <div className="text-3xl font-black tracking-[0.3em] text-white underline decoration-teal-500/50 underline-offset-8">
+                                            {userData.dota_id}
+                                        </div>
+                                    </div>
                                     <Button
                                         onClick={() => router.push(`/player/${userData.dota_id}`)}
                                         className="w-full bg-gradient-to-r from-teal-600 to-teal-800 hover:from-teal-500 hover:to-teal-700 text-white font-black uppercase tracking-widest py-8 rounded-2xl shadow-[0_0_30px_rgba(20,184,166,0.2)] group"
