@@ -11,6 +11,7 @@ import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import LiveCoachCard from "@/components/LiveCoachCard";
+import LiveTokenCard from "@/components/LiveTokenCard";
 
 export default function DashboardPage() {
     const { user, userData, loading } = useAuth();
@@ -259,7 +260,8 @@ export default function DashboardPage() {
                 </div>
 
                 {/* NEW SECTION: Oracle Live Coach */}
-                <div className="max-w-4xl mx-auto">
+                <div className="max-w-4xl mx-auto space-y-8">
+                    <LiveTokenCard />
                     <LiveCoachCard />
                 </div>
 

@@ -9,6 +9,7 @@ from services import tts_service
 from services.ai_coach import oracle
 from services.stratz_service import stratz
 from services.live_manager import live_manager
+from services.token_service import token_service
 import json
 import os
 
@@ -330,11 +331,55 @@ async def refresh_player(account_id: str):
     return result
 
 
+# --- LIVE COACHING TOKEN ENDPOINTS ---
+@app.post("/api/user/generate-live-token")
+async def generate_live_token(user_id: str):
+    """Generates a unique token for live coaching"""
+    try:
+        if not user_id or user_id == "guest":
+            raise HTTPException(status_code=400, detail="User must be authenticated")
+        
+        token = token_service.generate_live_token(user_id)
+        return {"token": token, "user_id": user_id}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        print(f"[TOKEN] Error generating token: {e}")
+        raise HTTPException(status_code=500, detail="Failed to generate token")
+
+@app.get("/api/user/get-live-token")
+async def get_live_token(user_id: str):
+    """Retrieves existing token for a user"""
+    try:
+        if not user_id or user_id == "guest":
+            raise HTTPException(status_code=400, detail="User must be authenticated")
+        
+        token = token_service.get_user_token(user_id)
+        if not token:
+            raise HTTPException(status_code=404, detail="No token found. Generate one first.")
+        
+        return {"token": token, "user_id": user_id}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[TOKEN] Error retrieving token: {e}")
+        raise HTTPException(status_code=500, detail="Failed to retrieve token")
+
+
 # --- LIVE COACH WEBSOCKET ---
 @app.websocket("/ws/live/{token}")
 async def websocket_endpoint(websocket: WebSocket, token: str):
+    # VALIDATE TOKEN BEFORE ACCEPTING
+    user_id = token_service.validate_token(token)
+    if not user_id:
+        await websocket.close(code=1008, reason="Invalid or expired token")
+        print(f"[WS] Rejected connection - invalid token: {token}")
+        return
+    
     await websocket.accept()
-    live_manager.register_session(token)
+    print(f"[WS] User {user_id} connected with token {token}")
+    live_manager.register_session(token, user_id=user_id)
+    
     try:
         while True:
             data = await websocket.receive_json()
@@ -345,9 +390,9 @@ async def websocket_endpoint(websocket: WebSocket, token: str):
                 await websocket.send_json(response)
                 
     except WebSocketDisconnect:
-        print(f"[WS] Client {token} disconnected")
+        print(f"[WS] User {user_id} (token {token}) disconnected")
     except Exception as e:
-        print(f"[WS] Error: {e}")
+        print(f"[WS] Error for user {user_id}: {e}")
         try:
             await websocket.close()
         except:

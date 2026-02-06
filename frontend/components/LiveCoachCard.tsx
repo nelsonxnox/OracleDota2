@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 
 export default function LiveCoachCard() {
     const handleDownload = () => {
-        // Direct download link to the backend served file
-        window.location.href = "http://localhost:8000/download/OracleNeuralLink.exe";
+        // Production backend URL
+        window.location.href = "https://oracledota2.onrender.com/download/OracleNeuralLink.exe";
     };
 
     return (
@@ -45,7 +45,7 @@ export default function LiveCoachCard() {
                             </p>
                         </div>
                     </div>
-                    
+
                     <p className="max-w-md text-sm leading-relaxed text-zinc-400">
                         Conecta el cerebro de Oracle directamente a tu partida. Recibe análisis de voz en tiempo real, alertas de economía y predicciones tácticas.
                     </p>
@@ -64,14 +64,14 @@ export default function LiveCoachCard() {
                 </div>
 
                 {/* Action Button */}
-                <Button 
+                <Button
                     onClick={handleDownload}
                     className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-black uppercase tracking-widest py-8 rounded-2xl shadow-[0_0_30px_rgba(249,115,22,0.2)] group transition-all"
                 >
                     <ArrowDownCircle className="mr-2 h-6 w-6 group-hover:translate-y-1 transition-transform" />
                     Descargar Neural Link
                 </Button>
-                
+
                 <p className="text-center text-[10px] uppercase tracking-widest text-zinc-600">
                     Solo para Windows 10/11 • No requiere instalación
                 </p>

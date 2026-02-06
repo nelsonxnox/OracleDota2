@@ -15,14 +15,15 @@ class LiveCoachManager:
         self.health_history: Dict[str, bool] = {} # token -> was_low_hp
 
         
-    def register_session(self, token: str):
+    def register_session(self, token: str, user_id: str = None):
         self.active_sessions[token] = {
             "start_time": time.time(),
             "last_gsi_update": 0,
             "hero": None,
-            "gold_warning_sent": False
+            "gold_warning_sent": False,
+            "user_id": user_id  # Track which user owns this session
         }
-        print(f"[LIVE] New session registered: {token}")
+        print(f"[LIVE] New session registered: {token} (user: {user_id})")
 
     async def process_gsi_event(self, token: str, data: dict) -> Optional[dict]:
         """

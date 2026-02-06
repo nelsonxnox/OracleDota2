@@ -20,13 +20,14 @@ import websockets
 from concurrent.futures import ThreadPoolExecutor
 
 # Configuration
-BACKEND_HOST = os.getenv("ORACLE_BACKEND_HOST", "localhost:8000")
-BACKEND_WS_URL = f"ws://{BACKEND_HOST}/ws/live"
+BACKEND_HOST = os.getenv("ORACLE_BACKEND_HOST", "oracledota2.onrender.com")
+BACKEND_WS_URL = f"wss://{BACKEND_HOST}/ws/live"  # Use wss:// for production
 GSI_PORT = 3000
 VOSK_MODEL_PATH = "vosk-model-small-es-0.42"
+CONFIG_FILE = "oracle_config.json"
 
 # Global State
-current_token = "asd"
+current_token = None  # Load from config file
 status_message = "Desconectado"
 last_advice = "Esperando partida..."
 loop = None
@@ -344,6 +345,22 @@ class App(tk.Tk):
         # Mic Button
         self.btn_mic = tk.Button(self, text="🎙️ PREGUNTAR AL COACH", command=self.toggle_mic, bg="#ff9900", fg="black", font=("Arial", 12, "bold"))
         self.btn_mic.pack(pady=10)
+        
+        # Load saved token
+        self.load_token()
+
+    def load_token(self):
+        """Load saved token from config file"""
+        try:
+            if os.path.exists(CONFIG_FILE):
+                with open(CONFIG_FILE, "r") as f:
+                    data = json.load(f)
+                    saved_token = data.get("token", "")
+                    if saved_token:
+                        self.entry_token.insert(0, saved_token)
+                        print(f"[CONFIG] Token loaded from {CONFIG_FILE}")
+        except Exception as e:
+            print(f"[CONFIG] Error loading token: {e}")
 
     def toggle_mic(self):
         # Disable button while listening
@@ -372,6 +389,14 @@ class App(tk.Tk):
         if not current_token:
             messagebox.showwarning("Alerta", "Ingresa tu Access Key")
             return
+        
+        # Save token to file
+        try:
+            with open(CONFIG_FILE, "w") as f:
+                json.dump({"token": current_token}, f)
+            print(f"[CONFIG] Token saved to {CONFIG_FILE}")
+        except Exception as e:
+            print(f"[CONFIG] Error saving token: {e}")
         
         # Start async connection task
         asyncio.create_task(bridge.connect())
