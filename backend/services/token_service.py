@@ -24,10 +24,12 @@ class TokenService:
         
         # Store in Firestore
         try:
+            from google.cloud import firestore
+            
             token_ref = db.collection("live_tokens").document(token)
             token_ref.set({
                 "user_id": user_id,
-                "created_at": datetime.utcnow(),
+                "created_at": firestore.SERVER_TIMESTAMP,
                 "active": True
             })
             

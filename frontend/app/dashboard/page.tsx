@@ -177,12 +177,6 @@ export default function DashboardPage() {
 
                             {userData?.dota_id ? (
                                 <div className="space-y-6 pt-4">
-                                    <div className="bg-black/40 border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center space-y-2">
-                                        <span className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em]">Dota Friend ID</span>
-                                        <div className="text-3xl font-black tracking-[0.3em] text-white underline decoration-teal-500/50 underline-offset-8">
-                                            {userData.dota_id}
-                                        </div>
-                                    </div>
                                     <Button
                                         onClick={() => router.push(`/player/${userData.dota_id}`)}
                                         className="w-full bg-gradient-to-r from-teal-600 to-teal-800 hover:from-teal-500 hover:to-teal-700 text-white font-black uppercase tracking-widest py-8 rounded-2xl shadow-[0_0_30px_rgba(20,184,166,0.2)] group"
