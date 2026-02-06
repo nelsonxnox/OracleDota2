@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException, Response, BackgroundTasks
+from fastapi import FastAPI, HTTPException, Response, BackgroundTasks, WebSocket, WebSocketDisconnect
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -7,6 +8,8 @@ from services import firebase_service
 from services import tts_service
 from services.ai_coach import oracle
 from services.stratz_service import stratz
+from services.live_manager import live_manager
+import json
 import os
 
 # Load .env from project root
@@ -17,11 +20,16 @@ app = FastAPI(title="OracleDota Backend", version="1.2.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In production, we can tighten this to Vercel URL
+    allow_origins=["*"], # Permite conexiones desde cualquier IP/Dominio para pruebas con amigos. Restringir en producción.
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve Executable
+dist_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dist')
+os.makedirs(dist_path, exist_ok=True) # Ensure it exists
+app.mount("/download", StaticFiles(directory=dist_path), name="download")
 
 # --- MODELS ---
 class ChatRequest(BaseModel):
@@ -128,6 +136,25 @@ async def get_match_details(match_id: str, background_tasks: BackgroundTasks):
 
         data = opendota_service.process_match_data(match_data)
         
+        # --- FALLBACK STRATZ: Si OpenDota no tiene telemetría (malla de oro/xp) ---
+        if data.get("metadata", {}).get("partial_data") or not data.get("metadata", {}).get("gold_advantage"):
+            try:
+                print(f"[FALLBACK] Fetching supplementary data from Stratz for match {match_id}...")
+                stratz_data = stratz.get_match_laning_data(match_id)
+                if stratz_data and "error" not in stratz_data:
+                    # Extraemos la probabilidad de victoria como ventaja porcentual
+                    win_prob = stratz_data.get("winProbability", [])
+                    if win_prob:
+                        # Mapeamos probabilidad a una escala similar a gold_adv (pero es % de victoria)
+                        # Esto ayuda a que la gráfica no esté vacía
+                        data["metadata"]["gold_advantage"] = [round((p.get("radiantWinProbability", 0.5) - 0.5) * 20000) for p in win_prob]
+                        print(f"[FALLBACK] Successfully added Win Probability as Gold Adv fallback.")
+                    
+                    # Guardamos resultados de líneas de Stratz
+                    data["metadata"]["stratz_lanes"] = stratz_data.get("lanes", [])
+            except Exception as se:
+                print(f"[FALLBACK] Stratz failed: {se}")
+
         # 3. Save to DB (Synchronous for stability now)
         try:
             # Prevent overwriting FULL data with PARTIAL data
@@ -301,6 +328,30 @@ async def refresh_player(account_id: str):
     if "error" in result:
         raise HTTPException(status_code=500, detail=result["error"])
     return result
+
+
+# --- LIVE COACH WEBSOCKET ---
+@app.websocket("/ws/live/{token}")
+async def websocket_endpoint(websocket: WebSocket, token: str):
+    await websocket.accept()
+    live_manager.register_session(token)
+    try:
+        while True:
+            data = await websocket.receive_json()
+            # Process GSI event
+            response = await live_manager.process_gsi_event(token, data)
+            
+            if response:
+                await websocket.send_json(response)
+                
+    except WebSocketDisconnect:
+        print(f"[WS] Client {token} disconnected")
+    except Exception as e:
+        print(f"[WS] Error: {e}")
+        try:
+            await websocket.close()
+        except:
+            pass
 
 if __name__ == "__main__":
     import uvicorn

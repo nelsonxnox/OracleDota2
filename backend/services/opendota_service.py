@@ -92,8 +92,12 @@ def get_match_data(match_id: str) -> Dict:
         
         # Validación de Parseo
         # Si no tiene 'version', es que no ha sido procesada profundamente (Replay parsed)
-        if not data.get("version"):
-            print(f"[FETCH] Match {match_id} not fully parsed. Requesting parse job...")
+        # También verificamos si faltan campos clave de telemetría
+        is_fully_parsed = data.get("version") is not None
+        has_telemetry = data.get("radiant_gold_adv") is not None
+        
+        if not is_fully_parsed or not has_telemetry:
+            print(f"[FETCH] Match {match_id} not fully parsed or missing telemetry. Requesting parse job...")
             # Solicitamos parseo para futuro, pero NO bloqueamos
             try:
                 requests.post(f"{OPENDOTA_API_URL}/request/{match_id}", timeout=5)
@@ -208,8 +212,8 @@ def process_match_data(match_data: Dict) -> Dict:
         # Refine Pos 1 vs 2 if both in same team
         # (This is basic but better than before)
         
-        # Get player name
-        player_name = p.get("personaname", "Anonymous")
+        # Get player name with better fallback for Pros
+        player_name = p.get("personaname") or p.get("name") or "Anonymous"
         
         # Hero name resolution
         hero_id = p.get("hero_id")

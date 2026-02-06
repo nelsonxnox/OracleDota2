@@ -1,0 +1,22 @@
+# Oracle Neural Link Bridge Dependencies
+# Estas son las dependencias necesarias para oracle_bridge.py
+
+# Async & WebSockets
+websockets
+
+# Text-to-Speech
+edge-tts
+playsound
+
+# Speech Recognition
+SpeechRecognition
+PyAudio
+sounddevice
+scipy
+numpy
+
+# GUI
+# tkinter viene incluido con Python
+
+# Windows Registry (viene con Python en Windows)
+# pywin32 (opcional, winreg viene incluido)

@@ -26,3 +26,4 @@ aiofiles
 # faiss-cpu (removed for memory)
 # sentence-transformers (removed for memory)
 numpy
+websockets

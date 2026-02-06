@@ -5,17 +5,19 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Swords, Search, User as UserIcon, Gamepad2, Sparkles, LogOut, History, TrendingUp } from "lucide-react";
+import { Swords, Search, User as UserIcon, Gamepad2, Sparkles, LogOut, History, TrendingUp, Copy, Check, Key } from "lucide-react";
 import { motion } from "framer-motion";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import LiveCoachCard from "@/components/LiveCoachCard";
 
 export default function DashboardPage() {
     const { user, userData, loading } = useAuth();
     const router = useRouter();
     const [searchId, setSearchId] = useState("");
     const [progress, setProgress] = useState(0);
+    const [copied, setCopied] = useState(false);
 
     useEffect(() => {
         if (loading) {
@@ -43,6 +45,14 @@ export default function DashboardPage() {
     const handleLogout = async () => {
         await signOut(auth);
         router.push("/");
+    };
+
+    const copyToClipboard = () => {
+        if (user?.uid) {
+            navigator.clipboard.writeText(user.uid);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        }
     };
 
     if (loading || progress < 100) return <LoadingScreen progress={Math.round(progress)} />;
@@ -103,6 +113,39 @@ export default function DashboardPage() {
                         Tu Panel de <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Guerra</span>
                     </h1>
                     <p className="text-zinc-400 font-medium tracking-wide">Analiza, aprende y asciende hacia el rango Inmortal.</p>
+                </motion.div>
+
+                {/* Access Key Section (New) */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.1 }}
+                    className="bg-gradient-to-r from-zinc-900/80 to-zinc-950/80 backdrop-blur-3xl border border-white/5 rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden"
+                >
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-red-600 to-transparent" />
+
+                    <div className="flex items-center gap-4">
+                        <div className="h-12 w-12 rounded-2xl bg-zinc-800/50 flex items-center justify-center text-red-500">
+                            <Key className="h-6 w-6" />
+                        </div>
+                        <div>
+                            <h4 className="text-xs font-black uppercase tracking-widest text-zinc-500">Tu Access Key Particular</h4>
+                            <p className="text-zinc-400 text-[10px] mt-1">Usa esta clave en el Oracle Neural Link (Bridge) para conectar tu cuenta.</p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 w-full md:w-auto">
+                        <div className="bg-black/60 border border-white/5 rounded-xl px-4 py-3 font-mono text-sm text-red-400 tracking-wider flex-1 md:w-64 overflow-hidden truncate">
+                            {user?.uid}
+                        </div>
+                        <Button
+                            onClick={copyToClipboard}
+                            className={`h-12 px-6 rounded-xl font-black uppercase tracking-widest transition-all ${copied ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}`}
+                        >
+                            {copied ? <Check className="h-5 w-5 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+                            {copied ? "¡Copiado!" : "Copiar"}
+                        </Button>
+                    </div>
                 </motion.div>
 
                 <div className="grid md:grid-cols-2 gap-8">
@@ -213,6 +256,11 @@ export default function DashboardPage() {
                         </div>
                     </motion.div>
 
+                </div>
+
+                {/* NEW SECTION: Oracle Live Coach */}
+                <div className="max-w-4xl mx-auto">
+                    <LiveCoachCard />
                 </div>
 
                 {/* Optional: Footer or Extra Stats */}

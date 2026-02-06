@@ -61,7 +61,7 @@ function LoginContent() {
             {/* Background Ambience */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute inset-0 bg-gradient-to-br from-black via-zinc-950 to-black z-0" />
-                <div className="absolute top-0 left-0 w-full h-full bg-[url('/bg-texture.png')] opacity-5 mix-blend-overlay" />
+                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-zinc-800/20 to-transparent opacity-30 mix-blend-overlay" />
                 <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-red-600/10 blur-[150px] rounded-full animate-pulse" />
                 <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-purple-600/10 blur-[150px] rounded-full animate-pulse delay-1000" />
             </div>

@@ -13,9 +13,11 @@ interface Player {
 interface LaneMapProps {
     players: Player[];
     currentTime?: number; // Minuto actual para replay
+    partialData?: boolean;
 }
 
 // Mapeo de hero_id a nombre de imagen (igual que HeroList.tsx)
+// ... (rest of the map is the same)
 const HERO_MAP: { [key: number]: string } = {
     1: "antimage", 2: "axe", 3: "bane", 4: "bloodseeker", 5: "crystal_maiden",
     6: "drow_ranger", 7: "earthshaker", 8: "juggernaut", 9: "mirana", 10: "morphling",
@@ -44,7 +46,7 @@ const HERO_MAP: { [key: number]: string } = {
     135: "dawnbreaker", 136: "marci", 137: "primal_beast", 138: "muerta"
 };
 
-export default function LaneMap({ players, currentTime = -1 }: LaneMapProps) {
+export default function LaneMap({ players, currentTime = -1, partialData }: LaneMapProps) {
 
     const getPosition = (p: Player, indexInLane: number) => {
         const isRadiant = p.team === "Radiant"; // Moved this definition to the top
@@ -249,6 +251,14 @@ export default function LaneMap({ players, currentTime = -1 }: LaneMapProps) {
             {/* Team Labels - Mejorados */}
             <div className="absolute bottom-2 left-2 z-0 text-[11px] font-black text-emerald-400/40 uppercase tracking-widest pointer-events-none drop-shadow-lg">Radiant</div>
             <div className="absolute top-2 right-2 z-0 text-[11px] font-black text-rose-400/40 uppercase tracking-widest pointer-events-none drop-shadow-lg">Dire</div>
+
+            {/* AVISO DE DATOS PARCIALES */}
+            {partialData && (
+                <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 z-50 bg-black/80 backdrop-blur-md border border-white/10 p-4 rounded-xl text-center shadow-2xl">
+                    <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-1">Telemetría no Disponible</p>
+                    <p className="text-[9px] text-zinc-500 italic">OpenDota aún no ha procesado la repetición de esta partida. Las posiciones exactas están ocultas.</p>
+                </div>
+            )}
 
             {/* Corner Glow Effects */}
             <div className="absolute bottom-0 left-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />

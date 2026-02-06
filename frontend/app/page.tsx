@@ -169,7 +169,7 @@ export default function Home() {
 
           {/* Locked Feature (Profile Analysis) - Takes up right side */}
           <div className="md:col-span-2 bg-zinc-900/40 backdrop-blur-sm border border-white/5 rounded-2xl p-6 relative overflow-hidden group cursor-pointer hover:bg-zinc-900/60 transition-all flex flex-col justify-center items-center text-center">
-            <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-5"></div>
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `linear-gradient(to right, #444 1px, transparent 1px), linear-gradient(to bottom, #444 1px, transparent 1px)`, backgroundSize: '20px 20px' }}></div>
 
             <div className="h-12 w-12 rounded-full bg-zinc-800 flex items-center justify-center mb-4 group-hover:bg-teal-900/30 group-hover:text-teal-400 transition-all">
               <Lock className="h-5 w-5 text-zinc-500 group-hover:text-teal-400" />

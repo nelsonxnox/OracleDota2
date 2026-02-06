@@ -21,6 +21,7 @@ interface Metadata {
     duration_minutes: number;
     radiant_score: number;
     dire_score: number;
+    partial_data?: boolean;
 }
 
 interface MatchStatsProps {
@@ -265,7 +266,9 @@ export default function MatchStats({ players, metadata }: MatchStatsProps) {
                     <div className="flex-1">
                         <h4 className="text-sm font-bold text-white">{mostHeroDamage.name}</h4>
                         <span className="text-[10px] text-red-400 font-black">
-                            {(mostHeroDamage.hero_damage / 1000).toFixed(1)}k de daño
+                            {(mostHeroDamage.hero_damage === 0 && metadata.partial_data)
+                                ? "Datos NO disponibles"
+                                : `${(mostHeroDamage.hero_damage / 1000).toFixed(1)}k de daño`}
                         </span>
                     </div>
                 </div>

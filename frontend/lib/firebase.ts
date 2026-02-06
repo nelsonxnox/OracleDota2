@@ -17,6 +17,10 @@ const isConfigValid = !!firebaseConfig.apiKey &&
     firebaseConfig.apiKey !== "undefined" &&
     firebaseConfig.projectId !== "undefined";
 
+if (!isConfigValid && typeof window !== 'undefined') {
+    console.warn("Firebase configuration is missing or invalid. Using placeholders.");
+}
+
 const app = getApps().length > 0
     ? getApp()
     : (isConfigValid

@@ -229,7 +229,7 @@ export default function DashboardPage() {
 
                         <div className="p-2 bg-zinc-950/50">
                             <div className="aspect-square">
-                                <LaneMap players={players} currentTime={currentMin} />
+                                <LaneMap players={players} currentTime={currentMin} partialData={metadata.partial_data} />
                             </div>
                         </div>
 
