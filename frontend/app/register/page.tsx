@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { auth, db } from "@/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import TermsModal from "@/components/TermsModal";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -19,10 +20,18 @@ export default function RegisterPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [dotaId, setDotaId] = useState("");
     const [error, setError] = useState("");
+    const [showTerms, setShowTerms] = useState(false);
+    const [termsAccepted, setTermsAccepted] = useState(false);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
+
+        // Check if terms are accepted
+        if (!termsAccepted) {
+            setShowTerms(true);
+            return;
+        }
 
         if (password !== confirmPassword) {
             setError("Las contraseñas no coinciden");
@@ -40,7 +49,9 @@ export default function RegisterPage() {
                 email: email,
                 dota_id: dotaId,
                 createdAt: new Date().toISOString(),
-                uid: user.uid
+                uid: user.uid,
+                termsAccepted: true,
+                termsAcceptedAt: new Date().toISOString()
             });
 
             // 3. Redirigir al dashboard o login
@@ -57,6 +68,16 @@ export default function RegisterPage() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleAcceptTerms = () => {
+        setTermsAccepted(true);
+        setShowTerms(false);
+    };
+
+    const handleDeclineTerms = () => {
+        setShowTerms(false);
+        setError("Debes aceptar los términos de uso para registrarte.");
     };
 
     return (
@@ -154,13 +175,35 @@ export default function RegisterPage() {
                             </div>
                         </div>
 
+                        {/* Terms and Conditions Checkbox */}
+                        <div className="flex items-start gap-3 pt-2">
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                checked={termsAccepted}
+                                onChange={(e) => setTermsAccepted(e.target.checked)}
+                                className="mt-1 h-4 w-4 rounded border-zinc-700 bg-zinc-950/50 text-emerald-600 focus:ring-emerald-500 focus:ring-offset-0"
+                            />
+                            <label htmlFor="terms" className="text-xs text-zinc-400">
+                                Acepto los{" "}
+                                <button
+                                    type="button"
+                                    onClick={() => setShowTerms(true)}
+                                    className="text-emerald-400 hover:text-emerald-300 underline font-semibold"
+                                >
+                                    Términos de Uso y Condiciones
+                                </button>
+                                {" "}de Oracle Dota 2
+                            </label>
+                        </div>
+
                         <div className="pt-4">
                             <Button
                                 type="submit"
-                                disabled={loading}
-                                className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white font-bold tracking-widest uppercase py-6 shadow-[0_0_20px_rgba(20,184,166,0.2)]"
+                                disabled={loading || !termsAccepted}
+                                className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white font-bold tracking-widest uppercase py-6 shadow-[0_0_20px_rgba(20,184,166,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {loading ? "Creando cuenta..." : "Registrarse"}
+                                {loading ? "Creando cuenta..." : termsAccepted ? "Registrarse" : "Acepta los términos primero"}
                             </Button>
                         </div>
                     </form>
@@ -180,6 +223,13 @@ export default function RegisterPage() {
                     </p>
                 </div>
             </div>
+
+            {/* Terms Modal */}
+            <TermsModal
+                isOpen={showTerms}
+                onAccept={handleAcceptTerms}
+                onDecline={handleDeclineTerms}
+            />
         </main>
     );
 }

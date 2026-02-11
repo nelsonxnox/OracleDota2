@@ -10,8 +10,10 @@ from services.ai_coach import oracle
 from services.stratz_service import stratz
 from services.live_manager import live_manager
 from services.token_service import token_service
+from services import question_limit_service
 import json
 import os
+import requests
 
 # Load .env from project root
 dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '.env')
@@ -58,6 +60,15 @@ async def text_to_speech(request: TTSRequest):
     except Exception as e:
         print(f"[TTS] Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/version")
+def get_latest_version():
+    """Returns the latest version info for Oracle Neural Link auto-update"""
+    return {
+        "version": "1.3.0",
+        "download_url": f"{os.getenv('BACKEND_URL', 'http://localhost:8000')}/download/OracleNeuralLink.exe",
+        "changelog": "- Sistema de tokens con límite de partidas\n- Auto-actualización implementada\n- Mejoras en AI coach"
+    }
 
 
 def quick_answer_router(data: dict, query: str) -> str | None:
@@ -185,6 +196,28 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
     query = request.query.strip()
     user_id = request.user_id
     
+    # NEW: Verificar límite de preguntas
+    if user_id and user_id != "guest":
+        db = firebase_service.get_db()
+        if db:
+            limit_check = question_limit_service.check_question_limit(user_id, db)
+            
+            if not limit_check.get("can_ask", False):
+                plan_type = limit_check.get("plan_type", "free")
+                limit = limit_check.get("limit", 3)
+                
+                raise HTTPException(
+                    status_code=403,
+                    detail={
+                        "error": "question_limit_reached",
+                        "plan_type": plan_type,
+                        "limit": limit,
+                        "questions_used": limit_check.get("questions_used", 0),
+                        "message": f"Has alcanzado el límite de {limit} preguntas este mes. Actualiza tu plan para preguntas ilimitadas.",
+                        "upgrade_url": "/plans"
+                    }
+                )
+    
     # ASYNC: Save User Query to History (Legacy support, no blocking)
     background_tasks.add_task(firebase_service.save_chat_message, user_id, match_id, "user", query)
     
@@ -243,6 +276,12 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
     
     # ASYNC: Save Assistant Response (Legacy support)
     background_tasks.add_task(firebase_service.save_chat_message, user_id, match_id, "assistant", response)
+    
+    # NEW: Incrementar contador de preguntas después de respuesta exitosa
+    if user_id and user_id != "guest":
+        db = firebase_service.get_db()
+        if db:
+            background_tasks.add_task(question_limit_service.increment_question_count, user_id, db)
     
     return ChatResponse(response=response)
 
@@ -397,6 +436,71 @@ async def text_to_speech(request: TTSRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 # --- LIVE COACH WEBSOCKET ---
+# --- QUESTION LIMIT ENDPOINTS ---
+@app.get("/api/user/{user_id}/question-limit")
+async def get_question_limit_status(user_id: str):
+    """Retorna el estado del límite de preguntas del usuario"""
+    try:
+        db = firebase_service.get_db()
+        if not db:
+            raise HTTPException(status_code=500, detail="Database not available")
+        
+        limit_check = question_limit_service.check_question_limit(user_id, db)
+        
+        if "error" in limit_check:
+            raise HTTPException(status_code=404, detail=limit_check["error"])
+        
+        return limit_check
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# --- PLAYER STATISTICS ENDPOINTS ---
+@app.get("/api/player/{account_id}/stats")
+async def get_player_stats(account_id: str):
+    """
+    Obtiene estadísticas reales del jugador desde OpenDota:
+    - Winrate
+    - Versatilidad (héroes únicos)
+    - Total de partidas
+    """
+    try:
+        # 1. Obtener info básica
+        player_info = opendota_service.get_player_info(account_id)
+        
+        # 2. Obtener estadísticas de winrate
+        wl_url = f"https://api.opendota.com/api/players/{account_id}/wl"
+        wl_response = requests.get(wl_url, timeout=10)
+        wl_data = wl_response.json()
+        
+        wins = wl_data.get("win", 0)
+        losses = wl_data.get("lose", 0)
+        total_games = wins + losses
+        winrate = (wins / total_games * 100) if total_games > 0 else 0
+        
+        # 3. Obtener héroes jugados para versatilidad
+        heroes_url = f"https://api.opendota.com/api/players/{account_id}/heroes"
+        heroes_response = requests.get(heroes_url, timeout=10)
+        heroes_data = heroes_response.json()
+        
+        unique_heroes = len(heroes_data) if isinstance(heroes_data, list) else 0
+        
+        return {
+            "account_id": account_id,
+            "winrate": round(winrate, 1),
+            "total_games": total_games,
+            "wins": wins,
+            "losses": losses,
+            "versatility": unique_heroes,
+            "rank_tier": player_info.get("rank_tier"),
+            "leaderboard_rank": player_info.get("leaderboard_rank")
+        }
+    except Exception as e:
+        print(f"[ERROR] Failed to fetch player stats: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.websocket("/ws/live/{token}")
 async def websocket_live_coaching(websocket: WebSocket, token: str):
     """WebSocket endpoint for live coaching during Dota 2 matches"""

@@ -5,13 +5,15 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Swords, Search, User as UserIcon, Gamepad2, Sparkles, LogOut, History, TrendingUp, Copy, Check, Key } from "lucide-react";
+import { Swords, Search, User as UserIcon, Gamepad2, Sparkles, LogOut, History, TrendingUp, Copy, Check, Key, AlertCircle, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import LiveCoachCard from "@/components/LiveCoachCard";
 import LiveTokenCard from "@/components/LiveTokenCard";
+import PlansPanel from "@/components/PlansPanel";
+import PlayerStatsCard from "@/components/PlayerStatsCard";
 
 export default function DashboardPage() {
     const { user, userData, loading } = useAuth();
@@ -67,11 +69,12 @@ export default function DashboardPage() {
                     style={{ backgroundImage: "url('/dashboard_bg.png')" }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-transparent to-black/90" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(220,38,38,0.1)_0%,_transparent_100%)]" />
             </div>
 
             {/* Navigation Bar */}
-            <nav className="relative z-50 flex items-center justify-between px-6 md:px-12 py-6 border-b border-white/5 backdrop-blur-md bg-black/20">
+            <nav className="relative z-50 flex items-center justify-between px-6 md:px-12 py-6 border-b border-white/5 backdrop-blur-md bg-black/40 sticky top-0">
                 <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push("/")}>
                     <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-red-600 to-red-900 flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.3)]">
                         <Sparkles className="h-5 w-5 text-white" />
@@ -82,20 +85,20 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-3 bg-zinc-900/80 p-1.5 pl-4 rounded-full border border-white/10 backdrop-blur-xl">
+                    <div className="flex items-center gap-3 bg-zinc-900/80 p-1.5 pl-4 rounded-full border border-white/10 backdrop-blur-xl hover:bg-zinc-800 transition-colors cursor-pointer" onClick={() => router.push("/profile")}>
                         <div className="flex flex-col items-end mr-1 hidden sm:flex">
-                            <span className="text-[10px] font-black text-zinc-500 uppercase leading-none mb-1">Iniciado como</span>
+                            <span className="text-[10px] font-black text-zinc-500 uppercase leading-none mb-1">Comandante</span>
                             <span className="text-xs font-bold text-white leading-none">{user?.email?.split('@')[0]}</span>
                         </div>
-                        <div className="h-8 w-8 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-900 flex items-center justify-center border border-white/10">
-                            <UserIcon className="h-4 w-4 text-zinc-400" />
+                        <div className="h-8 w-8 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-900 flex items-center justify-center border border-white/10 ring-2 ring-transparent group-hover:ring-red-500/50 transition-all">
+                            <UserIcon className="h-4 w-4 text-zinc-400 group-hover:text-white" />
                         </div>
                     </div>
                     <Button
                         onClick={handleLogout}
                         size="icon"
                         variant="ghost"
-                        className="h-10 w-10 rounded-full text-zinc-500 hover:text-red-500 hover:bg-red-500/10"
+                        className="h-10 w-10 rounded-full text-zinc-500 hover:text-red-500 hover:bg-red-500/10 transition-colors"
                     >
                         <LogOut className="h-5 w-5" />
                     </Button>
@@ -108,15 +111,45 @@ export default function DashboardPage() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="space-y-2 text-center md:text-left"
+                    className="space-y-4 text-center md:text-left flex flex-col md:flex-row justify-between items-end gap-6"
                 >
-                    <h1 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter">
-                        Tu Panel de <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Guerra</span>
-                    </h1>
-                    <p className="text-zinc-400 font-medium tracking-wide">Analiza, aprende y asciende hacia el rango Inmortal.</p>
+                    <div className="space-y-2">
+                        <h1 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter drop-shadow-2xl">
+                            Tu Panel de <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 animate-pulse">Guerra</span>
+                        </h1>
+                        <p className="text-zinc-400 font-medium tracking-wide max-w-xl">Analiza tus batallas, descubre tus errores y asciende hacia la inmortalidad con el poder del Oráculo.</p>
+                    </div>
                 </motion.div>
 
-
+                {/* ORACLE PROTOCOL BANNER (NEW) */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.1 }}
+                    className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-orange-600/10 via-red-600/10 to-transparent border border-orange-500/30 p-1"
+                >
+                    <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
+                    <div className="relative bg-black/40 backdrop-blur-xl rounded-[1.8rem] p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
+                        <div className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-[0_0_40px_rgba(234,88,12,0.4)] animate-pulse">
+                            <AlertCircle className="h-8 w-8 md:h-10 md:w-10 text-white" />
+                        </div>
+                        <div className="flex-1 text-center md:text-left space-y-2">
+                            <h3 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">
+                                ⚡ Oracle Protocol: Activación Requerida
+                            </h3>
+                            <p className="text-zinc-300 font-medium text-sm md:text-base max-w-3xl">
+                                Para que el Oráculo pueda analizar tu historial completo, debes activar la opción <span className="text-white font-bold bg-white/10 px-2 py-0.5 rounded border border-white/10">"Exponer datos de partidas públicas"</span> en la configuración de Dota 2. Sin esto, tu destino permanecerá oculto.
+                            </p>
+                        </div>
+                        <Button
+                            variant="outline"
+                            className="border-orange-500/50 text-orange-400 hover:bg-orange-500/10 font-bold uppercase tracking-wider"
+                            onClick={() => window.open('https://www.dota2.com', '_blank')}
+                        >
+                            Ver Guía
+                        </Button>
+                    </div>
+                </motion.div>
 
                 <div className="grid md:grid-cols-2 gap-8">
 
@@ -146,15 +179,25 @@ export default function DashboardPage() {
 
                             {userData?.dota_id ? (
                                 <div className="space-y-6 pt-4">
-                                    <div className="bg-black/40 border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center space-y-2">
-                                        <span className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em]">Dota Friend ID</span>
-                                        <div className="text-3xl font-black tracking-[0.3em] text-white underline decoration-teal-500/50 underline-offset-8">
-                                            {userData.dota_id}
+                                    <div className="bg-black/40 border border-white/5 rounded-2xl p-6 relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 p-2 opacity-10">
+                                            <Sparkles className="h-24 w-24 text-teal-500" />
                                         </div>
+
+                                        <div className="flex flex-col items-center justify-center space-y-2 relative z-10">
+                                            <span className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em]">Dota Friend ID</span>
+                                            <div className="text-4xl font-black tracking-[0.2em] text-white tabular-nums">
+                                                {userData.dota_id}
+                                            </div>
+                                        </div>
+
+                                        {/* NEW: REAL STATS FROM OPENDOTA */}
+                                        <PlayerStatsCard accountId={userData.dota_id} />
                                     </div>
+
                                     <Button
                                         onClick={() => router.push(`/player/${userData.dota_id}`)}
-                                        className="w-full bg-gradient-to-r from-teal-600 to-teal-800 hover:from-teal-500 hover:to-teal-700 text-white font-black uppercase tracking-widest py-8 rounded-2xl shadow-[0_0_30px_rgba(20,184,166,0.2)] group"
+                                        className="w-full bg-gradient-to-r from-teal-600 to-teal-800 hover:from-teal-500 hover:to-teal-700 text-white font-black uppercase tracking-widest py-8 rounded-2xl shadow-[0_0_30px_rgba(20,184,166,0.2)] group transition-all hover:scale-[1.02]"
                                     >
                                         Explorar Mi Historial <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                                     </Button>
@@ -233,6 +276,11 @@ export default function DashboardPage() {
                     <LiveTokenCard />
                     <LiveCoachCard />
                 </div>
+
+                {/* PLANS PANEL SECTION */}
+                <section className="pt-12 border-t border-white/5">
+                    <PlansPanel />
+                </section>
 
                 {/* Optional: Footer or Extra Stats */}
                 <div className="pt-12 flex flex-col items-center justify-center opacity-30">

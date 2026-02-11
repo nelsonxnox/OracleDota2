@@ -19,10 +19,14 @@ import keyboard
 from concurrent.futures import ThreadPoolExecutor
 
 # Configuration
+CURRENT_VERSION = "1.3.0"  # Update this when releasing new versions
 LOCAL_MODE = True # Set to False to connect to Render (Production)
 BACKEND_HOST = "localhost:8000" if LOCAL_MODE else os.getenv("ORACLE_BACKEND_HOST", "oracledota2.onrender.com")
+BACKEND_HTTP_PROTOCOL = "http" if LOCAL_MODE else "https"
 BACKEND_WS_PROTOCOL = "ws" if LOCAL_MODE else "wss"
+BACKEND_API_URL = f"{BACKEND_HTTP_PROTOCOL}://{BACKEND_HOST}"
 BACKEND_WS_URL = f"{BACKEND_WS_PROTOCOL}://{BACKEND_HOST}/ws/live"
+UPDATE_CHECK_URL = f"{BACKEND_API_URL}/api/version"
 GSI_PORT = 3000
 VOSK_MODEL_PATH = "vosk-model-small-es-0.42"
 CONFIG_FILE = "oracle_config.json"
@@ -104,6 +108,74 @@ def play_audio_thread(text: str):
 
 def play_audio(text: str):
     threading.Thread(target=play_audio_thread, args=(text,), daemon=True).start()
+
+# --- AUTO-UPDATE FUNCTIONS ---
+def check_for_updates():
+    """Verifica si hay una nueva versión disponible"""
+    try:
+        import requests
+        response = requests.get(UPDATE_CHECK_URL, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            latest_version = data.get("version", "0.0.0")
+            
+            # Compare versions (simple string comparison works for semantic versioning)
+            if latest_version > CURRENT_VERSION:
+                return {
+                    "update_available": True,
+                    "version": latest_version,
+                    "download_url": data.get("download_url"),
+                    "changelog": data.get("changelog", "")
+                }
+        return {"update_available": False}
+    except Exception as e:
+        print(f"[UPDATE] Error checking for updates: {e}")
+        return {"update_available": False, "error": str(e)}
+
+def download_and_install_update(download_url):
+    """Descarga e instala la actualización"""
+    try:
+        import requests
+        import subprocess
+        
+        # 1. Descargar nuevo ejecutable
+        print(f"[UPDATE] Downloading from {download_url}")
+        response = requests.get(download_url, stream=True)
+        temp_file = "OracleNeuralLink_new.exe"
+        
+        total_size = int(response.headers.get('content-length', 0))
+        downloaded = 0
+        
+        with open(temp_file, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+                    downloaded += len(chunk)
+                    progress = (downloaded / total_size) * 100 if total_size > 0 else 0
+                    print(f"[UPDATE] Progress: {progress:.1f}%")
+        
+        print(f"[UPDATE] Download complete: {temp_file}")
+        
+        # 2. Crear script de actualización
+        update_script = '''@echo off
+timeout /t 2 /nobreak > nul
+del "OracleNeuralLink.exe"
+ren "OracleNeuralLink_new.exe" "OracleNeuralLink.exe"
+start "" "OracleNeuralLink.exe"
+del "%~f0"
+'''
+        with open("update.bat", "w") as f:
+            f.write(update_script)
+        
+        print("[UPDATE] Executing update script...")
+        
+        # 3. Ejecutar script y cerrar aplicación
+        subprocess.Popen(["update.bat"], shell=True)
+        sys.exit(0)
+        
+    except Exception as e:
+        messagebox.showerror("Error de Actualización", f"Error al actualizar: {e}")
+        print(f"[UPDATE] Error: {e}")
 
 # --- BRIDGE LOGIC ---
 class OracleBridge:
@@ -354,6 +426,17 @@ class App(tk.Tk):
                                   bg="#444", fg="#ffaaaa", font=("Arial", 9), activebackground="#555", relief="flat")
         btn_uninstall.pack(pady=5, fill="x", padx=20)
         
+        # Update Button
+        tk.Label(left_panel, text="ACTUALIZACIÓN", font=("Arial", 10, "bold"), bg="#1e1e1e", fg="#aaaaaa").pack(pady=(20, 10))
+        
+        btn_update = tk.Button(left_panel, text="🔄 Buscar Actualizaciones", command=self.handle_update_click, 
+                              bg="#4CAF50", fg="white", font=("Arial", 9, "bold"), activebackground="#66BB6A", relief="flat")
+        btn_update.pack(pady=5, fill="x", padx=20)
+        
+        # Version Label
+        version_label = tk.Label(left_panel, text=f"Versión: {CURRENT_VERSION}", bg="#1e1e1e", fg="#666", font=("Arial", 8))
+        version_label.pack(pady=5)
+        
         # Status Label
         self.lbl_status = tk.Label(left_panel, text="Sistema en espera", bg="#1e1e1e", fg="gray", font=("Consolas", 10))
         self.lbl_status.place(relx=0.5, rely=0.9, anchor="center")
@@ -434,6 +517,28 @@ class App(tk.Tk):
                         print(f"[CONFIG] Token loaded from {CONFIG_FILE}")
         except Exception as e:
             print(f"[CONFIG] Error loading token: {e}")
+    
+    def handle_update_click(self):
+        """Maneja el clic en el botón de actualización"""
+        print("[UPDATE] Checking for updates...")
+        update_info = check_for_updates()
+        
+        if update_info.get("error"):
+            messagebox.showerror("Error", f"No se pudo verificar actualizaciones:\n{update_info['error']}")
+            return
+        
+        if update_info.get("update_available"):
+            message = f"🎉 Nueva versión disponible: {update_info['version']}\n\n"
+            message += f"Versión actual: {CURRENT_VERSION}\n\n"
+            message += f"Cambios:\n{update_info['changelog']}\n\n"
+            message += "¿Deseas actualizar ahora? La aplicación se reiniciará."
+            
+            if messagebox.askyesno("Actualización Disponible", message):
+                self.lbl_status.config(text="Descargando actualización...", fg="yellow")
+                self.update()  # Force UI update
+                download_and_install_update(update_info['download_url'])
+        else:
+            messagebox.showinfo("Sin Actualizaciones", f"Ya tienes la última versión instalada.\n\nVersión actual: {CURRENT_VERSION}")
 
     def start_connection(self):
         global current_token

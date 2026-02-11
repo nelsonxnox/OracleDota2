@@ -1,95 +1,79 @@
-"""
-Build script for Oracle Neural Link desktop application.
+# Build Script for Oracle Neural Link
+# Generates the executable file
+# -*- coding: utf-8 -*-
 
-Requirements:
-- PyInstaller: pip install pyinstaller
-- All dependencies from oracle_bridge.py
-
-Usage:
-    python build_exe.py
-    
-Output:
-    dist/OracleNeuralLink.exe
-"""
-
-import subprocess
-import sys
 import os
+import subprocess
 import shutil
+import sys
 
-def build_exe():
-    print("[BUILD] Starting Oracle Neural Link compilation...")
-    
-    # Ensure dist folder exists and is clean
-    dist_path = os.path.join(os.path.dirname(__file__), "dist")
-    if os.path.exists(dist_path):
-        print(f"[BUILD] Cleaning {dist_path}")
-        shutil.rmtree(dist_path)
-    
-    os.makedirs(dist_path, exist_ok=True)
-    
-    # PyInstaller command - Optimized for size + Binaries
-    cmd = [
-        sys.executable,
-        "-m", "PyInstaller",
-        "--onefile",
-        "--windowed",
-        "--name", "OracleNeuralLink",
-        "--icon", "NONE",
-        "--add-data", "vosk-model-small-es-0.42;vosk-model-small-es-0.42",
-        
-        # Collect binaries (DLLs) - CRITICAL for vosk/sounddevice
-        "--collect-binaries", "vosk",
-        "--collect-binaries", "sounddevice",
-        
-        # Specific hidden imports
-        "--hidden-import", "pyttsx3.drivers",
-        "--hidden-import", "pyttsx3.drivers.sapi5",
-        "--hidden-import", "win32com.client",
-        "--hidden-import", "pythoncom",
-        "--hidden-import", "sounddevice",
-        "--hidden-import", "vosk",
-        "--hidden-import", "websockets",
-        "--hidden-import", "tkinter",
-        "--hidden-import", "queue",
-        "--hidden-import", "winreg",
-        
-        # Exclude unnecessary heavy modules
-        "--exclude-module", "matplotlib",
-        "--exclude-module", "numpy",
-        "--exclude-module", "pandas",
-        
-        "--noupx",
-        "oracle_bridge.py"
-    ]
-    
-    print(f"[BUILD] Running PyInstaller...")
-    
-    try:
-        result = subprocess.run(cmd, check=True, capture_output=True, text=True, encoding='utf-8', errors='replace')
-        print(result.stdout)
-        print("\n[BUILD] Compilation successful!")
-        print(f"[BUILD] Executable created at: dist/OracleNeuralLink.exe")
-        print("\n[BUILD] Upload this file to your backend's 'dist/' folder for download.")
-        
-    except subprocess.CalledProcessError as e:
-        print(f"[BUILD] Error during compilation:")
-        print(e.stderr)
-        sys.exit(1)
-    except FileNotFoundError:
-        print("[BUILD] PyInstaller not found. Install it with:")
-        print("   python -m pip install pyinstaller")
-        sys.exit(1)
+# Force UTF-8 encoding for Windows console
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding='utf-8')
 
-if __name__ == "__main__":
-    # Check if Vosk model exists
-    vosk_path = "vosk-model-small-es-0.42"
-    if not os.path.exists(vosk_path):
-        print(f"[BUILD] WARNING: Vosk model not found at '{vosk_path}'")
-        print("    The executable will work, but voice recognition won't function.")
-        print("    Download from: https://alphacephei.com/vosk/models")
-        response = input("\nContinue anyway? (y/n): ")
-        if response.lower() != 'y':
-            sys.exit(0)
-    
-    build_exe()
+print("="*60)
+print("ORACLE NEURAL LINK - BUILD SCRIPT")
+print("="*60)
+
+# 1. Clean previous builds
+print("\n[1/4] Cleaning previous builds...")
+if os.path.exists("build"):
+    shutil.rmtree("build")
+    print("  [OK] Removed build/ directory")
+
+if os.path.exists("dist"):
+    shutil.rmtree("dist")
+    print("  [OK] Removed dist/ directory")
+
+if os.path.exists("OracleNeuralLink.spec"):
+    os.remove("OracleNeuralLink.spec")
+    print("  [OK] Removed OracleNeuralLink.spec")
+
+# 2. Build executable
+print("\n[2/4] Building executable with PyInstaller...")
+cmd = [
+    "python", "-m", "PyInstaller",
+    "--onefile",
+    "--windowed",
+    "--name", "OracleNeuralLink",
+    "oracle_bridge.py"
+]
+
+result = subprocess.run(cmd, capture_output=True, text=True)
+
+if result.returncode != 0:
+    print("  [ERROR] Build failed!")
+    print(result.stderr)
+    exit(1)
+else:
+    print("  [OK] Build successful!")
+
+# 3. Copy to backend/dist for download
+print("\n[3/4] Copying to backend/dist...")
+backend_dist = os.path.join("..", "backend", "dist")
+os.makedirs(backend_dist, exist_ok=True)
+
+exe_source = os.path.join("dist", "OracleNeuralLink.exe")
+exe_dest = os.path.join(backend_dist, "OracleNeuralLink.exe")
+
+if os.path.exists(exe_source):
+    shutil.copy2(exe_source, exe_dest)
+    print(f"  [OK] Copied to {exe_dest}")
+else:
+    print(f"  [ERROR] Executable not found at {exe_source}")
+    exit(1)
+
+# 4. Display file size
+file_size = os.path.getsize(exe_dest) / (1024 * 1024)  # MB
+print(f"\n[4/4] Build complete!")
+print(f"  File: {exe_dest}")
+print(f"  Size: {file_size:.2f} MB")
+
+print("\n" + "="*60)
+print("SUCCESS: ORACLE NEURAL LINK BUILD COMPLETE")
+print("="*60)
+print("\nNext steps:")
+print("1. Test the executable: backend/dist/OracleNeuralLink.exe")
+print("2. Update CURRENT_VERSION in oracle_bridge.py if needed")
+print("3. Update version in backend/main.py /api/version endpoint")
+print("4. Commit and push to GitHub for deployment")

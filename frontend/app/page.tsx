@@ -12,6 +12,7 @@ import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import { User as UserIcon } from "lucide-react";
+import PlansPanel from "@/components/PlansPanel";
 
 export default function Home() {
   const [searchId, setSearchId] = useState("");
@@ -217,6 +218,11 @@ export default function Home() {
           ))}
         </motion.div>
       </div>
+
+      {/* PLANS PANEL SECTION */}
+      <section className="w-full bg-black/50 py-16 border-t border-white/5 backdrop-blur-sm z-20">
+        <PlansPanel />
+      </section>
 
       {/* Modern Footer with Signature */}
       <footer className="relative z-50 py-8 border-t border-white/5 bg-black/80 backdrop-blur-xl">
