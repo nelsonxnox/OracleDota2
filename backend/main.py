@@ -348,56 +348,102 @@ async def generate_live_token(user_id: str):
         raise HTTPException(status_code=500, detail="Failed to generate token")
 
 @app.get("/api/user/get-live-token")
-async def get_live_token(user_id: str):
-    """Retrieves existing token for a user"""
+async def get_user_token(user_id: str):
+    """Retrieves the current live token for a user"""
     try:
         if not user_id or user_id == "guest":
             raise HTTPException(status_code=400, detail="User must be authenticated")
         
         token = token_service.get_user_token(user_id)
         if not token:
-            raise HTTPException(status_code=404, detail="No token found. Generate one first.")
+            return {"token": None, "message": "No active token found"}
         
         return {"token": token, "user_id": user_id}
-    except HTTPException:
-        raise
     except Exception as e:
         print(f"[TOKEN] Error retrieving token: {e}")
         raise HTTPException(status_code=500, detail="Failed to retrieve token")
 
+@app.get("/api/token/status/{token}")
+async def get_token_status(token: str):
+    """Returns the current status of a token including matches remaining"""
+    try:
+        status = token_service.get_token_status(token)
+        
+        if "error" in status:
+            raise HTTPException(status_code=404, detail=status["error"])
+        
+        return status
+    except Exception as e:
+        print(f"[TOKEN] Error getting token status: {e}")
+        raise HTTPException(status_code=500, detail="Failed to get token status")
+
+# --- TTS ENDPOINT ---
+@app.post("/tts")
+async def text_to_speech(request: TTSRequest):
+    """Generates audio from text using Edge TTS"""
+    try:
+        audio_path = await tts_service.generate_tts(request.text)
+        
+        if not os.path.exists(audio_path):
+            raise HTTPException(status_code=500, detail="Audio generation failed")
+        
+        return Response(
+            content=open(audio_path, "rb").read(),
+            media_type="audio/mpeg",
+            headers={"Content-Disposition": f"attachment; filename=oracle_voice.mp3"}
+        )
+    except Exception as e:
+        print(f"[TTS] Error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 # --- LIVE COACH WEBSOCKET ---
 @app.websocket("/ws/live/{token}")
-async def websocket_endpoint(websocket: WebSocket, token: str):
-    # VALIDATE TOKEN BEFORE ACCEPTING
+async def websocket_live_coaching(websocket: WebSocket, token: str):
+    """WebSocket endpoint for live coaching during Dota 2 matches"""
     user_id = token_service.validate_token(token)
+    
     if not user_id:
         await websocket.close(code=1008, reason="Invalid or expired token")
-        print(f"[WS] Rejected connection - invalid token: {token}")
         return
     
     await websocket.accept()
     print(f"[WS] User {user_id} connected with token {token}")
-    live_manager.register_session(token, user_id=user_id)
+    
+    # Initialize session for this user
+    session = live_manager.get_or_create_session(user_id)
+    session["token"] = token  # Store token in session for consumption tracking
     
     try:
         while True:
+            # Receive GSI data from client
             data = await websocket.receive_json()
-            # Process GSI event
-            response = await live_manager.process_gsi_event(token, data)
             
-            if response:
+            # Handle different message types
+            msg_type = data.get("type")
+            
+            if msg_type == "gsi":
+                # Process game state
+                response = await live_manager.process_gsi_event(data.get("data", {}), session)
+                if response:
+                    await websocket.send_json(response)
+            
+            elif msg_type == "question":
+                # User asking a question via voice/text
+                question = data.get("question", "")
+                response = await live_manager._handle_question(question, data.get("data", {}), session)
                 await websocket.send_json(response)
+            
+            elif msg_type == "ping":
+                # Keep-alive
+                await websocket.send_json({"type": "pong"})
                 
     except WebSocketDisconnect:
-        print(f"[WS] User {user_id} (token {token}) disconnected")
+        print(f"[WS] User {user_id} disconnected")
     except Exception as e:
         print(f"[WS] Error for user {user_id}: {e}")
-        try:
-            await websocket.close()
-        except:
-            pass
+        await websocket.close(code=1011, reason="Internal server error")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

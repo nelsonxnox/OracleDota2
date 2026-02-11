@@ -24,14 +24,24 @@ def get_db():
                 cred_dict = json.loads(cred_json)
                 cred = credentials.Certificate(cred_dict)
                 firebase_admin.initialize_app(cred)
-            elif cred_path and os.path.exists(cred_path):
-                print(f"[FIREBASE] Initializing with credentials from {cred_path}")
-                cred = credentials.Certificate(cred_path)
-                firebase_admin.initialize_app(cred)
-            else:
-                # Try default credentials (gcloud auth application-default login)
-                print("[FIREBASE] Initializing with Default Credentials...")
-                firebase_admin.initialize_app()
+            elif cred_path:
+                # Resolve path relative to project root if it exists there
+                actual_path = cred_path
+                if not os.path.isabs(cred_path) and not os.path.exists(cred_path):
+                    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                    project_root = os.path.dirname(project_root) # Go up twice to reach project root from backend/services/
+                    potential_path = os.path.join(project_root, cred_path)
+                    if os.path.exists(potential_path):
+                        actual_path = potential_path
+                
+                if os.path.exists(actual_path):
+                    print(f"[FIREBASE] Initializing with credentials from {actual_path}")
+                    cred = credentials.Certificate(actual_path)
+                    firebase_admin.initialize_app(cred)
+                else:
+                    print(f"[FIREBASE] WARNING: Credentials file not found at {actual_path}")
+                    print("[FIREBASE] Initializing with Default Credentials...")
+                    firebase_admin.initialize_app()
             
             db = firestore.client()
             print("[FIREBASE] Firestore connected successfully.")

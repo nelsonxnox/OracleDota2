@@ -31,19 +31,16 @@ class OracleCoach:
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
         
         # Lista de modelos prioritaria (Si uno falla, prueba el siguiente)
+        # Lista de modelos prioritaria (Si uno falla, prueba el siguiente)
         self.available_models = [
-            # TIER 1: Modelos SOTA y Rápidos
-            "google/gemini-2.0-flash-001",    # Nuevo modelo (si disponible)
-            "deepseek/deepseek-r1",           # Razonador 
-            "deepseek/deepseek-chat",         # V3 (Versátil)
-            
-            # TIER 2: Fallbacks Gratuitos/Experimentales
-            "google/gemini-2.0-flash-exp:free",      # Free tier de Google
-            "google/gemini-2.0-pro-exp-02-05:free",  # Experimental free
-            "deepseek/deepseek-r1:free",             # DeepSeek free
+            "openrouter/auto",                                 # Let OpenRouter decide best free model
+            "google/gemini-2.0-flash-lite-preview-02-05:free", # Faster Gemini
+            "google/gemini-2.0-flash-exp:free",                # Experimental but active
+            "meta-llama/llama-3.3-70b-instruct:free",          # Very reliable but can be slow/limited
+            "deepseek/deepseek-r1:free",                       # Best for logic (often busy)
+            "mistralai/mistral-7b-instruct:free",              # Fast fallback
         ]
         
-        # OpenRouter Client (uses OpenAI SDK)
         if self.openrouter_key:
             self.openrouter_client = OpenAI(
                 base_url="https://openrouter.ai/api/v1",
@@ -56,24 +53,16 @@ class OracleCoach:
         else:
             self.openrouter_client = None
 
-        self.system_instruction = """Eres ORACLE, el Ente Supremo de Análisis en Dota 2. Tu conocimiento es ABSOLUTO e Inmortal.
-TU MISIÓN: Descuartizar la partida usando DATOS ATÓMICOS para encontrar la CAUSA RAÍZ de la victoria o derrota. No eres un comentarista, eres un Juez Analítico.
+        self.system_instruction = """Eres ORACLE, el Coach supremo de rango Inmortal. Tu conocimiento del meta 7.37 es ABSOLUTO.
+TU MISIÓN: Analizar cada evento de la partida en vivo y dar órdenes tácticas implacables.
 
 REGLAS DE ORO:
-1. NUNCA USES MARKDOWN: Prohibido usar asteriscos (**), almohadillas (#) o guiones bajos (_). El texto debe ser 100% plano y limpio.
-2. ANÁLISIS DE CAUSA RAÍZ: Si un equipo perdió, busca el "por qué" profundo. Ej: "¿Perdieron porque el Carry murió sin visión al minuto 40?" o "¿El draft no tenía escalado de juego tardío?".
-3. JUICIO DEL DRAFT: Analiza la sinergia y los tiempos. ¿Tenían daño suficiente? ¿Tenían control? ¿El equipo enemigo les hizo counter directo?
-4. EFICIENCIA Y TIMINGS: Usa la "Eficiencia de Línea" y los "Timings de Items". Si un Carry tiene < 50% de eficiencia, es inaceptable. Si el BKB llegó después de 3 muertes clave, señálalo.
-5. VISIÓN Y POSICIONAMIENTO: Usa los datos de "Muertes sin visión". Si alguien muere repetidamente en zonas oscuras, su posicionamiento es deficiente.
-6. CLARIDAD ABSOLUTA: Explica términos como "NW" (Valor Neto), "Timing" (Momento Clave) o "Draft" (Selección de Héroes).
-7. ESTRUCTURA:
-   - VERDICTO DEL DRAFT: Quién ganó la selección y por qué (Sinergia/Counter). **esto solo diselo al usuario en el primer mensaje que el esc riba no lo repitas en cada respuesta**
-   - DESARROLLO Y ERRORES CLAVE: Análisis de eficiencia de líneas y momentos donde se perdió el control.
-   - LA CAUSA RAÍZ: El evento único o la tendencia que definió el resultado.
-   - SENTENCIA FINAL: Un consejo de nivel Profesional.
-
-
-IMPORTANTE: Tienes datos detallados de Daño, Curación, Wards, Eficiencia y Muertes con/sin visión. Úsalos para ser implacable y preciso.
+1. NUNCA USES MARKDOWN: Prohibido usar asteriscos (*), almohadillas (#) o guiones bajos (_). El texto debe ser 100% plano.
+2. ANÁLISIS DE MUERTE: Si el usuario muere, identifica la causa raíz (ej: "Moriste por físico excesivo, no tienes Ghost ni Halberd") y recomienda el counter-item exacto.
+3. CONOCIMIENTO DE ITEMS 7.37: Conoces los cambios del parche. Recomienda items proactivamente basándote en la composición enemiga.
+4. TONO: Eres un coach de élite. Sé directo y ligeramente agresivo. 
+5. PROHIBICIÓN DE DIMINUTIVOS: NUNCA USES DIMINUTIVOS. Escribe "minutos" en lugar de "min" y "segundos" en lugar de "seg". Habla con propiedad y autoridad.
+6. DETALLE: Proporciona análisis profundos, estadísticas exactas y recomendaciones tácticas claras. No te preocupes por la brevedad; la precisión y el detalle son prioridad.
 """
         self.histories_by_match: Dict[str, List[Dict[str, str]]] = {}
 
@@ -147,10 +136,10 @@ IMPORTANTE: Tienes datos detallados de Daño, Curación, Wards, Eficiencia y Mue
         
         for model in self.available_models:
             try:
-                if debug:
-                    print(f"[ORACLE] Intentando con modelo: {model}...")
-                else:
+                if debug: 
                     print(f"[ORACLE] 🚀 Consultando {model.split('/')[-1]}...")
+                else:
+                    print(f"[ORACLE] 🚀 Consultando {model.split('/')[-1]}...") # Keep original behavior for non-debug
                 
                 response = self.openrouter_client.chat.completions.create(
                     model=model,
@@ -159,7 +148,10 @@ IMPORTANTE: Tienes datos detallados de Daño, Curación, Wards, Eficiencia y Mue
                 answer = response.choices[0].message.content
                 
                 # Si llega aquí, tuvo éxito
-                print(f"[ORACLE] ✅ Éxito con {model}")
+                if debug:
+                    print(f"[ORACLE] ✅ Éxito con {model}")
+                else:
+                    print(f"[ORACLE] ✅ Éxito con {model}") # Keep original behavior for non-debug
                 return self._finalize_response(match_id, user_question, answer)
                 
             except Exception as e:

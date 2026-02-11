@@ -144,10 +144,13 @@ export default function LiveTokenCard() {
                             ) : (
                                 <>
                                     <Key className="mr-2 h-4 w-4" />
-                                    Generar Token
+                                    Generar Nuevo Token
                                 </>
                             )}
                         </Button>
+                        <p className="text-[10px] text-zinc-500 text-center italic">
+                            * Al generar un nuevo token, el anterior quedará invalidado.
+                        </p>
                     </div>
                 )}
             </CardContent>
