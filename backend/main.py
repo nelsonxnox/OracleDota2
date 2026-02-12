@@ -203,20 +203,29 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
             limit_check = question_limit_service.check_question_limit(user_id, db)
             
             if not limit_check.get("can_ask", False):
-                plan_type = limit_check.get("plan_type", "free")
+                tier = limit_check.get("tier", "free")
                 limit = limit_check.get("limit", 3)
+                reset_hours = limit_check.get("reset_in_hours", 24)
+                
+                # Mensaje diferente según tier
+                if tier == "free":
+                    message = f"Has usado tus {limit} preguntas gratuitas de hoy. Vuelve en {reset_hours:.1f} horas o apoya el proyecto con una donación para obtener 20 preguntas diarias."
+                else:
+                    message = f"Has usado tus {limit} preguntas de hoy. Vuelve en {reset_hours:.1f} horas."
                 
                 raise HTTPException(
                     status_code=403,
                     detail={
-                        "error": "question_limit_reached",
-                        "plan_type": plan_type,
+                        "error": "daily_limit_reached",
+                        "tier": tier,
                         "limit": limit,
                         "questions_used": limit_check.get("questions_used", 0),
-                        "message": f"Has alcanzado el límite de {limit} preguntas este mes. Actualiza tu plan para preguntas ilimitadas.",
-                        "upgrade_url": "/plans"
+                        "reset_in_hours": reset_hours,
+                        "message": message,
+                        "donation_url": "/donate"
                     }
                 )
+
     
     # ASYNC: Save User Query to History (Legacy support, no blocking)
     background_tasks.add_task(firebase_service.save_chat_message, user_id, match_id, "user", query)

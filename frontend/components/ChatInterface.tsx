@@ -148,11 +148,22 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = 
             if (error.response?.status === 403) {
                 const errorData = error.response?.data?.detail;
 
-                if (errorData?.error === "question_limit_reached") {
-                    errorMessage = `🚫 ${errorData.message}\n\n` +
-                        `📊 Plan actual: ${errorData.plan_type}\n` +
-                        `❓ Preguntas usadas: ${errorData.questions_used}/${errorData.limit}\n\n` +
-                        `💎 Actualiza tu plan para preguntas ilimitadas en la sección de Planes.`;
+                if (errorData?.error === "daily_limit_reached") {
+                    const tier = errorData.tier || "free";
+                    const resetHours = errorData.reset_in_hours || 24;
+
+                    if (tier === "free") {
+                        errorMessage = `🚫 ${errorData.message}\n\n` +
+                            `📊 Plan: Gratuito\n` +
+                            `❓ Preguntas usadas hoy: ${errorData.questions_used}/${errorData.limit}\n` +
+                            `⏰ Próximo reset: en ${resetHours} horas\n\n` +
+                            `💚 ¿Te gusta Oracle? Dona cualquier cantidad y obtén 20 preguntas diarias: /donate`;
+                    } else {
+                        errorMessage = `🚫 ${errorData.message}\n\n` +
+                            `📊 Plan: Donador ⭐\n` +
+                            `❓ Preguntas usadas hoy: ${errorData.questions_used}/${errorData.limit}\n` +
+                            `⏰ Próximo reset: en ${resetHours} horas`;
+                    }
                 } else if (typeof errorData === "string") {
                     errorMessage = errorData;
                 }

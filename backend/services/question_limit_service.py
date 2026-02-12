@@ -1,26 +1,28 @@
 """
-Question Limit Service
-Manages question limits for different user plans
+Question Limit Service - Daily Limit System with Donor Tier
+- Free users: 3 preguntas/día
+- Donors: 20 preguntas/día (cualquier donación)
 """
 
 from datetime import datetime, timedelta
 from firebase_admin import firestore
 
-QUESTION_LIMITS = {
+# Límites diarios por tier
+DAILY_LIMITS = {
     "free": 3,
-    "basic": float('inf'),  # Unlimited
-    "premium": float('inf')  # Unlimited
+    "donor": 20
 }
 
 def check_question_limit(user_id: str, db) -> dict:
     """
-    Verifica si el usuario puede hacer una pregunta
+    Verifica si el usuario puede hacer una pregunta hoy
     Returns: {
         "can_ask": bool,
-        "remaining": int | float,
-        "plan_type": str,
-        "limit": int | float,
-        "questions_used": int
+        "remaining": int,
+        "limit": int,
+        "questions_used": int,
+        "tier": str,  # "free" o "donor"
+        "reset_in_hours": float
     }
     """
     try:
@@ -31,44 +33,50 @@ def check_question_limit(user_id: str, db) -> dict:
             return {"can_ask": False, "error": "User not found"}
         
         user_data = user_doc.to_dict()
-        plan_type = user_data.get("plan_type", "free")
-        questions_used = user_data.get("questions_used_this_month", 0)
-        reset_date = user_data.get("questions_reset_date")
         
-        # Verificar si necesita reset (nuevo mes)
+        # Determinar tier del usuario
+        is_donor = user_data.get("is_donor", False)
+        tier = "donor" if is_donor else "free"
+        
+        questions_used = user_data.get("questions_used_today", 0)
+        last_question_date = user_data.get("last_question_date")
+        
+        # Verificar si necesita reset (nuevo día)
         now = datetime.now()
+        today = now.date()
         needs_reset = False
         
-        if not reset_date:
+        if not last_question_date:
             needs_reset = True
-        elif isinstance(reset_date, datetime):
-            if reset_date < now:
+        elif isinstance(last_question_date, datetime):
+            if last_question_date.date() < today:
                 needs_reset = True
         
         if needs_reset:
-            # Reset contador
-            next_month = now + timedelta(days=30)
+            # Reset contador diario
             user_ref.update({
-                "questions_used_this_month": 0,
-                "questions_reset_date": next_month
+                "questions_used_today": 0,
+                "last_question_date": now
             })
             questions_used = 0
         
-        limit = QUESTION_LIMITS.get(plan_type, 3)
+        # Obtener límite según tier
+        limit = DAILY_LIMITS.get(tier, 3)
         
-        if limit == float('inf'):
-            remaining = float('inf')
-            can_ask = True
-        else:
-            remaining = max(0, limit - questions_used)
-            can_ask = questions_used < limit
+        remaining = max(0, limit - questions_used)
+        can_ask = questions_used < limit
+        
+        # Calcular hora del próximo reset (medianoche)
+        tomorrow = datetime.combine(today + timedelta(days=1), datetime.min.time())
+        hours_until_reset = (tomorrow - now).total_seconds() / 3600
         
         return {
             "can_ask": can_ask,
             "remaining": remaining,
-            "plan_type": plan_type,
             "limit": limit,
-            "questions_used": questions_used
+            "questions_used": questions_used,
+            "tier": tier,
+            "reset_in_hours": round(hours_until_reset, 1)
         }
     except Exception as e:
         print(f"[QUESTION_LIMIT] Error checking limit: {e}")
@@ -79,49 +87,56 @@ def increment_question_count(user_id: str, db):
     try:
         user_ref = db.collection("users").document(user_id)
         user_ref.update({
-            "questions_used_this_month": firestore.Increment(1)
+            "questions_used_today": firestore.Increment(1),
+            "last_question_date": datetime.now()
         })
-        print(f"[QUESTION_LIMIT] Incremented question count for user {user_id}")
+        print(f"[QUESTION_LIMIT] Incremented daily question count for user {user_id}")
     except Exception as e:
         print(f"[QUESTION_LIMIT] Error incrementing count: {e}")
 
-def get_plan_info(plan_type: str) -> dict:
-    """Retorna información sobre un plan específico"""
-    plans = {
+def upgrade_to_donor(user_id: str, db, donation_amount: float = 0):
+    """
+    Actualiza un usuario a tier 'donor' después de una donación
+    
+    Args:
+        user_id: ID del usuario
+        db: Firestore database instance
+        donation_amount: Monto de la donación (opcional, para tracking)
+    """
+    try:
+        user_ref = db.collection("users").document(user_id)
+        user_ref.update({
+            "is_donor": True,
+            "donor_since": datetime.now(),
+            "total_donated": firestore.Increment(donation_amount)
+        })
+        print(f"[QUESTION_LIMIT] Upgraded user {user_id} to donor tier (${donation_amount})")
+        return True
+    except Exception as e:
+        print(f"[QUESTION_LIMIT] Error upgrading user to donor: {e}")
+        return False
+
+def get_tier_info(tier: str) -> dict:
+    """Retorna información sobre un tier específico"""
+    tiers = {
         "free": {
             "name": "Gratuito",
-            "price": 0,
-            "questions_per_month": 3,
-            "live_tokens": 1,
+            "questions_per_day": 3,
             "features": [
-                "1 token de coaching en vivo",
-                "3 preguntas al mes",
-                "Análisis básico de partidas"
+                "3 preguntas diarias al AI Coach",
+                "Análisis básico de partidas",
+                "Acceso a estadísticas"
             ]
         },
-        "basic": {
-            "name": "Básico",
-            "price": 1.99,
-            "questions_per_month": "ilimitadas",
-            "live_tokens": 10,
+        "donor": {
+            "name": "Donador",
+            "questions_per_day": 20,
             "features": [
-                "10 tokens de coaching",
-                "Preguntas ilimitadas",
-                "Análisis avanzado",
-                "Soporte prioritario"
-            ]
-        },
-        "premium": {
-            "name": "Premium",
-            "price": 2.50,
-            "questions_per_month": "ilimitadas",
-            "live_tokens": 50,
-            "features": [
-                "50 tokens de coaching",
-                "Preguntas ilimitadas",
-                "Análisis profundo con IA",
-                "Soporte VIP 24/7"
+                "20 preguntas diarias al AI Coach",
+                "Análisis avanzado de partidas",
+                "Acceso prioritario a nuevas features",
+                "Agradecimiento en la página de donadores"
             ]
         }
     }
-    return plans.get(plan_type, plans["free"])
+    return tiers.get(tier, tiers["free"])
