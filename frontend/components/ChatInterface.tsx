@@ -141,8 +141,29 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = 
                 user_id: user?.uid || "guest"
             });
             setMessages((prev) => [...prev, { role: "assistant", content: response.data.response }]);
-        } catch (error) {
-            setMessages((prev) => [...prev, { role: "assistant", content: "Error de conexión con el Oráculo." }]);
+        } catch (error: any) {
+            let errorMessage = "Error de conexión con el Oráculo.";
+
+            // Detectar error de límite de preguntas
+            if (error.response?.status === 403) {
+                const errorData = error.response?.data?.detail;
+
+                if (errorData?.error === "question_limit_reached") {
+                    errorMessage = `🚫 ${errorData.message}\n\n` +
+                        `📊 Plan actual: ${errorData.plan_type}\n` +
+                        `❓ Preguntas usadas: ${errorData.questions_used}/${errorData.limit}\n\n` +
+                        `💎 Actualiza tu plan para preguntas ilimitadas en la sección de Planes.`;
+                } else if (typeof errorData === "string") {
+                    errorMessage = errorData;
+                }
+            } else if (error.code === "ERR_NETWORK") {
+                errorMessage = "⚠️ No se puede conectar al servidor. Verifica tu conexión a internet.";
+            }
+
+            setMessages((prev) => [...prev, {
+                role: "assistant",
+                content: errorMessage
+            }]);
         } finally {
             setLoading(false);
         }
