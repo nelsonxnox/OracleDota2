@@ -11,7 +11,8 @@ Darle al coach IA conocimiento actualizado del **meta actual** sin gastar miles 
 ```
 knowledge/
 ├── __init__.py           # Exporta funciones principales
-├── meta_737.py          # Base de conocimiento curada (Parche 7.37)
+├── meta_740c.py         # Base de conocimiento curada (Parche 7.40c)
+├── meta_737.py          # Base de conocimiento legacy (Parche 7.37)
 ├── dota_mapper.py       # Mapea IDs a nombres legibles
 ├── heroes.json          # Datos de héroes (dotaconstants)
 ├── items.json           # Datos de items (dotaconstants)
@@ -142,4 +143,4 @@ Verifica que la carpeta `knowledge/` exista y tenga `__init__.py`.
 ---
 
 **Creado por**: Oracle Coach Development Team  
-**Última actualización**: Feb 2026 (Parche 7.37)
+**Última actualización**: Feb 2026 (Parche 7.40c)

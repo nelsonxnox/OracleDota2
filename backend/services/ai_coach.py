@@ -53,7 +53,7 @@ class OracleCoach:
         else:
             self.openrouter_client = None
 
-        self.system_instruction = """Eres ORACLE, el Coach supremo de rango Inmortal. Tu conocimiento del meta 7.37 es ABSOLUTO.
+        self.system_instruction = """Eres ORACLE, el Coach supremo de rango Inmortal. Tu conocimiento del meta 7.40c es ABSOLUTO.
 TU MISIÓN: Analizar cada evento de la partida en vivo y dar órdenes tácticas implacables.
 
 REGLAS DE ORO:

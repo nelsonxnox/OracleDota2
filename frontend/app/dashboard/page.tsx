@@ -12,7 +12,7 @@ import { signOut } from "firebase/auth";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import LiveCoachCard from "@/components/LiveCoachCard";
 import LiveTokenCard from "@/components/LiveTokenCard";
-import PlansPanel from "@/components/PlansPanel";
+import DonationPanel from "@/components/DonationPanel";
 import PlayerStatsCard from "@/components/PlayerStatsCard";
 
 export default function DashboardPage() {
@@ -277,9 +277,9 @@ export default function DashboardPage() {
                     <LiveCoachCard />
                 </div>
 
-                {/* PLANS PANEL SECTION */}
-                <section className="pt-12 border-t border-white/5">
-                    <PlansPanel />
+                {/* DONATION PANEL */}
+                <section className="w-full">
+                    <DonationPanel />
                 </section>
 
                 {/* Optional: Footer or Extra Stats */}

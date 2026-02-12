@@ -12,7 +12,7 @@ import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import { User as UserIcon } from "lucide-react";
-import PlansPanel from "@/components/PlansPanel";
+import DonationPanel from "@/components/DonationPanel";
 
 export default function Home() {
   const [searchId, setSearchId] = useState("");
@@ -219,9 +219,9 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* PLANS PANEL SECTION */}
+      {/* DONATION PANEL SECTION */}
       <section className="w-full bg-black/50 py-16 border-t border-white/5 backdrop-blur-sm z-20">
-        <PlansPanel />
+        <DonationPanel />
       </section>
 
       {/* Modern Footer with Signature */}
