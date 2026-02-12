@@ -21,7 +21,7 @@ export default function Home() {
 
   const handleSearch = () => {
     if (!searchId) return;
-    router.push(`/dashboard/${searchId}`);
+    router.push(`/dashboard/analysis?matchId=${searchId}`);
   };
 
   const handleLogout = async () => {

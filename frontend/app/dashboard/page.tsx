@@ -41,7 +41,7 @@ export default function DashboardPage() {
 
     const handleSearch = () => {
         if (searchId) {
-            router.push(`/dashboard/${searchId}`);
+            router.push(`/dashboard/analysis?matchId=${searchId}`);
         }
     };
 
@@ -196,7 +196,7 @@ export default function DashboardPage() {
                                     </div>
 
                                     <Button
-                                        onClick={() => router.push(`/player/${userData.dota_id}`)}
+                                        onClick={() => router.push(`/player?id=${userData.dota_id}`)}
                                         className="w-full bg-gradient-to-r from-teal-600 to-teal-800 hover:from-teal-500 hover:to-teal-700 text-white font-black uppercase tracking-widest py-8 rounded-2xl shadow-[0_0_30px_rgba(20,184,166,0.2)] group transition-all hover:scale-[1.02]"
                                     >
                                         Explorar Mi Historial <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
