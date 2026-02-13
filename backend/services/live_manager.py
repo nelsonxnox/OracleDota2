@@ -3,7 +3,7 @@ import asyncio
 from typing import Dict, Optional
 import json
 from services.ai_coach import oracle
-from knowledge.meta_737 import PATCH_CORE_CONCEPTS, TIER_S_ITEMS, COMMON_MISTAKES
+from knowledge.meta_740c import PATCH_CORE_CONCEPTS, TIER_S_ITEMS, COMMON_MISTAKES
 
 class LiveCoachManager:
     def __init__(self):
@@ -57,9 +57,7 @@ class LiveCoachManager:
 
         # 0. HANDLE EXPLICIT QUESTION
         if data.get("type") == "question":
-            if session.get("question_count", 0) >= 10: # Increased limit to 10 for chat
-                return {"type": "answer", "text": "Has agotado tus preguntas por ahora. Concéntrate en el juego."}
-            
+            # Removed limit check as per user request
             session["question_count"] = session.get("question_count", 0) + 1
             return await self._handle_question(data.get("text"), data, session)
 
@@ -352,7 +350,7 @@ Funciones: Alertas de tiempos, consejos personales cada tres minutos, análisis 
         ai_prompt = f"""
         CONTEXTO: Muerte en minuto {game_time//60}. Hero: {hero.get('name')} | Oro: {player.get('gold')}
         Items: {self._hash_items(items)}
-        ¿Por qué murió? Sugiere un item de contra (parche 7.37). 
+        ¿Por qué murió? Sugiere un item de contra (parche 7.40). 
         Máximo 20 palabras. Español. Coach Inmortal. NO USES DIMINUTIVOS (di minutos, segundos).
         """
         try:

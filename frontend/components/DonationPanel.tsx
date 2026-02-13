@@ -10,14 +10,14 @@ export default function DonationPanel() {
 
     const tiers = [
         {
-            name: "Gratuito",
+            name: "Estándar",
             price: "$0",
             period: "Para siempre",
             icon: Check,
             color: "from-gray-600 to-gray-800",
             features: [
-                "3 preguntas diarias al AI Coach",
-                "Análisis básico de partidas",
+                "Acceso completo al AI Coach",
+                "Análisis de partidas ilimitado",
                 "Acceso a estadísticas públicas"
             ],
             buttonText: "Plan Actual",
@@ -31,11 +31,11 @@ export default function DonationPanel() {
             color: "from-teal-600 to-cyan-600",
             popular: true,
             features: [
-                "20 preguntas diarias al AI Coach",
-                "Análisis avanzado de partidas",
-                "Acceso prioritario a nuevas features",
-                "Tu nombre en la página de donadores",
-                "Acceso de por vida"
+                "Apoya el mantenimiento del servidor",
+                "Badge de Donador en tu perfil",
+                "Acceso anticipado a nuevas funciones",
+                "Tu nombre en la página de créditos",
+                "Nuestro agradecimiento eterno"
             ],
             buttonText: "Apoyar Proyecto",
             action: () => router.push("/donate")

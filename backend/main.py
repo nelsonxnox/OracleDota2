@@ -10,7 +10,7 @@ from services.ai_coach import oracle
 from services.stratz_service import stratz
 from services.live_manager import live_manager
 from services.token_service import token_service
-from services import question_limit_service
+
 import json
 import os
 import requests
@@ -196,35 +196,7 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
     query = request.query.strip()
     user_id = request.user_id
     
-    # NEW: Verificar límite de preguntas
-    if user_id and user_id != "guest":
-        db = firebase_service.get_db()
-        if db:
-            limit_check = question_limit_service.check_question_limit(user_id, db)
-            
-            if not limit_check.get("can_ask", False):
-                tier = limit_check.get("tier", "free")
-                limit = limit_check.get("limit", 3)
-                reset_hours = limit_check.get("reset_in_hours", 24)
-                
-                # Mensaje diferente según tier
-                if tier == "free":
-                    message = f"Has usado tus {limit} preguntas gratuitas de hoy. Vuelve en {reset_hours:.1f} horas o apoya el proyecto con una donación para obtener 20 preguntas diarias."
-                else:
-                    message = f"Has usado tus {limit} preguntas de hoy. Vuelve en {reset_hours:.1f} horas."
-                
-                raise HTTPException(
-                    status_code=403,
-                    detail={
-                        "error": "daily_limit_reached",
-                        "tier": tier,
-                        "limit": limit,
-                        "questions_used": limit_check.get("questions_used", 0),
-                        "reset_in_hours": reset_hours,
-                        "message": message,
-                        "donation_url": "/donate"
-                    }
-                )
+
 
     
     # ASYNC: Save User Query to History (Legacy support, no blocking)
@@ -286,11 +258,7 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
     # ASYNC: Save Assistant Response (Legacy support)
     background_tasks.add_task(firebase_service.save_chat_message, user_id, match_id, "assistant", response)
     
-    # NEW: Incrementar contador de preguntas después de respuesta exitosa
-    if user_id and user_id != "guest":
-        db = firebase_service.get_db()
-        if db:
-            background_tasks.add_task(question_limit_service.increment_question_count, user_id, db)
+
     
     return ChatResponse(response=response)
 
@@ -445,25 +413,10 @@ async def text_to_speech(request: TTSRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 # --- LIVE COACH WEBSOCKET ---
-# --- QUESTION LIMIT ENDPOINTS ---
-@app.get("/api/user/{user_id}/question-limit")
-async def get_question_limit_status(user_id: str):
-    """Retorna el estado del límite de preguntas del usuario"""
-    try:
-        db = firebase_service.get_db()
-        if not db:
-            raise HTTPException(status_code=500, detail="Database not available")
-        
-        limit_check = question_limit_service.check_question_limit(user_id, db)
-        
-        if "error" in limit_check:
-            raise HTTPException(status_code=404, detail=limit_check["error"])
-        
-        return limit_check
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+
+
+# --- ADMIN ENDPOINTS ---
+
 
 # --- PLAYER STATISTICS ENDPOINTS ---
 @app.get("/api/player/{account_id}/stats")

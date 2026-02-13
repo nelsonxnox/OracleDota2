@@ -144,30 +144,8 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = 
         } catch (error: any) {
             let errorMessage = "Error de conexión con el Oráculo.";
 
-            // Detectar error de límite de preguntas
-            if (error.response?.status === 403) {
-                const errorData = error.response?.data?.detail;
-
-                if (errorData?.error === "daily_limit_reached") {
-                    const tier = errorData.tier || "free";
-                    const resetHours = errorData.reset_in_hours || 24;
-
-                    if (tier === "free") {
-                        errorMessage = `🚫 ${errorData.message}\n\n` +
-                            `📊 Plan: Gratuito\n` +
-                            `❓ Preguntas usadas hoy: ${errorData.questions_used}/${errorData.limit}\n` +
-                            `⏰ Próximo reset: en ${resetHours} horas\n\n` +
-                            `💚 ¿Te gusta Oracle? Dona cualquier cantidad y obtén 20 preguntas diarias: /donate`;
-                    } else {
-                        errorMessage = `🚫 ${errorData.message}\n\n` +
-                            `📊 Plan: Donador ⭐\n` +
-                            `❓ Preguntas usadas hoy: ${errorData.questions_used}/${errorData.limit}\n` +
-                            `⏰ Próximo reset: en ${resetHours} horas`;
-                    }
-                } else if (typeof errorData === "string") {
-                    errorMessage = errorData;
-                }
-            } else if (error.code === "ERR_NETWORK") {
+            // Limit handling removed as per user request
+            if (error.code === "ERR_NETWORK") {
                 errorMessage = "⚠️ No se puede conectar al servidor. Verifica tu conexión a internet.";
             }
 

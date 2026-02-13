@@ -128,7 +128,7 @@ export default function DashboardPage() {
                     transition={{ delay: 0.1 }}
                     className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-orange-600/10 via-red-600/10 to-transparent border border-orange-500/30 p-1"
                 >
-                    <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
+                    <div className="absolute inset-0 bg-white/5 opacity-20 mix-blend-overlay" />
                     <div className="relative bg-black/40 backdrop-blur-xl rounded-[1.8rem] p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
                         <div className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-[0_0_40px_rgba(234,88,12,0.4)] animate-pulse">
                             <AlertCircle className="h-8 w-8 md:h-10 md:w-10 text-white" />
