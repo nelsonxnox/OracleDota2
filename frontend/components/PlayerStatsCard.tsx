@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Trophy, Target, Gamepad2, TrendingUp, AlertCircle, History, Zap } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
+import { API_BASE } from "@/lib/api";
 
 interface PlayerStats {
     winrate: number;
@@ -23,8 +24,7 @@ export default function PlayerStatsCard({ accountId }: { accountId: string }) {
 
             try {
                 setLoading(true);
-                const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
-                const res = await fetch(`${backendUrl}/api/player/${accountId}/stats`);
+                const res = await fetch(`${API_BASE}/api/player/${accountId}/stats`);
 
                 if (!res.ok) {
                     throw new Error("Failed to fetch player stats");

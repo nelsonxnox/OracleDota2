@@ -5,7 +5,7 @@
     "frontend"
   ],
   "scripts": {
-    "frontend:dev": "npm run dev --workspace=frontend",
+    "frontend:dev": "npm run dev --workspace=frontend -- --no-turbo",
     "frontend:build": "npm run build --workspace=frontend",
     "backend:dev": "cd backend && python main.py"
   }
