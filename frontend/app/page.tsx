@@ -249,13 +249,7 @@ export default function Home() {
         </div>
       </footer>
 
-      <style jsx global>{`
-        @keyframes slow-zoom {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.1); }
-          100% { transform: scale(1); }
-        }
-      `}</style>
+
     </main>
   );
 }

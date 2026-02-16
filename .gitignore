@@ -14,6 +14,8 @@ node_modules/
 out/
 build/
 dist/
+backend/dist/
+*.exe
 .DS_Store
 *.pem
 

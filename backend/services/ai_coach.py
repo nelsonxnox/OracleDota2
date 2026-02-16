@@ -57,14 +57,21 @@ class OracleCoach:
             api_key=or_key,
         )
 
+        # 4. DeepSeek (Direct API)
+        deepseek_key = os.getenv("DEEPSEEK_API_KEY")
+        self.client_deepseek = OpenAI(
+            base_url="https://api.deepseek.com",
+            api_key=deepseek_key if deepseek_key else "MISSING_KEY"
+        )
+
         
         
         # Diccionario de Modelos Específicos por Proveedor
         self.models_config = {
-            "gemini": "gemini-3-flash-preview",      # Nombre técnico en Google AI Studio
-            "github": "gpt-4o", # GitHub Models (Free Tier via Azure)
+            "gemini": "gemini-2.0-flash",       # Google AI Studio
+            "deepseek": "deepseek-chat",        # DeepSeek V3/R1
             "openrouter": "openrouter/free",    # Router gratuito
-                             
+            "github": "gpt-4o"                  # GitHub Models (Azure)
         }
         
         self.system_instruction = """Eres ORACLE, el Coach supremo de rango Inmortal para Dota 2. Tu conocimiento del meta 7.40c es ABSOLUTO.
@@ -177,7 +184,7 @@ RECUERDA: Eres un Inmortal guiando a un mortal. Tus palabras deben ser órdenes 
             return self._finalize_response(match_id, user_question, answer)
         except Exception as e:
             print(f"[ORACLE] ERROR FATAL: {e}")
-            return "El Oraculo intento invocar a todos los espiritus (Gemini -> OpenRouter -> GitHub Models), pero todos los portales estan cerrados. Verifica tus API Keys en .env"
+            return "El Oraculo intento invocar a todos los espiritus (Gemini -> DeepSeek -> OpenRouter -> GitHub Models), pero todos los portales estan cerrados. Verifica tus API Keys en .env"
 
     def ask_oracle_resilient(self, messages: List[Dict], model_debug_name: str) -> str:
         """
@@ -196,7 +203,19 @@ RECUERDA: Eres un Inmortal guiando a un mortal. Tus palabras deben ser órdenes 
         except Exception as e:
             print(f"[{model_debug_name}] Gemini Falló: {e}")
 
-        # 2. NIVEL 2: OPENROUTER (Respaldo Gratuito)
+        # 2. NIVEL 2: DEEPSEEK (Directo)
+        try:
+            print(f"[{model_debug_name}] Invocando a DEEPSEEK (Secundario)...")
+            return self._call_provider(
+                self.client_deepseek, 
+                self.models_config["deepseek"], 
+                messages,
+                provider_name="DeepSeek"
+            )
+        except Exception as e:
+            print(f"[{model_debug_name}] DeepSeek Falló: {e}")
+
+        # 3. NIVEL 3: OPENROUTER (Respaldo Gratuito)
         try:
             print(f"[{model_debug_name}] Invocando a OPENROUTER (Respaldo)...")
             return self._call_provider(
@@ -220,8 +239,8 @@ RECUERDA: Eres un Inmortal guiando a un mortal. Tus palabras deben ser órdenes 
             )
         except Exception as e:
             print(f"[{model_debug_name}] GitHub Models Falló: {e}")
-
-        raise Exception("Todos los proveedores fallaron.")
+            
+        raise Exception("Todos los proveedores fallaron (Gemini, DeepSeek, OpenRouter, GitHub).")
 
     def _call_provider(self, client: OpenAI, model: str, messages: List[Dict], is_openrouter: bool = False, provider_name: str = "API") -> str:
         start_time = time.time()
