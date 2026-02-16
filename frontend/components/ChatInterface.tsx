@@ -144,8 +144,14 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = 
         } catch (error: any) {
             let errorMessage = "Error de conexión con el Oráculo.";
 
-            // Limit handling removed as per user request
-            if (error.code === "ERR_NETWORK") {
+            if (error.response?.data?.detail?.error === "daily_limit_reached") {
+                const detail = error.response.data.detail;
+                const resetHours = detail.reset_in_hours || 24;
+                errorMessage = `🚫 ${detail.message}\n\n` +
+                    `❓ Usadas hoy: ${detail.questions_used}/${detail.limit}\n` +
+                    `⏰ Reset en: ${resetHours}h\n\n` +
+                    `💚 Apoya el proyecto: visitando la sección de Donaciones.`;
+            } else if (error.code === "ERR_NETWORK") {
                 errorMessage = "⚠️ No se puede conectar al servidor. Verifica tu conexión a internet.";
             }
 

@@ -1,8 +1,17 @@
 import os
+import sys
+import time
 from typing import Optional, Dict, List
 from dotenv import load_dotenv
 from openai import OpenAI
-import time
+
+# Robust path setup for knowledge module
+current_dir = os.path.dirname(os.path.abspath(__file__))
+backend_dir = os.path.dirname(current_dir)
+if backend_dir not in sys.path:
+    sys.path.append(backend_dir)
+
+load_dotenv()
 
 # RAG System: Inyección de conocimiento del meta
 try:
@@ -28,34 +37,75 @@ load_dotenv()
 
 class OracleCoach:
     def __init__(self):
-        # Configuración del cliente OpenRouter / OpenAI
-        api_key = os.getenv("OPENROUTER_API_KEY")
-        self.client = OpenAI(
-            base_url="https://openrouter.ai/api/v1",
-            api_key=api_key,
+        
+        gemini_key = os.getenv("GEMINI_API_KEY")
+        self.client_gemini = OpenAI(
+            base_url="https://generativelanguage.googleapis.com/v1beta/openai",
+            api_key=gemini_key if gemini_key else "MISSING_KEY"
+        )
+
+        # 3. GitHub Models (Safety Net - Free Tier via Azure)
+        github_key = os.getenv("GITHUB_API_KEY")
+        self.client_github = OpenAI(
+            base_url="https://models.inference.ai.azure.com",
+            api_key=github_key if github_key else "MISSING_KEY"
         )
         
-        # Lista de modelos priorizada (VALIDADA FEB 2026)
-        # IDs extraídos de documentación oficial de OpenRouter
-        # Lista de modelos CORREGIDA y LIMPIA
-        self.available_models = [
-            "google/gemini-2.0-flash-lite-preview-02-05:free",
-            "meta-llama/llama-3.3-70b-instruct:free",
-            "mistralai/mistral-7b-instruct:free",
-            "deepseek/deepseek-r1:free",
-        ]
-        
-        self.system_instruction = """Eres ORACLE, el Coach supremo de rango Inmortal. Tu conocimiento del meta 7.40c es ABSOLUTO.
-TU MISIÓN: Analizar cada evento de la partida en vivo y dar órdenes tácticas implacables.
+        or_key = os.getenv("OPENROUTER_API_KEY")
+        self.client_openrouter = OpenAI(
+            base_url="https://openrouter.ai/api/v1",
+            api_key=or_key,
+        )
 
-REGLAS DE ORO:
-1. NUNCA USES MARKDOWN: Prohibido usar asteriscos (*), almohadillas (#) o guiones bajos (_). El texto debe ser 100% plano.
-2. ANÁLISIS DE MUERTE: Si el usuario muere, identifica la causa raíz (ej: "Moriste por físico excesivo, no tienes Ghost ni Halberd") y recomienda el counter-item exacto.
-3. CONOCIMIENTO DE ITEMS 7.37: Conoces los cambios del parche. Recomienda items proactivamente basándote en la composición enemiga.
-4. TONO: Eres un coach de élite. Sé directo y ligeramente agresivo. 
-5. PROHIBICIÓN DE DIMINUTIVOS: NUNCA USES DIMINUTIVOS. Escribe "minutos" en lugar de "min" y "segundos" en lugar de "seg". Habla con propiedad y autoridad.
-6. DETALLE: Proporciona análisis profundos, estadísticas exactas y recomendaciones tácticas claras. No te preocupes por la brevedad; la precisión y el detalle son prioridad.
-"""
+        
+        
+        # Diccionario de Modelos Específicos por Proveedor
+        self.models_config = {
+            "gemini": "gemini-3-flash-preview",      # Nombre técnico en Google AI Studio
+            "github": "gpt-4o", # GitHub Models (Free Tier via Azure)
+            "openrouter": "openrouter/free",    # Router gratuito
+                             
+        }
+        
+        self.system_instruction = """Eres ORACLE, el Coach supremo de rango Inmortal para Dota 2. Tu conocimiento del meta 7.40c es ABSOLUTO.
+Tu personalidad es la de un mentor de élite: directo, autoritario, ligeramente agresivo pero extremadamente preciso. No buscas amabilidad, buscas la victoria del usuario.
+
+REGLAS CRÍTICAS DE RESPUESTA:
+1. IDIOMA: Responde SIEMPRE en el mismo idioma que el usuario (generalmente ESPAÑOL). Mantén un lenguaje técnico impecable (ej: "teletransportación", "atontamiento", "daño explosivo").
+2. PROHIBICIÓN TOTAL DE MARKDOWN: No uses NUNCA asteriscos (*), almohadillas (#), guiones bajos (_), ni bloques de código.
+   - INCORRECTO: **Regla 1**: *Atención*
+   - CORRECTO: REGLA 1: ATENCION
+3. PROHIBICIÓN DE DIMINUTIVOS: Escribe "minutos" en lugar de "min", "segundos" en lugar de "seg". La precisión denota maestría.
+4. TONO DE COMANDANTE: No sugieras, ordena. Identifica errores y exige correcciones inmediatas.
+
+MÓDULOS DE ANÁLISIS:
+- CONDICIÓN DE VICTORIA: Evalúa quién debe ganar y qué objetivos (Roshan, Tormentor) priorizar.
+- ANÁLISIS DE MUERTE: Si el usuario muere, dictamina la causa raíz y el item counter exacto (BKB, Ethereal, Manta).
+- ITEMIZACIÓN DINÁMICA: Propón construcciones basadas en la partida actual, no en guías estáticas.
+
+RECUERDA: Eres un Inmortal guiando a un mortal. Tus palabras deben ser órdenes claras y texto 100% plano."""
+
+        # RAG System: Inyección de conocimiento del meta
+        self.rag_enabled = False
+        try:
+            from knowledge import get_relevant_knowledge
+            self.get_knowledge = get_relevant_knowledge
+            self.rag_enabled = True
+            print("[ORACLE] RAG System activado - Conocimiento del meta disponible")
+            
+            try:
+                from knowledge.rag_engine_v2 import rag_v2
+                self.rag_v2 = rag_v2
+                self.rag_v2_enabled = True
+            except ImportError:
+                self.rag_v2_enabled = False
+                
+        except ImportError as e:
+            print(f"[ORACLE] Warning: RAG System no disponible: {e}")
+            self.get_knowledge = None
+            self.rag_enabled = False
+            self.rag_v2_enabled = False
+            
         self.histories_by_match: Dict[str, List[Dict[str, str]]] = {}
 
     def ask_oracle(self, context: str, user_question: str, match_id: Optional[str] = None, debug: bool = False, external_history: List[Dict] = None) -> str:
@@ -67,78 +117,135 @@ REGLAS DE ORO:
         # ===== RAG: INYECCIÓN SELECTIVA =====
         knowledge_injection = ""
         
-        if RAG_ENABLED:
+        if self.rag_enabled and self.get_knowledge:
             try:
-                relevant_knowledge = get_relevant_knowledge(user_question, debug=debug)
-                knowledge_injection = f"\n\n📚 CONOCIMIENTO DEL META:\n{relevant_knowledge}\n"
+                relevant_knowledge = self.get_knowledge(user_question, debug=debug)
+                knowledge_injection = f"\n\nCONOCIMIENTO DEL META:\n{relevant_knowledge}\n"
                 
                 if debug:
-                    print(f"[RAG] ✅ Conocimiento inyectado: {len(relevant_knowledge)} chars")
-                else:
-                    pass
+                    print(f"[RAG] EXITO: Conocimiento inyectado: {len(relevant_knowledge)} chars")
             except Exception as e:
-                print(f"[RAG] ❌ Error al obtener conocimiento: {e}")
+                print(f"[RAG] ERROR al obtener conocimiento: {e}")
         
         # ===== RAG 2.0: SEMANTIC INJECTION =====
         semantic_injection = ""
-        if RAG_V2_ENABLED:
+        if self.rag_v2_enabled and hasattr(self, 'rag_v2'):
             try:
                 # Semantic search for additional context
-                semantic_knowledge = rag_v2.search(user_question, top_k=3)
+                semantic_knowledge = self.rag_v2.search(user_question, top_k=3)
                 if semantic_knowledge:
-                    semantic_injection = f"\n\n📖 CONOCIMIENTO SEMÁNTICO (Habilidades/Items):\n{semantic_knowledge}\n"
+                    semantic_injection = f"\n\nCONOCIMIENTO SEMANTICO:\n{semantic_knowledge}\n"
             except Exception as e:
                 if debug:
-                    print(f"[RAG 2.0] ❌ Error en búsqueda semántica: {e}")
+                    print(f"[RAG 2.0] ERROR en búsqueda semántica: {e}")
 
         # ===== CONSTRUCCIÓN DE MENSAJES =====
-        prompt = f"{knowledge_injection}{semantic_injection}CONTEXTO DE PARTIDA:\n{context}\n\nPREGUNTA DEL USUARIO: {user_question}"
+        # OPTIMIZATION: Ensure the question and system instructions are never truncated.
+        # We truncate the injected knowledge and context if they are too large.
+        
+        MAX_KNOWLEDGE = 2000
+        MAX_CONTEXT = 3000
+        
+        if len(knowledge_injection) > MAX_KNOWLEDGE:
+            knowledge_injection = knowledge_injection[:MAX_KNOWLEDGE] + "... [KNOWLEDGE TRUNCATED]"
+            
+        if len(semantic_injection) > MAX_KNOWLEDGE:
+            semantic_injection = semantic_injection[:MAX_KNOWLEDGE] + "... [SEMANTIC TRUNCATED]"
+            
+        if len(context) > MAX_CONTEXT:
+            context = context[:MAX_CONTEXT] + "... [CONTEXT TRUNCATED]"
+
+        prompt = f"{knowledge_injection}{semantic_injection}\nCONTEXTO DE PARTIDA:\n{context}\n\nPREGUNTA DEL USUARIO: {user_question}"
         
         messages = [{"role": "system", "content": self.system_instruction}]
         
         # Usamos historial externo si existe, sino local
         if external_history:
-             messages.extend(external_history[-4:])
+             messages.extend(external_history[-2:])
         elif match_id and match_id in self.histories_by_match:
-            history = self.histories_by_match[match_id][-4:]
+            history = self.histories_by_match[match_id][-2:]
             messages.extend(history)
-        
+
         messages.append({"role": "user", "content": prompt})
 
         # ===== CONSULTA A API (CON FALLBACKS) =====
         last_error = ""
         
-        for model in self.available_models:
-            try:
-                if debug:
-                    print(f"[ORACLE] 🚀 Consultando {model}...") 
-                
-                start_time = time.time()
-                
-                completion = self.client.chat.completions.create(
-                    extra_headers={
-                        "HTTP-Referer": "http://localhost:3000",
-                        "X-Title": "Oracle Dota AI Coach",
-                    },
-                    model=model,
-                    messages=messages,
-                    temperature=0.7,
-                    max_tokens=1024,
-                )
-                
-                duration = time.time() - start_time
-                answer = completion.choices[0].message.content
-                
-                print(f"[ORACLE] ✅ Éxito con {model} ({duration:.2f}s)")
-                return self._finalize_response(match_id, user_question, answer)
-                
-            except Exception as e:
-                error_msg = str(e)
-                print(f"[ORACLE] ⚠️ Falló {model}: {error_msg}")
-                last_error = error_msg
-                # Continúa loop al siguiente modelo
+        # Implementación de Estrategia "Triángulo de Respaldo"
+        try:
+            answer = self.ask_oracle_resilient(messages, model_debug_name="Oracle")
+            return self._finalize_response(match_id, user_question, answer)
+        except Exception as e:
+            print(f"[ORACLE] ERROR FATAL: {e}")
+            return "El Oraculo intento invocar a todos los espiritus (Gemini -> OpenRouter -> GitHub Models), pero todos los portales estan cerrados. Verifica tus API Keys en .env"
+
+    def ask_oracle_resilient(self, messages: List[Dict], model_debug_name: str) -> str:
+        """
+        Estrategia 'Triángulo de Respaldo' con APIs Directas.
+        """
         
-        return f"El Oráculo intentó invocar a todos los espíritus, pero fallaron. Error final: {last_error}"
+        # 1. NIVEL 1: GOOGLE GEMINI (Directo)
+        try:
+            print(f"[{model_debug_name}] Invocando a GEMINI (Principal)...")
+            return self._call_provider(
+                self.client_gemini, 
+                self.models_config["gemini"], 
+                messages,
+                provider_name="Gemini"
+            )
+        except Exception as e:
+            print(f"[{model_debug_name}] Gemini Falló: {e}")
+
+        # 2. NIVEL 2: OPENROUTER (Respaldo Gratuito)
+        try:
+            print(f"[{model_debug_name}] Invocando a OPENROUTER (Respaldo)...")
+            return self._call_provider(
+                self.client_openrouter, 
+                self.models_config["openrouter"], 
+                messages, 
+                is_openrouter=True,
+                provider_name="OpenRouter"
+            )
+        except Exception as e:
+            print(f"[{model_debug_name}] OpenRouter Falló: {e}")
+
+        # 3. NIVEL 3: GITHUB MODELS (Seguridad)
+        try:
+            print(f"[{model_debug_name}] Invocando a GITHUB MODELS (Seguridad)...")
+            return self._call_provider(
+                self.client_github, 
+                self.models_config["github"], 
+                messages,
+                provider_name="GitHub Models"
+            )
+        except Exception as e:
+            print(f"[{model_debug_name}] GitHub Models Falló: {e}")
+
+        raise Exception("Todos los proveedores fallaron.")
+
+    def _call_provider(self, client: OpenAI, model: str, messages: List[Dict], is_openrouter: bool = False, provider_name: str = "API") -> str:
+        start_time = time.time()
+        
+        extra_headers = {}
+        if is_openrouter:
+            extra_headers = {
+                "HTTP-Referer": "https://github.com/nelsonxnox/OracleDota2",
+                "X-Title": "Oracle Dota AI Coach",
+            }
+
+        completion = client.chat.completions.create(
+            extra_headers=extra_headers,
+            model=model,
+            messages=messages,
+            temperature=0.3,
+            max_tokens=2048,
+        )
+        
+        duration = time.time() - start_time
+        answer = completion.choices[0].message.content
+        print(f"[ORACLE] Éxito con {provider_name} ({duration:.2f}s)")
+        return answer
+
 
     def _finalize_response(self, match_id: str, user_question: str, answer_text: str) -> str:
         if match_id:

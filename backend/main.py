@@ -10,6 +10,7 @@ from services.ai_coach import oracle
 from services.stratz_service import stratz
 from services.live_manager import live_manager
 from services.token_service import token_service
+from services import question_limit_service
 
 import json
 import os
@@ -198,7 +199,26 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
     
 
 
+    # 0. Check Daily Limit
+    db = firebase_service.get_db()
+    limit_check = question_limit_service.check_question_limit(user_id, db)
     
+    if not limit_check.get("can_ask", False):
+        limit = limit_check.get("limit", 3)
+        reset_hours = limit_check.get("reset_in_hours", 24)
+        
+        raise HTTPException(
+            status_code=403,
+            detail={
+                "error": "daily_limit_reached",
+                "limit": limit,
+                "questions_used": limit_check.get("questions_used", 0),
+                "reset_in_hours": reset_hours,
+                "message": f"Has usado tus {limit} preguntas de hoy. Vuelve en {reset_hours:.1f} horas o apoya el proyecto con una donacion.",
+                "donation_url": "/donate"
+            }
+        )
+
     # ASYNC: Save User Query to History (Legacy support, no blocking)
     background_tasks.add_task(firebase_service.save_chat_message, user_id, match_id, "user", query)
     
@@ -258,7 +278,8 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
     # ASYNC: Save Assistant Response (Legacy support)
     background_tasks.add_task(firebase_service.save_chat_message, user_id, match_id, "assistant", response)
     
-
+    # 6. Increment count
+    background_tasks.add_task(question_limit_service.increment_question_count, user_id, db)
     
     return ChatResponse(response=response)
 

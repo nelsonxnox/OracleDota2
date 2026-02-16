@@ -91,6 +91,10 @@ CRITICAL_COUNTERS = {
         "heroes": ["Alchemist", "Necrophos", "Morphling", "Timbersaw"],
         "counters": "Spirit Vessel (MANDATORY), Skadi, AA ulti, Shiva's. Sin anti-heal = unkillable."
     },
+    "mass_units": {
+        "heroes": ["Meepo", "Broodmother", "Chen", "Visage"],
+        "counters": "Earthshaker (Echo Slam), Winter Wyvern (Winter's Curse), Elder Titan, Jakiro (Macropyre). AoE damage y control de masas son obligatorios."
+    },
     "invis_heroes": {
         "heroes": ["Riki", "Bounty Hunter", "Weaver", "Clinkz"],
         "counters": "Sentries en lane, Dust en supports, Gem a 25min. Sin detection = 4v5. NOTA 7.40c: Clinkz NERFEADO (Skeleton Walk building dmg 75%, ya no viable para rat). Menos prioridad en bans."

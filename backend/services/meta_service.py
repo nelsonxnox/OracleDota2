@@ -13,7 +13,7 @@ def get_real_time_meta() -> Dict:
     try:
         # 1. Fetch hero stats (includes winrates by rank tier)
         print("[META] Fetching hero stats from OpenDota...")
-        resp = requests.get(f"{OPENDOTA_API_URL}/heroStats", timeout=15)
+        resp = requests.get(f"{OPENDOTA_API_URL}/heroStats", timeout=3)
         if resp.status_code != 200:
             return {"error": f"API error: {resp.status_code}"}
         
