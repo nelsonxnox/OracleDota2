@@ -7,8 +7,8 @@ const nextConfig = {
     unoptimized: true,
   },
   webpack: (config) => {
-    config.resolve.alias['react'] = path.resolve(__dirname, 'node_modules', 'react');
-    config.resolve.alias['react-dom'] = path.resolve(__dirname, 'node_modules', 'react-dom');
+    config.resolve.alias['react'] = path.resolve(__dirname, '../node_modules', 'react');
+    config.resolve.alias['react-dom'] = path.resolve(__dirname, '../node_modules', 'react-dom');
     return config;
   },
 };
