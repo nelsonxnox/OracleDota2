@@ -295,7 +295,7 @@ def health_check():
     db_status = "connected" if firebase_service.get_db() else "disconnected"
     return {
         "status": "healthy",
-        "ai_ready": oracle.openrouter_client is not None,
+        "ai_ready": oracle.client_openrouter is not None,
         "database": db_status,
         "version": "1.1.0"
     }

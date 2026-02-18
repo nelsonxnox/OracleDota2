@@ -1,16 +1,13 @@
 const path = require('path');
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export', // Disabled for dynamic routes
+  // output: 'export', // Desactivado para permitir rutas dinámicas
   trailingSlash: true,
   images: {
     unoptimized: true,
   },
-  webpack: (config) => {
-    config.resolve.alias['react'] = path.resolve(__dirname, '../node_modules', 'react');
-    config.resolve.alias['react-dom'] = path.resolve(__dirname, '../node_modules', 'react-dom');
-    return config;
-  },
+  // Se eliminó la sección 'experimental' que causaba el error con lucide-react.
 };
 
 module.exports = nextConfig;

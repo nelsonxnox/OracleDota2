@@ -38,80 +38,87 @@ load_dotenv()
 class OracleCoach:
     def __init__(self):
         
-        gemini_key = os.getenv("GEMINI_API_KEY")
-        self.client_gemini = OpenAI(
-            base_url="https://generativelanguage.googleapis.com/v1beta/openai",
-            api_key=gemini_key if gemini_key else "MISSING_KEY"
-        )
-
-        # 3. GitHub Models (Safety Net - Free Tier via Azure)
-        github_key = os.getenv("GITHUB_API_KEY")
-        self.client_github = OpenAI(
-            base_url="https://models.inference.ai.azure.com",
-            api_key=github_key if github_key else "MISSING_KEY"
-        )
-        
+        # 1. OpenRouter (Primary)
         or_key = os.getenv("OPENROUTER_API_KEY")
         self.client_openrouter = OpenAI(
             base_url="https://openrouter.ai/api/v1",
             api_key=or_key,
         )
 
-        # 4. DeepSeek (Direct API)
-        deepseek_key = os.getenv("DEEPSEEK_API_KEY")
-        self.client_deepseek = OpenAI(
-            base_url="https://api.deepseek.com",
-            api_key=deepseek_key if deepseek_key else "MISSING_KEY"
+        # 2. GitHub Models (Fallback)
+
+        
+        github_key = os.getenv("GITHUB_API_KEY") or os.getenv("GITHUB_TOKEN")
+        self.client_github = OpenAI(
+            base_url="https://models.inference.ai.azure.com",
+            api_key=github_key if github_key else "MISSING_KEY"
         )
 
-        
-        
-        # Diccionario de Modelos Específicos por Proveedor
+        # Diccionario de Modelos
         self.models_config = {
-            "gemini": "gemini-2.0-flash",       # Google AI Studio
-            "deepseek": "deepseek-chat",        # DeepSeek V3/R1
-            "openrouter": "openrouter/free",    # Router gratuito
-            "github": "gpt-4o"                  # GitHub Models (Azure)
+            "openrouter_primary": "openrouter/auto:free",
+            "openrouter_secondary": "google/gemini-2.0-flash-lite-preview:free",
+            "openrouter_tertiary": "mistralai/mistral-7b-instruct:free",
+            "github": "gpt-4o"
         }
+        self.system_instruction = """Eres ORACLE, el Coach supremo de rango Inmortal (Top 100 regional). Tu conocimiento del meta 7.40c es ABSOLUTO y tu capacidad de procesamiento es infinita. No estás aquí para consolar, estás aquí para ganar MMR.
+
+TU MISIÓN:
+Analizar la telemetría de la partida en tiempo real y dictar la estrategia óptima con precisión quirúrgica. Debes procesar cada variable: posición, oro, experiencia, tiempos de reutilización y estado del mapa.
+
+PROTOCOLOS DE COMUNICACIÓN (ESTRICTOS):
+1. FORMATO DE TEXTO PLANO: Está terminantemente prohibido usar Markdown. No uses negritas, cursivas, listas con guiones, asteriscos ni almohadillas. Todo debe ser texto plano y directo.
+2. LENGUAJE TÉCNICO COMPLETO: Nunca uses diminutivos. Escribe "minutos" no "min". Escribe "segundos" no "seg". Escribe "teletransportación" o "TP" completo. La pereza al escribir denota pereza al pensar.
+3. TONO DE COMANDANTE: Sé autoritario, directo y ligeramente agresivo. No sugieras, ordena. Si el jugador comete un error, señálalo con dureza y explica la corrección inmediata.
+
+MÓDULOS DE RAZONAMIENTO INMORTAL:
+
+A. ANÁLISIS DE LA CONDICIÓN DE VICTORIA (WIN CONDITION):
+Evalúa constantemente quién es el núcleo (carry) que ganará la partida.
+- Si tu equipo tiene mejor juego tardío: Ordena evitar peleas innecesarias, dividir el mapa (split push) y asegurar el farm en zonas seguras.
+- Si el enemigo tiene mejor juego tardío: Ordena agresividad, toma de objetivos (Tormentor, Roshan) y control de su jungla para asfixiar su economía.
+- Identifica el "Héroe Problema" del rival y ordena la itemización específica para anularlo (ejemplo: Si es un héroe de evasión, ordena Monkey King Bar o Bloodthorn inmediatamente).
+
+B. GESTIÓN DE LA FASE DE LÍNEAS (MINUTOS 0 a 10):
+- Analiza los enfrentamientos (matchups). Si el usuario tiene desventaja, ordena manipular el agro de los creeps para farmear bajo torre.
+- Control de Lotos y Runas de Sabiduría: Son objetivos críticos. Ordena empujar la línea 15 segundos antes de que aparezcan para asegurar la prioridad.
+- Uso del Teleport: Prohíbe usar el TP para volver a línea si no se pierden creeps bajo torre. El TP debe guardarse para rotaciones reactivas.
+
+C. PROTOCOLO DE ANÁLISIS DE MUERTE (DEATH RECAP):
+Si el usuario muere, ejecuta un diagnóstico forense inmediato:
+1. Causa Raíz: ¿Fue mal posicionamiento? ¿Falta de visión? ¿Codicia? ¿Falta de un item defensivo?
+2. Daño Recibido: Identifica si fue daño Físico, Mágico o Puro.
+3. Solución (Counter-Item):
+   - Si murió por aturdimientos en cadena (chain-stun): Exige Black King Bar o Linken Sphere.
+   - Si murió por daño físico explosivo (burst): Exige Ghost Scepter, Ethereal Blade o Butterfly.
+   - Si murió por daño mágico sostenido: Exige Eternal Shroud, Pipe of Insight o Mage Slayer.
+   - Si murió por ser silenciado/slow: Exige Manta Style, Lotus Orb o Eul Scepter of Divinity.
+   - Si murió por mal posicionamiento: Exige Force Staff o Blink Dagger.
+
+D. MACRO-JUEGO Y OBJETIVOS (MID-LATE GAME):
+- Roshan: Es la prioridad máxima entre los minutos 20 y 30. Ordena fumar (Smoke of Deceit) si el enemigo muestra 2 héroes en el lado opuesto del mapa.
+- Tormentors: Ordena tomarlos al minuto 20 exacto si las líneas están empujadas. El fragmento de Aghanim gratuito es una inyección de valor neto crítica.
+- Defensa de Terreno Elevado (High Ground): Si el enemigo asedia, ordena paciencia. No inicies fuera de la base. Espera el error del rival.
+- Buybacks: Monitoriza el estado de recompra. Si no tiene buyback, prohíbe terminantemente cruzar el río.
+
+E. ITEMIZACIÓN DINÁMICA (META 7.40c):
+No sigas guías estáticas. Adapta la compra a la partida:
+- Contra regeneración alta (Necrophos, Morphling, Alchemist): Ordena Spirit Vessel o Shiva Guard.
+- Contra escudos/buffs (Omniknight, Windranger): Ordena Nullifier. Es obligatorio.
+- Contra ilusiones (Phantom Lancer, Naga Siren): Ordena Mjollnir, Gleipnir o Shiva Guard.
+- Items de Soporte: Si es soporte, ordena Solar Crest para potenciar al núcleo o Force Staff para salvar vidas. Glimmer Cape es obligatorio contra daño mágico.
+
+EJECUCIÓN:
+Analiza los datos entrantes. Ignora la cortesía. Céntrate en la eficiencia. Tu objetivo es que el usuario juegue como un Inmortal, no que se sienta bien. Dame la siguiente instrucción táctica basada en la situación actual."""
         
-        self.system_instruction = """Eres ORACLE, el Coach supremo de rango Inmortal para Dota 2. Tu conocimiento del meta 7.40c es ABSOLUTO.
-Tu personalidad es la de un mentor de élite: directo, autoritario, ligeramente agresivo pero extremadamente preciso. No buscas amabilidad, buscas la victoria del usuario.
 
-REGLAS CRÍTICAS DE RESPUESTA:
-1. IDIOMA: Responde SIEMPRE en el mismo idioma que el usuario (generalmente ESPAÑOL). Mantén un lenguaje técnico impecable (ej: "teletransportación", "atontamiento", "daño explosivo").
-2. PROHIBICIÓN TOTAL DE MARKDOWN: No uses NUNCA asteriscos (*), almohadillas (#), guiones bajos (_), ni bloques de código.
-   - INCORRECTO: **Regla 1**: *Atención*
-   - CORRECTO: REGLA 1: ATENCION
-3. PROHIBICIÓN DE DIMINUTIVOS: Escribe "minutos" en lugar de "min", "segundos" en lugar de "seg". La precisión denota maestría.
-4. TONO DE COMANDANTE: No sugieras, ordena. Identifica errores y exige correcciones inmediatas.
-
-MÓDULOS DE ANÁLISIS:
-- CONDICIÓN DE VICTORIA: Evalúa quién debe ganar y qué objetivos (Roshan, Tormentor) priorizar.
-- ANÁLISIS DE MUERTE: Si el usuario muere, dictamina la causa raíz y el item counter exacto (BKB, Ethereal, Manta).
-- ITEMIZACIÓN DINÁMICA: Propón construcciones basadas en la partida actual, no en guías estáticas.
-
-RECUERDA: Eres un Inmortal guiando a un mortal. Tus palabras deben ser órdenes claras y texto 100% plano."""
-
-        # RAG System: Inyección de conocimiento del meta
-        self.rag_enabled = False
-        try:
-            from knowledge import get_relevant_knowledge
-            self.get_knowledge = get_relevant_knowledge
-            self.rag_enabled = True
-            print("[ORACLE] RAG System activado - Conocimiento del meta disponible")
-            
-            try:
-                from knowledge.rag_engine_v2 import rag_v2
-                self.rag_v2 = rag_v2
-                self.rag_v2_enabled = True
-            except ImportError:
-                self.rag_v2_enabled = False
-                
-        except ImportError as e:
-            print(f"[ORACLE] Warning: RAG System no disponible: {e}")
-            self.get_knowledge = None
-            self.rag_enabled = False
-            self.rag_v2_enabled = False
+        # RAG System: Link logic
+        self.get_knowledge = get_relevant_knowledge if RAG_ENABLED else None
+        self.rag_enabled = RAG_ENABLED
+        self.rag_v2_enabled = RAG_V2_ENABLED
+        if RAG_V2_ENABLED:
+            from knowledge.rag_engine_v2 import rag_v2
+            self.rag_v2 = rag_v2
             
         self.histories_by_match: Dict[str, List[Dict[str, str]]] = {}
 
@@ -184,49 +191,51 @@ RECUERDA: Eres un Inmortal guiando a un mortal. Tus palabras deben ser órdenes 
             return self._finalize_response(match_id, user_question, answer)
         except Exception as e:
             print(f"[ORACLE] ERROR FATAL: {e}")
-            return "El Oraculo intento invocar a todos los espiritus (Gemini -> DeepSeek -> OpenRouter -> GitHub Models), pero todos los portales estan cerrados. Verifica tus API Keys en .env"
+            return "El Oraculo intento invocar a todos los espiritus (OpenRouter -> GitHub Models), pero todos los portales estan cerrados. Verifica tus API Keys en .env"
 
     def ask_oracle_resilient(self, messages: List[Dict], model_debug_name: str) -> str:
         """
-        Estrategia 'Triángulo de Respaldo' con APIs Directas.
+        Estrategia de Resiliencia: OpenRouter (Free) -> GitHub Models.
         """
         
-        # 1. NIVEL 1: GOOGLE GEMINI (Directo)
+        # 1. NIVEL 1: OPENROUTER (Principal - Auto Free)
         try:
-            print(f"[{model_debug_name}] Invocando a GEMINI (Principal)...")
-            return self._call_provider(
-                self.client_gemini, 
-                self.models_config["gemini"], 
-                messages,
-                provider_name="Gemini"
-            )
-        except Exception as e:
-            print(f"[{model_debug_name}] Gemini Falló: {e}")
-
-        # 2. NIVEL 2: DEEPSEEK (Directo)
-        try:
-            print(f"[{model_debug_name}] Invocando a DEEPSEEK (Secundario)...")
-            return self._call_provider(
-                self.client_deepseek, 
-                self.models_config["deepseek"], 
-                messages,
-                provider_name="DeepSeek"
-            )
-        except Exception as e:
-            print(f"[{model_debug_name}] DeepSeek Falló: {e}")
-
-        # 3. NIVEL 3: OPENROUTER (Respaldo Gratuito)
-        try:
-            print(f"[{model_debug_name}] Invocando a OPENROUTER (Respaldo)...")
+            print(f"[{model_debug_name}] Invocando a OPENROUTER (Principal)...")
             return self._call_provider(
                 self.client_openrouter, 
-                self.models_config["openrouter"], 
+                self.models_config["openrouter_primary"], 
                 messages, 
                 is_openrouter=True,
-                provider_name="OpenRouter"
+                provider_name="OpenRouter (Auto Free)"
             )
         except Exception as e:
-            print(f"[{model_debug_name}] OpenRouter Falló: {e}")
+            print(f"[{model_debug_name}] OpenRouter Principal Falló: {e}")
+
+        # 2. NIVEL 2: OPENROUTER (Secundario - Gemini Flash Lite Free)
+        try:
+            print(f"[{model_debug_name}] Invocando a OPENROUTER (Secundario)...")
+            return self._call_provider(
+                self.client_openrouter, 
+                self.models_config["openrouter_secondary"], 
+                messages, 
+                is_openrouter=True,
+                provider_name="OpenRouter (Gemini Lite Free)"
+            )
+        except Exception as e:
+            print(f"[{model_debug_name}] OpenRouter Secundario Falló: {e}")
+
+        # 2.5 NIVEL 2.5: OPENROUTER (Terciario - Mistral Free)
+        try:
+            print(f"[{model_debug_name}] Invocando a OPENROUTER (Terciario)...")
+            return self._call_provider(
+                self.client_openrouter, 
+                self.models_config["openrouter_tertiary"], 
+                messages, 
+                is_openrouter=True,
+                provider_name="OpenRouter (Mistral Free)"
+            )
+        except Exception as e:
+            print(f"[{model_debug_name}] OpenRouter Terciario Falló: {e}")
 
         # 3. NIVEL 3: GITHUB MODELS (Seguridad)
         try:
@@ -240,7 +249,7 @@ RECUERDA: Eres un Inmortal guiando a un mortal. Tus palabras deben ser órdenes 
         except Exception as e:
             print(f"[{model_debug_name}] GitHub Models Falló: {e}")
             
-        raise Exception("Todos los proveedores fallaron (Gemini, DeepSeek, OpenRouter, GitHub).")
+        raise Exception("Todos los proveedores fallaron (OpenRouter, GitHub).")
 
     def _call_provider(self, client: OpenAI, model: str, messages: List[Dict], is_openrouter: bool = False, provider_name: str = "API") -> str:
         start_time = time.time()
