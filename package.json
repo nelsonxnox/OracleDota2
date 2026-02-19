@@ -1,17 +1,9 @@
 {
     "name": "oracledota2-root",
     "private": true,
-    "workspaces": [
-        "frontend"
-    ],
     "scripts": {
-        "frontend:dev": "npm run dev --workspace=frontend -- --no-turbo",
-        "frontend:build": "npm run build --workspace=frontend",
+        "frontend:dev": "cd frontend && npm run dev",
+        "frontend:build": "cd frontend && npm run build",
         "backend:dev": "cd backend && python main.py"
-    },
-    "overrides": {
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "styled-jsx": "^5.1.1"
     }
 }
