@@ -11,6 +11,7 @@ from services.stratz_service import stratz
 from services.live_manager import live_manager
 from services.token_service import token_service
 from services import question_limit_service
+from datetime import datetime
 
 import json
 import os
@@ -50,7 +51,97 @@ class ChatHistoryResponse(BaseModel):
 class TTSRequest(BaseModel):
     text: str
 
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+    dota_id: str
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+class AuthResponse(BaseModel):
+    uid: str
+    email: str
+    token: str = None
+    message: str = None
+    userData: dict = None
+
 # --- ROUTES ---
+
+@app.post("/api/auth/register", response_model=AuthResponse)
+async def register_user(request: RegisterRequest):
+    """Bypass regional blocks by creating user via Admin SDK"""
+    from firebase_admin import auth as admin_auth
+    try:
+        # 1. Create User in Firebase Auth
+        user = admin_auth.create_user(
+            email=request.email,
+            password=request.password
+        )
+        
+        # 2. Save extra data to Firestore
+        db = firebase_service.get_db()
+        user_data = {
+            "email": request.email,
+            "dota_id": request.dota_id,
+            "createdAt": datetime.now().isoformat(),
+            "uid": user.uid,
+            "termsAccepted": True,
+            "termsAcceptedAt": datetime.now().isoformat()
+        }
+        if db:
+            db.collection("users").document(user.uid).set(user_data)
+            
+        return AuthResponse(uid=user.uid, email=user.email, message="Registro exitoso", userData=user_data)
+    except Exception as e:
+        print(f"[AUTH] Error in registration: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/auth/login", response_model=AuthResponse)
+async def login_user(request: LoginRequest):
+    """Bypass regional blocks by proxying login to Google Identity Toolkit REST API"""
+    api_key = os.getenv("NEXT_PUBLIC_FIREBASE_API_KEY")
+    url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={api_key}"
+    
+    payload = {
+        "email": request.email,
+        "password": request.password,
+        "returnSecureToken": True
+    }
+    
+    try:
+        response = requests.post(url, json=payload)
+        data = response.json()
+        
+        if response.status_code != 200:
+            error_msg = data.get("error", {}).get("message", "Login failed")
+            raise HTTPException(status_code=401, detail=error_msg)
+            
+        uid = data["localId"]
+        email = data["email"]
+        token = data["idToken"]
+        
+        # Fetch Firestore Data via Admin SDK (Bypass client blocks)
+        user_data = None
+        db = firebase_service.get_db()
+        if db:
+            doc = db.collection("users").document(uid).get()
+            if doc.exists:
+                user_data = doc.to_dict()
+            
+        return AuthResponse(
+            uid=uid,
+            email=email,
+            token=token,
+            message="Login exitoso",
+            userData=user_data
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[AUTH] Error in login: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 @app.post("/tts")
 async def text_to_speech(request: TTSRequest):
@@ -66,9 +157,9 @@ async def text_to_speech(request: TTSRequest):
 def get_latest_version():
     """Returns the latest version info for Oracle Neural Link auto-update"""
     return {
-        "version": "1.3.0",
-        "download_url": f"{os.getenv('BACKEND_URL', 'http://localhost:8000')}/download/OracleNeuralLink.exe",
-        "changelog": "- Sistema de tokens con límite de partidas\n- Auto-actualización implementada\n- Mejoras en AI coach"
+        "version": "1.3.1",
+        "download_url": "https://firebasestorage.googleapis.com/v0/b/dota-2-oracle.firebasestorage.app/o/OracleNeuralLink.exe?alt=media",
+        "changelog": "- Sistema de tokens con límite de partidas\n- Auto-actualización implementada\n- Mejoras en AI coach (Roshan, Oro, Wards)"
     }
 
 
@@ -414,24 +505,6 @@ async def get_token_status(token: str):
         print(f"[TOKEN] Error getting token status: {e}")
         raise HTTPException(status_code=500, detail="Failed to get token status")
 
-# --- TTS ENDPOINT ---
-@app.post("/tts")
-async def text_to_speech(request: TTSRequest):
-    """Generates audio from text using Edge TTS"""
-    try:
-        audio_path = await tts_service.generate_tts(request.text)
-        
-        if not os.path.exists(audio_path):
-            raise HTTPException(status_code=500, detail="Audio generation failed")
-        
-        return Response(
-            content=open(audio_path, "rb").read(),
-            media_type="audio/mpeg",
-            headers={"Content-Disposition": f"attachment; filename=oracle_voice.mp3"}
-        )
-    except Exception as e:
-        print(f"[TTS] Error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
 
 # --- LIVE COACH WEBSOCKET ---
 
@@ -496,36 +569,35 @@ async def websocket_live_coaching(websocket: WebSocket, token: str):
     await websocket.accept()
     print(f"[WS] User {user_id} connected with token {token}")
     
-    # Initialize session for this user
-    session = live_manager.get_or_create_session(user_id)
-    session["token"] = token  # Store token in session for consumption tracking
+    # Register or reuse session keyed by token
+    live_manager.register_session(token, user_id)
+    session = live_manager.active_sessions[token]
+    session["token"] = token
     
     try:
         while True:
-            # Receive GSI data from client
             data = await websocket.receive_json()
-            
-            # Handle different message types
             msg_type = data.get("type")
-            
-            if msg_type == "gsi":
-                # Process game state
-                response = await live_manager.process_gsi_event(data.get("data", {}), session)
+
+            if msg_type in ("gsi_event", "gsi"):
+                # Full GSI event — pass the whole message so live_manager can unwrap it
+                response = await live_manager.process_gsi_event(token, data)
                 if response:
                     await websocket.send_json(response)
-            
+
             elif msg_type == "question":
-                # User asking a question via voice/text
-                question = data.get("question", "")
-                response = await live_manager._handle_question(question, data.get("data", {}), session)
+                # Voice/text question from the user
+                question = data.get("text", data.get("question", ""))
+                snapshot = session.get("last_snapshot", {})
+                response = await live_manager._handle_question(question, snapshot, session)
                 await websocket.send_json(response)
-            
+
             elif msg_type == "ping":
-                # Keep-alive
                 await websocket.send_json({"type": "pong"})
-                
+
     except WebSocketDisconnect:
         print(f"[WS] User {user_id} disconnected")
+        live_manager.active_sessions.pop(token, None)
     except Exception as e:
         print(f"[WS] Error for user {user_id}: {e}")
         await websocket.close(code=1011, reason="Internal server error")

@@ -8,11 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Sparkles, User, Mail, Lock, ArrowRight, Gamepad2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { auth } from "@/lib/firebase";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useAuth } from "@/context/AuthContext";
 
 import { Suspense } from "react";
 
 function LoginContent() {
+    const { login } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
     const [method, setMethod] = useState<"email" | "dota_id">("email");
@@ -35,25 +36,38 @@ function LoginContent() {
         setLoading(true);
 
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            // 1. Iniciar sesión en el Backend (Puente para saltar el bloqueo de Google)
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                const errorMsg = data.detail || "Error al conectar con el servidor.";
+                throw new Error(errorMsg);
+            }
+
+            // 2. Guardar sesión localmente
+            login({
+                uid: data.uid,
+                email: data.email,
+                token: data.token
+            }, data.userData);
+
             router.push("/dashboard");
         } catch (err: any) {
             console.error("Error en login:", err);
-            setError("Credenciales inválidas. Por favor verifica tu correo y contraseña.");
+            setError(err.message || "Credenciales inválidas o servidor en mantenimiento.");
         } finally {
             setLoading(false);
         }
     };
 
-    const handleGoogleLogin = async () => {
-        const provider = new GoogleAuthProvider();
-        try {
-            await signInWithPopup(auth, provider);
-            router.push("/dashboard");
-        } catch (err: any) {
-            console.error("Error en Google login:", err);
-            setError("Error al iniciar sesión con Google.");
-        }
+    const handleGoogleLogin = () => {
+        setError("El inicio con Google no está disponible temporalmente por bloqueos regionales. Usa correo y contraseña.");
     };
 
     return (

@@ -122,6 +122,12 @@ class LiveCoachManager:
         if master_advice: return master_advice
 
         # 2. ROSHAN / AEGIS LOGIC
+        roshan_alert = self._check_roshan_aegis(items, game_time, session)
+        if roshan_alert: return roshan_alert
+
+        # 3. GOLD ALERT (Threshold: 2000g)
+        gold_alert = self._check_gold_threshold(player, items, session)
+        if gold_alert: return gold_alert
 
         # 4. DEATH ANALYSIS
         was_alive = session.get("hero_alive", True)
@@ -134,8 +140,8 @@ class LiveCoachManager:
         session["hero_alive"] = is_alive
 
         # 5. WARD DESTRUCTION DETECTION (Safe heuristic)
-        ward_alert = self._check_wards(items, game_time, session)
-        if ward_alert: return ward_alert
+        # ward_alert = self._check_wards(items, game_time, session)
+        # if ward_alert: return ward_alert
 
         # 6. CRITICAL HP WATCHER
         max_health = hero.get("max_health", 100)
@@ -148,6 +154,18 @@ class LiveCoachManager:
         elif health_percent > 30:
             session["low_hp_warned"] = False
 
+        return None
+
+    def _check_gold_threshold(self, player: dict, items: dict, session: dict) -> Optional[dict]:
+        """Warns the user if they are hoarding gold (>2000)."""
+        gold = player.get("gold", 0)
+        if gold > 2800:
+            current_level = session.get("gold_warning_level", 0)
+            if current_level < 1:
+                session["gold_warning_level"] = 1
+                return {"type": "warning", "text": "Tienes mucho oro acumulado. Considera comprar tu siguiente item clave."}
+        elif gold < 1000:
+            session["gold_warning_level"] = 0
         return None
     
     def _generate_welcome_message(self, hero: dict, session: dict) -> dict:
@@ -179,21 +197,24 @@ Funciones: Alertas de tiempos, consejos personales cada tres minutos, análisis 
         return {"type": "advice", "text": welcome_text}
 
     def _detect_role(self, hero: dict, items: dict) -> str:
-        """Simple heuristic to guess role based on hero name."""
+        """Heuristic to guess role based on hero name."""
         name = hero.get("name", "").replace("npc_dota_hero_", "")
-        # Very basic DB - extend as needed
-        pos1 = ["anti_mage", "juggernaut", "phantom_assassin", "ursa", "luna", "drow_ranger", "spectre", "faceless_void"]
-        pos2 = ["invoker", "sf", "storm_spirit", "tinker", "queenofpain", "puck", "ember_spirit", "zeus"]
-        pos3 = ["axe", "centaur", "tidehunter", "bristleback", "mars", "legion_commander", "slardar"]
-        pos4 = ["pudge", "mirana", "earthshaker", "tusk", "rubick", "skywrath_mage"]
-        pos5 = ["crystal_maiden", "lion", "witch_doctor", "dazzle", "oracle", "lich", "jakiro"]
         
-        if name in pos1: return "Posición Uno (Hard Carry)"
-        if name in pos2: return "Medio Juego (Midlaner)"
-        if name in pos3: return "El Sufridor (Offlaner)"
-        if name in pos4: return "Soporte (Posición 4)"
-        if name in pos5: return "Soporte Duro (Posición 5)"
-        return "Héroe"
+        roles = {
+            "p1": ["anti_mage", "juggernaut", "phantom_assassin", "ursa", "luna", "drow_ranger", "spectre", "faceless_void", "monkey_king", "terrorblade", "slark", "medusa", "chaos_knight", "morphling", "sven", "sniper", "lifestealer", "muerta"],
+            "p2": ["invoker", "nevermore", "storm_spirit", "tinker", "queenofpain", "puck", "ember_spirit", "zeus", "templar_assassin", "lina", "void_spirit", "leshrac", "pango", "kunkka", "meepo", "arc_warden"],
+            "p3": ["axe", "centaur", "tidehunter", "bristleback", "mars", "legion_commander", "slardar", "doom_bringer", "beastmaster", "night_stalker", "viper", "razor", "dawnbreaker", "dark_seer", "underlord", "magnus"],
+            "p4": ["pudge", "mirana", "earthshaker", "tusk", "rubick", "skywrath_mage", "bounty_hunter", "spirit_breaker", "weaver", "venomancer", "enchantress", "clinkz", "nyx_assassin", "hoodwink"],
+            "p5": ["crystal_maiden", "lion", "witch_doctor", "dazzle", "oracle", "lich", "jakiro", "bane", "shadow_shaman", "treant", "ogre_magi", "disruptor", "undying", "warlock", "keeper_of_the_light", "io", "abaddon"]
+        }
+        
+        if name in roles["p1"]: return "Posición 1 (Hard Carry)"
+        if name in roles["p2"]: return "Posición 2 (Midlaner)"
+        if name in roles["p3"]: return "Posición 3 (Offlaner)"
+        if name in roles["p4"]: return "Posición 4 (Soft Support)"
+        if name in roles["p5"]: return "Posición 5 (Hard Support)"
+        
+        return "Héroe (Rol Versátil)"
 
     def _check_timings(self, game_time: int, session: dict) -> Optional[dict]:
         warning_window = 20
@@ -333,12 +354,17 @@ Funciones: Alertas de tiempos, consejos personales cada tres minutos, análisis 
         return None
 
     def _check_wards(self, items: dict, game_time: int, session: dict) -> Optional[dict]:
-        """Very basic safe detection: if a ward item count drops unexpectedly? 
-        Actually GSI sends ward count. If it drops and hero pos hasn't changed much, it was placed.
-        But detecting it BROKEN (deward) requires checking vision? 
-        Safety: Valve doesn't like auto-detection of enemy actions in fog.
-        We will skip 'enemy ward detection' to stay safe as per user request.
-        """
+        """Simple reminder to place wards if carrying them for too long."""
+        obs_count = items.get("slot7", {}).get("charges", 0) if items.get("slot7", {}).get("name") == "item_ward_observer" else 0
+        sent_count = items.get("slot8", {}).get("charges", 0) if items.get("slot8", {}).get("name") == "item_ward_sentry" else 0
+        
+        total_wards = obs_count + sent_count
+        if total_wards >= 2:
+            last_ward_warn = session.get("last_ward_warning_min", 0)
+            current_min = game_time // 60
+            if current_min > 5 and current_min - last_ward_warn >= 4:
+                session["last_ward_warning_min"] = current_min
+                return {"type": "advice", "text": "Tienes varios wards en el inventario. Busca un buen lugar para dar visión al equipo."}
         return None
 
     async def _analyze_death(self, data: dict, session: dict) -> dict:

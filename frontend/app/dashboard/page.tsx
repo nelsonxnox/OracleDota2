@@ -16,7 +16,7 @@ import DonationPanel from "@/components/DonationPanel";
 import PlayerStatsCard from "@/components/PlayerStatsCard";
 
 export default function DashboardPage() {
-    const { user, userData, loading } = useAuth();
+    const { user, userData, loading, logout } = useAuth();
     const router = useRouter();
     const [searchId, setSearchId] = useState("");
     const [progress, setProgress] = useState(0);
@@ -46,7 +46,7 @@ export default function DashboardPage() {
     };
 
     const handleLogout = async () => {
-        await signOut(auth);
+        logout();
         router.push("/");
     };
 

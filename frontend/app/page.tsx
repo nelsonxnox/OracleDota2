@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, Search, History, Shield, Info, Swords, ArrowRight, Lock, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/lib/firebase";
-import { signOut } from "firebase/auth";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import { User as UserIcon } from "lucide-react";
 import DonationPanel from "@/components/DonationPanel";
@@ -17,15 +15,15 @@ import DonationPanel from "@/components/DonationPanel";
 export default function Home() {
   const [searchId, setSearchId] = useState("");
   const router = useRouter();
-  const { user, loading } = useAuth();
+  const { user, loading, logout } = useAuth();
 
   const handleSearch = () => {
     if (!searchId) return;
     router.push(`/dashboard/analysis?matchId=${searchId}`);
   };
 
-  const handleLogout = async () => {
-    await signOut(auth);
+  const handleLogout = () => {
+    logout();
   };
 
   if (loading) return <LoadingScreen progress={50} />;

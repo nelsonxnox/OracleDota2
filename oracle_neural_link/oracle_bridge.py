@@ -19,8 +19,8 @@ import keyboard
 from concurrent.futures import ThreadPoolExecutor
 
 # Configuration
-CURRENT_VERSION = "1.3.0"  # Update this when releasing new versions
-LOCAL_MODE = True # Set to False to connect to Render (Production)
+CURRENT_VERSION = "1.3.1"  
+LOCAL_MODE = True # PRODUCTION DEFAULT: Set to False for official release
 BACKEND_HOST = "localhost:8000" if LOCAL_MODE else os.getenv("ORACLE_BACKEND_HOST", "oracledota2.onrender.com")
 BACKEND_HTTP_PROTOCOL = "http" if LOCAL_MODE else "https"
 BACKEND_WS_PROTOCOL = "ws" if LOCAL_MODE else "wss"
@@ -30,6 +30,16 @@ UPDATE_CHECK_URL = f"{BACKEND_API_URL}/api/version"
 GSI_PORT = 3000
 VOSK_MODEL_PATH = "vosk-model-small-es-0.42"
 CONFIG_FILE = "oracle_config.json"
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 # Global State
 current_token = None  # Load from config file
@@ -183,7 +193,7 @@ class OracleBridge:
         self.ws = None
         self.listening = False
         self.mic_queue = queue.Queue()
-        self.recognizer = KaldiRecognizer(model, 16000)
+        self.recognizer = KaldiRecognizer(model, 16000) if model else None
 
     async def connect(self):
         global status_message
@@ -279,7 +289,9 @@ class OracleBridge:
 
     def listen_mic(self):
         """Records from mic until silence or manually stopped."""
-        if not model: return None
+        if not model or not self.recognizer: 
+            print("[MIC] Error: Modelo Vosk no cargado.")
+            return None
         
         print("[MIC] Listening...")
         with sd.RawInputStream(samplerate=16000, blocksize=8000, dtype='int16',
@@ -465,20 +477,33 @@ class App(tk.Tk):
     def load_assets(self):
         """Loads images using Pillow."""
         try:
-            # 1. Background
-            bg_path = os.path.join("..", "frontend", "public", "dota2_oracle_bg.png")
-            if os.path.exists(bg_path):
-                pil_img = Image.open(bg_path).convert("RGBA")
-                pil_img = pil_img.resize((900, 650), Image.Resampling.LANCZOS)
-                self.assets["bg"] = ImageTk.PhotoImage(pil_img)
-            else:
-                print(f"[UI] BG not found at {bg_path}")
+            # 1. Background (Try multiple locations)
+            # When compiled as EXE, we bundle assets in 'assets/'
+            bg_locations = [
+                resource_path("dota2_oracle_bg.png"),
+                resource_path("assets/dota2_oracle_bg.png"),
+                os.path.join("..", "frontend", "public", "dota2_oracle_bg.png")
+            ]
+            
+            for path in bg_locations:
+                if os.path.exists(path):
+                    pil_img = Image.open(path).convert("RGBA")
+                    pil_img = pil_img.resize((900, 650), Image.Resampling.LANCZOS)
+                    self.assets["bg"] = ImageTk.PhotoImage(pil_img)
+                    print(f"[UI] BG loaded from {path}")
+                    break
 
             # 2. Icon
-            icon_path = os.path.join("..", "frontend", "public", "logo.png")
-            if os.path.exists(icon_path):
-                icon_img = Image.open(icon_path)
-                self.assets["icon"] = ImageTk.PhotoImage(icon_img)
+            icon_locations = [
+                resource_path("logo.png"),
+                resource_path("assets/logo.png"),
+                os.path.join("..", "frontend", "public", "logo.png")
+            ]
+            for path in icon_locations:
+                if os.path.exists(path):
+                    icon_img = Image.open(path)
+                    self.assets["icon"] = ImageTk.PhotoImage(icon_img)
+                    break
         except Exception as e:
             print(f"[UI] Asset Load Error: {e}")
 
@@ -577,11 +602,17 @@ class App(tk.Tk):
                      # ("chat_msg", sender, text, tag)
                      self.append_chat(task[1], task[2], task[3])
                      
-        except queue.Empty:
+        except (tk.TclError, RuntimeError):
+            # Safe ignore if UI is closing or already destroyed
             pass
+        except Exception as e:
+            print(f"[UI] Queue Error: {e}")
         
         if self.running:
-            self.after(100, self.check_queue)
+            try:
+                self.after(100, self.check_queue)
+            except:
+                pass
 
     def on_closing(self):
         self.running = False
@@ -625,12 +656,13 @@ async def main():
     # inside loop: app.update()
     
     # Let's keep the existing loop logic but use the Queue properly
-    while app.running:
+    while app and app.running:
         try:
-            # app.update_gui() # Replaced by internal check_queue
             app.update() # Process Tkinter events
             await asyncio.sleep(0.01)
-        except tk.TclError:
+        except (tk.TclError, RuntimeError):
+            # Window was likely closed
+            if app: app.running = False
             break
         except Exception as e:
             print(f"[UI] Loop Error: {e}")

@@ -1,18 +1,19 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+const path = require('path');
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
-]);
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // output: 'export', // Desactivado para rutas dinámicas
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
+  webpack: (config) => {
+    // Esto asegura que use el React de la carpeta frontend
+    config.resolve.alias['react'] = path.resolve(__dirname, 'node_modules', 'react');
+    config.resolve.alias['react-dom'] = path.resolve(__dirname, 'node_modules', 'react-dom');
+    return config;
+  },
+  // La sección 'experimental' con 'lucide-react' HA SIDO ELIMINADA para evitar el conflicto.
+};
 
-export default eslintConfig;
+module.exports = nextConfig;

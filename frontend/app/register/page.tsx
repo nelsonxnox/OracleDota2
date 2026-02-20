@@ -38,33 +38,34 @@ export default function RegisterPage() {
             return;
         }
 
-        setLoading(true);
         try {
-            // 1. Crear usuario en Firebase Auth
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+            // Check if server is waking up (optional timeout or just clear state)
+            setLoading(true);
+            setError("");
 
-            // 2. Guardar datos adicionales en Firestore
-            await setDoc(doc(db, "users", user.uid), {
-                email: email,
-                dota_id: dotaId,
-                createdAt: new Date().toISOString(),
-                uid: user.uid,
-                termsAccepted: true,
-                termsAcceptedAt: new Date().toISOString()
+            // 1. Crear usuario en el Backend (Puente para saltar el bloqueo de Google)
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/auth/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    dota_id: dotaId
+                })
             });
 
-            // 3. Redirigir al dashboard o login
+            const data = await response.json();
+
+            if (!response.ok) {
+                const errorMsg = data.detail || "Error al conectar con el servidor. Puede que esté despertando, intenta de nuevo en un momento.";
+                throw new Error(errorMsg);
+            }
+
+            // 2. Redirigir al login
             router.push("/login?registered=true");
         } catch (err: any) {
             console.error("Error en registro:", err);
-            if (err.code === "auth/email-already-in-use") {
-                setError("El correo ya está en uso.");
-            } else if (err.code === "auth/weak-password") {
-                setError("La contraseña es muy débil (mínimo 6 caracteres).");
-            } else {
-                setError("Ocurrió un error al registrar. Inténtalo de nuevo.");
-            }
+            setError(err.message || "Ocurrió un error al registrar. Inténtalo de nuevo.");
         } finally {
             setLoading(false);
         }

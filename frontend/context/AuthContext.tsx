@@ -1,52 +1,68 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth, db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { createContext, useContext, useEffect, useState } from "react";
+
+interface User {
+    uid: string;
+    email: string;
+    token?: string;
+}
 
 interface AuthContextType {
     user: User | null;
+    userData: any;
     loading: boolean;
-    userData: any | null;
+    login: (userData: User, extraData?: any) => void;
+    logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType>({
-    user: null,
-    loading: true,
-    userData: null
-});
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
-    const [userData, setUserData] = useState<any | null>(null);
+    const [userData, setUserData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                setUser(user);
-                // Fetch extra data from Firestore
-                const docRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    setUserData(docSnap.data());
-                }
-            } else {
-                setUser(null);
-                setUserData(null);
+        const storedUser = localStorage.getItem("oracle_user");
+        const storedData = localStorage.getItem("oracle_user_data");
+        if (storedUser) {
+            try {
+                setUser(JSON.parse(storedUser));
+                if (storedData) setUserData(JSON.parse(storedData));
+            } catch (e) {
+                localStorage.removeItem("oracle_user");
+                localStorage.removeItem("oracle_user_data");
             }
-            setLoading(false);
-        });
-
-        return () => unsubscribe();
+        }
+        setLoading(false);
     }, []);
 
+    const login = (userData: User, extraData: any = null) => {
+        setUser(userData);
+        setUserData(extraData);
+        localStorage.setItem("oracle_user", JSON.stringify(userData));
+        if (extraData) localStorage.setItem("oracle_user_data", JSON.stringify(extraData));
+    };
+
+    const logout = () => {
+        setUser(null);
+        setUserData(null);
+        localStorage.removeItem("oracle_user");
+        localStorage.removeItem("oracle_user_data");
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loading, userData }}>
+        <AuthContext.Provider value={{ user, userData, loading, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
-};
+}
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error("useAuth must be used within an AuthProvider");
+    }
+    return context;
+}

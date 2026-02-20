@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 
 export default function LiveCoachCard() {
     const handleDownload = () => {
-        // Production backend URL
-        window.location.href = "https://oracledota2.onrender.com/download/OracleNeuralLink.exe";
+        // Updated to Firebase Storage for permanent hosting (Render is ephemeral)
+        window.location.href = "https://firebasestorage.googleapis.com/v0/b/dota-2-oracle.firebasestorage.app/o/OracleNeuralLink.exe?alt=media";
     };
 
     return (
