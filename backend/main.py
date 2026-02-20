@@ -74,6 +74,9 @@ async def register_user(request: RegisterRequest):
     """Bypass regional blocks by creating user via Admin SDK"""
     from firebase_admin import auth as admin_auth
     try:
+        # 0. Ensure Firebase is initialized
+        db = firebase_service.get_db()
+        
         # 1. Create User in Firebase Auth
         user = admin_auth.create_user(
             email=request.email,
@@ -81,7 +84,6 @@ async def register_user(request: RegisterRequest):
         )
         
         # 2. Save extra data to Firestore
-        db = firebase_service.get_db()
         user_data = {
             "email": request.email,
             "dota_id": request.dota_id,
@@ -122,9 +124,11 @@ async def login_user(request: LoginRequest):
         email = data["email"]
         token = data["idToken"]
         
+        # Ensure Firebase is initialized
+        db = firebase_service.get_db()
+        
         # Fetch Firestore Data via Admin SDK (Bypass client blocks)
         user_data = None
-        db = firebase_service.get_db()
         if db:
             doc = db.collection("users").document(uid).get()
             if doc.exists:
