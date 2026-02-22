@@ -94,16 +94,37 @@ async def register_user(request: RegisterRequest):
         }
         if db:
             db.collection("users").document(user.uid).set(user_data)
+
+        # 3. Auto-generate a live coaching token (2 partidas gratis)
+        live_token = None
+        try:
+            live_token = token_service.generate_live_token(
+                user_id=user.uid,
+                matches=2,
+                plan_type="free"
+            )
+            user_data["live_token"] = live_token
+            print(f"[AUTH] Token generado para nuevo usuario {user.uid}: {live_token}")
+        except Exception as token_err:
+            print(f"[AUTH] Warning: No se pudo generar token para {user.uid}: {token_err}")
             
-        return AuthResponse(uid=user.uid, email=user.email, message="Registro exitoso", userData=user_data)
+        return AuthResponse(
+            uid=user.uid,
+            email=user.email,
+            message="Registro exitoso. Tu token de coaching en vivo ha sido generado.",
+            userData=user_data
+        )
     except Exception as e:
         print(f"[AUTH] Error in registration: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
+
 @app.post("/api/auth/login", response_model=AuthResponse)
 async def login_user(request: LoginRequest):
     """Bypass regional blocks by proxying login to Google Identity Toolkit REST API"""
-    api_key = os.getenv("NEXT_PUBLIC_FIREBASE_API_KEY")
+    api_key = os.getenv("FIREBASE_API_KEY")
+    if not api_key:
+        raise HTTPException(status_code=500, detail="Firebase API Key no configurada en el servidor. Contacta al administrador.")
     url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={api_key}"
     
     payload = {
