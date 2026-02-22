@@ -36,7 +36,7 @@ Al registrarte recibirás automáticamente un **token de acceso** válido para *
 > Tu token aparece en el Dashboard → sección "Live Coaching"
 
 ### 2. Descarga e instala el programa
-- Descarga `OracleNeuralLink.exe` (≈ 29 MB)
+- **[DESCARGAR ORACLE NEURAL LINK (Google Drive)](https://drive.google.com/uc?export=download&id=10ryKp5y3s0JnMAtfdZPvEo1-OY-1jrOY)** (≈ 29 MB)
 - No requiere instalación — ejecuta el `.exe` directamente
 
 ### 3. Instala la configuración de Dota 2 (GSI)

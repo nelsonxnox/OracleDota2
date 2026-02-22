@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 
 export default function LiveCoachCard() {
     const handleDownload = () => {
-        // Updated to Firebase Storage for permanent hosting (Render is ephemeral)
-        window.location.href = "https://firebasestorage.googleapis.com/v0/b/dota-2-oracle.firebasestorage.app/o/OracleNeuralLink.exe?alt=media";
+        // Direct download link from user's Google Drive
+        window.location.href = "https://drive.google.com/uc?export=download&id=10ryKp5y3s0JnMAtfdZPvEo1-OY-1jrOY";
     };
 
     return (
