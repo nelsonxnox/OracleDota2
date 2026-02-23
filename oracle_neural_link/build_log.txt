@@ -1,0 +1,9774 @@
+﻿python : 464 INFO: 
+PyInstaller: 6.17.0, 
+contrib hooks: 
+2025.11
+En línea: 1 
+Carácter: 1
++ python -m 
+PyInstaller OracleNeu
+ralLink.spec --clean 
+2>&1 | Out-File - ...
++ ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: (464 INF   
+ O: PyIns... hook    
+s: 2025.11:Strin    
+g) [], RemoteExc    
+eption
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+465 INFO: Python: 
+3.14.2
+512 INFO: Platform: W
+indows-11-10.0.22631-
+SP0
+512 INFO: Python 
+environment: C:\Users
+\NelsonXboX\AppData\L
+ocal\Python\pythoncor
+e-3.14-64
+516 INFO: Removing 
+temporary files and 
+cleaning cache in C:\
+Users\NelsonXboX\AppD
+ata\Local\pyinstaller
+518 INFO: Module 
+search paths 
+(PYTHONPATH):
+['D:\\Proyectos de In
+formatica\\proyecto 
+de dota 2\\oracle_neu
+ral_link',
+ 'C:\\Users\\NelsonXb
+oX\\AppData\\Local\\P
+ython\\pythoncore-3.1
+4-64\\python314.zip',
+ 'C:\\Users\\NelsonXb
+oX\\AppData\\Local\\P
+ython\\pythoncore-3.1
+4-64\\DLLs',
+ 'C:\\Users\\NelsonXb
+oX\\AppData\\Local\\P
+ython\\pythoncore-3.1
+4-64\\Lib',
+ 'C:\\Users\\NelsonXb
+oX\\AppData\\Local\\P
+ython\\pythoncore-3.1
+4-64',
+ 'C:\\Users\\NelsonXb
+oX\\AppData\\Local\\P
+ython\\pythoncore-3.1
+4-64\\Lib\\site-packa
+ges',
+ 'C:\\Users\\NelsonXb
+oX\\AppData\\Local\\P
+ython\\pythoncore-3.1
+4-64\\Lib\\site-packa
+ges\\win32',
+ 'C:\\Users\\NelsonXb
+oX\\AppData\\Local\\P
+ython\\pythoncore-3.1
+4-64\\Lib\\site-packa
+ges\\win32\\lib',
+ 'C:\\Users\\NelsonXb
+oX\\AppData\\Local\\P
+ython\\pythoncore-3.1
+4-64\\Lib\\site-packa
+ges\\Pythonwin',
+ 'D:\\Proyectos de In
+formatica\\proyecto 
+de dota 2\\oracle_neu
+ral_link']
+1506 INFO: Appending 
+'datas' from .spec
+1508 INFO: checking 
+Analysis
+1508 INFO: Building 
+Analysis because 
+Analysis-00.toc is 
+non existent
+1508 INFO: Looking 
+for Python shared 
+library...
+1508 INFO: Using 
+Python shared 
+library: C:\Users\Nel
+sonXboX\AppData\Local
+\Python\pythoncore-3.
+14-64\python314.dll
+1508 INFO: Running 
+Analysis 
+Analysis-00.toc
+1508 INFO: Target 
+bytecode 
+optimization level: 2
+1509 INFO: 
+Initializing module 
+dependency graph...
+1534 INFO: 
+Initializing module 
+graph hook caches...
+1762 INFO: Analyzing 
+modules for 
+base_library.zip ...
+6493 INFO: 
+Processing standard 
+module hook 
+'hook-encodings.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks'
+8168 INFO: 
+Processing standard 
+module hook 
+'hook-pickle.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks'
+9742 INFO: 
+Processing standard 
+module hook 
+'hook-difflib.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks'
+9821 INFO: 
+Processing standard 
+module hook 
+'hook-heapq.py' from 
+'C:\\Users\\NelsonXbo
+X\\AppData\\Local\\Py
+thon\\pythoncore-3.14
+-64\\Lib\\site-packag
+es\\PyInstaller\\hook
+s'
+23811 INFO: Caching 
+module dependency 
+graph...
+23938 INFO: 
+Analyzing 
+D:\Proyectos de 
+Informatica\proyecto 
+de dota 2\oracle_neur
+al_link\oracle_bridge
+.py
+24868 INFO: 
+Processing standard 
+module hook 'hook-mul
+tiprocessing.util.py'
+ from 'C:\\Users\\Nel
+sonXboX\\AppData\\Loc
+al\\Python\\pythoncor
+e-3.14-64\\Lib\\site-
+packages\\PyInstaller
+\\hooks'
+27246 INFO: 
+Processing standard 
+module hook 
+'hook-sysconfig.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks'
+27304 INFO: 
+Processing standard 
+module hook 
+'hook-_ctypes.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks'
+30391 INFO: 
+Processing 
+pre-find-module-path 
+hook 
+'hook-tkinter.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks\\pre_find_modu
+le_path'
+30394 INFO: 
+TclTkInfo: 
+initializing cached 
+Tcl/Tk info...
+32138 INFO: 
+Processing standard 
+module hook 
+'hook-_tkinter.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks'
+32246 INFO: 
+Processing standard 
+module hook 
+'hook-PIL.py' from 'C
+:\\Users\\NelsonXboX\
+\AppData\\Local\\Pyth
+on\\pythoncore-3.14-6
+4\\Lib\\site-packages
+\\PyInstaller\\hooks'
+32756 INFO: 
+Processing standard 
+module hook 
+'hook-PIL.Image.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks'
+35027 INFO: 
+Processing standard 
+module hook 'hook-PIL
+.ImageFilter.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks'
+37351 INFO: 
+Processing standard 
+module hook 
+'hook-pyttsx3.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\_pyinstaller
+_hooks_contrib\\stdho
+oks'
+37472 INFO: 
+Processing standard 
+module hook 
+'hook-websockets.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\_pyinstaller
+_hooks_contrib\\stdho
+oks'
+39350 INFO: 
+Processing standard 
+module hook 
+'hook-platform.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks'
+40546 INFO: 
+Processing standard 
+module hook 
+'hook-urllib3.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\_pyinstaller
+_hooks_contrib\\stdho
+oks'
+41220 INFO: 
+Processing pre-safe-i
+mport-module hook 
+'hook-backports.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks\\pre_safe_impo
+rt_module'
+41225 INFO: 
+SetuptoolsInfo: 
+initializing cached 
+setuptools info...
+52257 INFO: 
+Setuptools: 
+'backports' appears 
+to be a full 
+setuptools-vendored 
+copy - creating 
+alias to 'setuptools.
+_vendor.backports'!
+52363 INFO: 
+Processing pre-safe-i
+mport-module hook 'ho
+ok-typing_extensions.
+py' from 'C:\\Users\\
+NelsonXboX\\AppData\\
+Local\\Python\\python
+core-3.14-64\\Lib\\si
+te-packages\\PyInstal
+ler\\hooks\\pre_safe_
+import_module'
+57473 INFO: 
+Processing standard 
+module hook 'hook-cha
+rset_normalizer.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\_pyinstaller
+_hooks_contrib\\stdho
+oks'
+58244 INFO: 
+Processing standard 
+module hook 'hook-cry
+ptography.py' from 'C
+:\\Users\\NelsonXboX\
+\AppData\\Local\\Pyth
+on\\pythoncore-3.14-6
+4\\Lib\\site-packages
+\\_pyinstaller_hooks_
+contrib\\stdhooks'
+61754 INFO: 
+hook-cryptography: 
+cryptography does 
+not seem to be using 
+dynamically linked 
+OpenSSL.
+64348 INFO: 
+Processing standard 
+module hook 
+'hook-bcrypt.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\_pyinstaller
+_hooks_contrib\\stdho
+oks'
+64723 INFO: 
+Processing standard 
+module hook 
+'hook-certifi.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\_pyinstaller
+_hooks_contrib\\stdho
+oks'
+65387 INFO: 
+Analyzing hidden 
+import 
+'pyttsx3.drivers'
+65389 INFO: 
+Analyzing hidden 
+import 'pyttsx3.drive
+rs.sapi5'
+66363 INFO: 
+Processing standard 
+module hook 'hook-com
+types.client.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\_pyinstaller
+_hooks_contrib\\stdho
+oks'
+70276 INFO: 
+Processing standard 
+module hook 
+'hook-pythoncom.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\_pyinstaller
+_hooks_contrib\\stdho
+oks'
+70723 INFO: 
+Processing standard 
+module hook 
+'hook-pywintypes.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\_pyinstaller
+_hooks_contrib\\stdho
+oks'
+70959 INFO: 
+Analyzing hidden 
+import 
+'websockets.legacy'
+70976 INFO: 
+Analyzing hidden 
+import 'websockets.le
+gacy.client'
+71435 INFO: 
+Processing module 
+hooks (post-graph 
+stage)...
+74361 INFO: 
+Processing standard 
+module hook 'hook-PIL
+.SpiderImagePlugin.py
+' from 'C:\\Users\\Ne
+lsonXboX\\AppData\\Lo
+cal\\Python\\pythonco
+re-3.14-64\\Lib\\site
+-packages\\PyInstalle
+r\\hooks'
+74727 INFO: 
+Processing standard 
+module hook 
+'hook-_tkinter.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks'
+74764 INFO: 
+Performing binary 
+vs. data 
+reclassification 
+(947 entries)
+89658 INFO: Looking 
+for ctypes DLLs
+90278 INFO: 
+Analyzing run-time 
+hooks ...
+90286 INFO: 
+Including run-time 
+hook 
+'pyi_rth_inspect.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks\\rthooks'
+90315 INFO: 
+Including run-time 
+hook 'pyi_rth_pythonc
+om.py' from 'C:\\User
+s\\NelsonXboX\\AppDat
+a\\Local\\Python\\pyt
+honcore-3.14-64\\Lib\
+\site-packages\\_pyin
+staller_hooks_contrib
+\\rthooks'
+90336 INFO: 
+Including run-time 
+hook 'pyi_rth_pywinty
+pes.py' from 'C:\\Use
+rs\\NelsonXboX\\AppDa
+ta\\Local\\Python\\py
+thoncore-3.14-64\\Lib
+\\site-packages\\_pyi
+nstaller_hooks_contri
+b\\rthooks'
+90340 INFO: 
+Including run-time 
+hook 'pyi_rth_cryptog
+raphy_openssl.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\_pyinstaller
+_hooks_contrib\\rthoo
+ks'
+90360 INFO: 
+Including run-time 
+hook 'pyi_rth__tkinte
+r.py' from 'C:\\Users
+\\NelsonXboX\\AppData
+\\Local\\Python\\pyth
+oncore-3.14-64\\Lib\\
+site-packages\\PyInst
+aller\\hooks\\rthooks
+'
+90384 INFO: 
+Including run-time 
+hook 
+'pyi_rth_pkgutil.py' 
+from 'C:\\Users\\Nels
+onXboX\\AppData\\Loca
+l\\Python\\pythoncore
+-3.14-64\\Lib\\site-p
+ackages\\PyInstaller\
+\hooks\\rthooks'
+90411 INFO: 
+Including run-time 
+hook 'pyi_rth_multipr
+ocessing.py' from 'C:
+\\Users\\NelsonXboX\\
+AppData\\Local\\Pytho
+n\\pythoncore-3.14-64
+\\Lib\\site-packages\
+\PyInstaller\\hooks\\
+rthooks'
+90528 INFO: Creating 
+base_library.zip...
+91262 INFO: Looking 
+for dynamic libraries
+92883 INFO: Extra 
+DLL search 
+directories 
+(AddDllDirectory): []
+92883 INFO: Extra 
+DLL search 
+directories (PATH): 
+[]
+95497 INFO: Warnings 
+written to 
+D:\Proyectos de 
+Informatica\proyecto 
+de dota 2\oracle_neur
+al_link\build\OracleN
+euralLink\warn-Oracle
+NeuralLink.txt
+95666 INFO: Graph 
+cross-reference 
+written to 
+D:\Proyectos de 
+Informatica\proyecto 
+de dota 2\oracle_neur
+al_link\build\OracleN
+euralLink\xref-Oracle
+NeuralLink.html
+95901 INFO: checking 
+PYZ
+95902 INFO: Building 
+PYZ because 
+PYZ-00.toc is non 
+existent
+95902 INFO: Building 
+PYZ (ZlibArchive) 
+D:\Proyectos de 
+Informatica\proyecto 
+de dota 2\oracle_neur
+al_link\build\OracleN
+euralLink\PYZ-00.pyz
+101202 INFO: 
+Building PYZ 
+(ZlibArchive) 
+D:\Proyectos de 
+Informatica\proyecto 
+de dota 2\oracle_neur
+al_link\build\OracleN
+euralLink\PYZ-00.pyz 
+completed 
+successfully.
+101301 INFO: 
+checking PKG
+101302 INFO: 
+Building PKG because 
+PKG-00.toc is non 
+existent
+101302 INFO: 
+Building PKG 
+(CArchive) 
+OracleNeuralLink.pkg
+101344 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+python314.dll
+101346 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\python
+314.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101401 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+pywin32_system32\pyth
+oncom314.dll
+101402 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\pywin3
+2_system32\\pythoncom
+314.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101430 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+pywin32_system32\pywi
+ntypes314.dll
+101432 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\pywin3
+2_system32\\pywintype
+s314.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101474 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_multiprocessing.pyd
+101477 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_multi
+processing.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101504 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_hashlib.pyd
+101506 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_hashl
+ib.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101534 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_socket.pyd
+101536 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_socke
+t.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101566 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+select.pyd
+101568 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\select
+.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101602 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+unicodedata.pyd
+101604 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\unicod
+edata.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101662 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_zstd.pyd
+101664 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_zstd.
+pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101694 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_lzma.pyd
+101696 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_lzma.
+pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101723 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_bz2.pyd
+101725 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_bz2.p
+yd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101754 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_ssl.pyd
+101756 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_ssl.p
+yd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101787 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_decimal.pyd
+101788 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_decim
+al.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101820 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_ctypes.pyd
+101821 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_ctype
+s.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101851 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+websockets\speedups.c
+p314-win_amd64.pyd
+101852 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\websoc
+kets\\speedups.cp314-
+win_amd64.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101882 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_uuid.pyd
+101883 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_uuid.
+pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101913 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_wmi.pyd
+101915 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_wmi.p
+yd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101945 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+win32\_win32sysloader
+.pyd
+101947 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\win32\
+\_win32sysloader.pyd'
+!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+101979 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_cffi_backend.cp314-w
+in_amd64.pyd
+101982 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_cffi_
+backend.cp314-win_amd
+64.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102076 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+cryptography\hazmat\b
+indings\_rust.pyd
+102079 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\crypto
+graphy\\hazmat\\bindi
+ngs\\_rust.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102109 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+bcrypt\_bcrypt.pyd
+102112 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\bcrypt
+\\_bcrypt.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102141 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+charset_normalizer\md
+__mypyc.cp314-win_amd
+64.pyd
+102143 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\charse
+t_normalizer\\md__myp
+yc.cp314-win_amd64.py
+d'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102172 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+charset_normalizer\md
+.cp314-win_amd64.pyd
+102174 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\charse
+t_normalizer\\md.cp31
+4-win_amd64.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102205 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_queue.pyd
+102207 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_queue
+.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102240 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+PIL\_imagingtk.cp314-
+win_amd64.pyd
+102241 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\PIL\\_
+imagingtk.cp314-win_a
+md64.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102277 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+PIL\_webp.cp314-win_a
+md64.pyd
+102279 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\PIL\\_
+webp.cp314-win_amd64.
+pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102339 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+PIL\_avif.cp314-win_a
+md64.pyd
+102340 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\PIL\\_
+avif.cp314-win_amd64.
+pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102373 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+PIL\_imagingcms.cp314
+-win_amd64.pyd
+102375 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\PIL\\_
+imagingcms.cp314-win_
+amd64.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102405 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+PIL\_imagingmath.cp31
+4-win_amd64.pyd
+102406 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\PIL\\_
+imagingmath.cp314-win
+_amd64.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102450 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+PIL\_imaging.cp314-wi
+n_amd64.pyd
+102452 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\PIL\\_
+imaging.cp314-win_amd
+64.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102483 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_tkinter.pyd
+102485 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_tkint
+er.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102516 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_overlapped.pyd
+102518 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_overl
+apped.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102548 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+_asyncio.pyd
+102550 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\_async
+io.pyd'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102582 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+VCRUNTIME140.dll
+102583 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\VCRUNT
+IME140.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102615 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-filesy
+stem-l1-1-0.dll
+102617 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-filesystem-l
+1-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102649 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-runtim
+e-l1-1-0.dll
+102651 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-runtime-l1-1
+-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102681 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-stdio-
+l1-1-0.dll
+102683 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-stdio-l1-1-0
+.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102714 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-locale
+-l1-1-0.dll
+102716 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-locale-l1-1-
+0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102746 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-heap-l
+1-1-0.dll
+102748 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-heap-l1-1-0.
+dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102793 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-math-l
+1-1-0.dll
+102795 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-math-l1-1-0.
+dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102826 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-proces
+s-l1-1-0.dll
+102829 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-process-l1-1
+-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102860 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-conver
+t-l1-1-0.dll
+102864 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-convert-l1-1
+-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102894 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-conio-
+l1-1-0.dll
+102897 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-conio-l1-1-0
+.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102926 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-enviro
+nment-l1-1-0.dll
+102927 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-environment-
+l1-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+102974 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-time-l
+1-1-0.dll
+102975 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-time-l1-1-0.
+dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103008 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-string
+-l1-1-0.dll
+103009 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-string-l1-1-
+0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103042 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+VCRUNTIME140_1.dll
+103044 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\VCRUNT
+IME140_1.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103074 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-crt-utilit
+y-l1-1-0.dll
+103076 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-crt-utility-l1-1
+-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103161 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+libcrypto-3.dll
+103164 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\libcry
+pto-3.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103202 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+libssl-3.dll
+103204 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\libssl
+-3.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103238 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+libffi-8.dll
+103239 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\libffi
+-8.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103272 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+python3.dll
+103274 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\python
+3.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103305 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-synch
+-l1-2-0.dll
+103306 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-synch-l1-2-
+0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103351 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+tcl86t.dll
+103353 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\tcl86t
+.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103399 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+tk86t.dll
+103401 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\tk86t.
+dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103441 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+ucrtbase.dll
+103442 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\ucrtba
+se.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103475 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+zlib1.dll
+103477 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\zlib1.
+dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103509 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-profi
+le-l1-1-0.dll
+103511 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-profile-l1-
+1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103544 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-util-
+l1-1-0.dll
+103545 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-util-l1-1-0
+.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103577 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-named
+pipe-l1-1-0.dll
+103578 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-namedpipe-l
+1-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103612 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-sysin
+fo-l1-2-0.dll
+103615 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-sysinfo-l1-
+2-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103648 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-proce
+ssthreads-l1-1-1.dll
+103649 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-processthre
+ads-l1-1-1.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103695 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-datet
+ime-l1-1-0.dll
+103698 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-datetime-l1
+-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103728 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-proce
+ssthreads-l1-1-0.dll
+103732 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-processthre
+ads-l1-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103763 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-strin
+g-l1-1-0.dll
+103766 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-string-l1-1
+-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103800 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-fiber
+s-l1-1-0.dll
+103802 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-fibers-l1-1
+-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103834 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-fiber
+s-l1-1-1.dll
+103835 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-fibers-l1-1
+-1.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103885 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-file-
+l1-2-0.dll
+103887 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-file-l1-2-0
+.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103922 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-kerne
+l32-legacy-l1-1-1.dll
+103924 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-kernel32-le
+gacy-l1-1-1.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103960 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-file-
+l1-1-0.dll
+103962 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-file-l1-1-0
+.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+103997 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-rtlsu
+pport-l1-1-0.dll
+104000 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-rtlsupport-
+l1-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104033 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-error
+handling-l1-1-0.dll
+104034 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-errorhandli
+ng-l1-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104066 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-local
+ization-l1-2-0.dll
+104068 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-localizatio
+n-l1-2-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104100 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-sysin
+fo-l1-1-0.dll
+104102 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-sysinfo-l1-
+1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104138 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-proce
+ssenvironment-l1-1-0.
+dll
+104139 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-processenvi
+ronment-l1-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104187 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-memor
+y-l1-1-0.dll
+104189 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-memory-l1-1
+-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104224 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-handl
+e-l1-1-0.dll
+104226 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-handle-l1-1
+-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104261 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-timez
+one-l1-1-0.dll
+104263 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-timezone-l1
+-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104311 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-debug
+-l1-1-0.dll
+104313 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-debug-l1-1-
+0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104345 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-file-
+l2-1-0.dll
+104347 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-file-l2-1-0
+.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104383 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-synch
+-l1-1-0.dll
+104385 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-synch-l1-1-
+0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104418 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-inter
+locked-l1-1-0.dll
+104420 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-interlocked
+-l1-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104455 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-conso
+le-l1-1-0.dll
+104457 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-console-l1-
+1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104491 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-libra
+ryloader-l1-1-0.dll
+104492 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-libraryload
+er-l1-1-0.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+104525 INFO: 
+Executing: strip C:\U
+sers\NelsonXboX\AppDa
+ta\Local\pyinstaller\
+bincache10py31464bit\
+api-ms-win-core-heap-
+l1-1-0.dll
+104527 WARNING: 
+Failed to run strip 
+on 'C:\\Users\\Nelson
+XboX\\AppData\\Local\
+\pyinstaller\\bincach
+e10py31464bit\\api-ms
+-win-core-heap-l1-1-0
+.dll'!
+Traceback (most 
+recent call last):
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\site-package
+s\PyInstaller\buildin
+g\utils.py", line 
+250, in process_colle
+cted_binary
+    p = 
+subprocess.run(
+        cmd,
+    ...<5 lines>...
+        
+encoding='utf-8',
+    )
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 554, in run
+    with 
+Popen(*popenargs, 
+**kwargs) as process:
+         ~~~~~^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1038, in 
+__init__
+    self._execute_chi
+ld(args, executable, 
+preexec_fn, 
+close_fds,
+    ~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^
+                     
+   pass_fds, cwd, 
+env,
+                     
+   
+^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                     
+   gid, gids, uid, 
+umask,
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+                     
+   
+start_new_session, 
+process_group)
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\Nels
+onXboX\AppData\Local\
+Python\pythoncore-3.1
+4-64\Lib\subprocess.p
+y", line 1552, in 
+_execute_child
+    hp, ht, pid, tid 
+= _winapi.CreateProce
+ss(executable, args,
+                     
+  ~~~~~~~~~~~~~~~~~~~
+~~^^^^^^^^^^^^^^^^^^
+                     
+        # no special 
+security
+                     
+        
+^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                     
+        cwd,
+                     
+        ^^^^
+                     
+        startupinfo)
+                     
+        ^^^^^^^^^^^^
+FileNotFoundError: 
+[WinError 2] El 
+sistema no puede 
+encontrar el archivo 
+especificado
+113246 INFO: 
+Building PKG 
+(CArchive) 
+OracleNeuralLink.pkg 
+completed 
+successfully.
+113324 INFO: 
+Bootloader C:\Users\N
+elsonXboX\AppData\Loc
+al\Python\pythoncore-
+3.14-64\Lib\site-pack
+ages\PyInstaller\boot
+loader\Windows-64bit-
+intel\runw.exe
+113324 INFO: 
+checking EXE
+113325 INFO: 
+Building EXE because 
+EXE-00.toc is non 
+existent
+113325 INFO: 
+Building EXE from 
+EXE-00.toc
+113344 INFO: Copying 
+bootloader EXE to 
+D:\Proyectos de 
+Informatica\proyecto 
+de dota 2\oracle_neur
+al_link\dist\OracleNe
+uralLink.exe
+113580 INFO: Copying 
+icon to EXE
+113711 INFO: Copying 
+0 resources to EXE
+113711 INFO: 
+Embedding manifest 
+in EXE
+115785 INFO: 
+Appending PKG 
+archive to EXE
+116032 INFO: Fixing 
+EXE headers
+125616 INFO: 
+Building EXE from 
+EXE-00.toc completed 
+successfully.
+125692 INFO: Build 
+complete! The 
+results are 
+available in: 
+D:\Proyectos de 
+Informatica\proyecto 
+de dota 2\oracle_neur
+al_link\dist

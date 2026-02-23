@@ -33,10 +33,8 @@ if os.path.exists("OracleNeuralLink.spec"):
 print("\n[2/4] Building executable with PyInstaller...")
 cmd = [
     "python", "-m", "PyInstaller",
-    "--onefile",
-    "--windowed",
-    "--name", "OracleNeuralLink",
-    "oracle_bridge.py"
+    "--clean",
+    "OracleNeuralLink.spec"
 ]
 
 result = subprocess.run(cmd, capture_output=True, text=True)

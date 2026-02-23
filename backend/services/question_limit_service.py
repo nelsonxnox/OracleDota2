@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from firebase_admin import firestore
 
 # Quotas
-FREE_DAILY_LIMIT = 20
+FREE_DAILY_LIMIT = 3
 DONOR_DAILY_LIMIT = 20
 
 def check_question_limit(user_id: str, db) -> dict:

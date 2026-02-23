@@ -1,5 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
-# OracleNeuralLink.spec — Build optimizado SIN voz/micrófono
+# OracleNeuralLink.spec — Versión Completa (Pillow + Requests)
 
 block_cipher = None
 
@@ -8,39 +8,27 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[
-        # Imágenes para la UI
         ('assets/*', 'assets'),
     ],
     hiddenimports=[
-        # pyttsx3 (TTS — solo salida de voz del coach)
         'pyttsx3',
         'pyttsx3.drivers',
         'pyttsx3.drivers.sapi5',
-        # WebSockets
         'websockets',
         'websockets.legacy',
         'websockets.legacy.client',
-        # Tkinter extra
         'tkinter.scrolledtext',
+        'PIL',
+        'PIL._tkinter_finder',
+        'requests',
     ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[
-        # Librerías científicas/ML pesadas — no usadas
         'numpy', 'pandas', 'scipy', 'matplotlib',
         'sklearn', 'tensorflow', 'torch', 'cv2',
-        'IPython', 'notebook', 'jupyter',
-        # Audio de entrada (voz) — eliminada
-        'sounddevice', 'pyaudio', 'vosk',
-        # Input de teclado — eliminado
-        'keyboard',
-        # Test frameworks
-        'pytest', 'unittest', 'doctest',
-        # Otros innecesarios
-        'xml', 'xmlrpc', 'pydoc',
-        'tkinter.test', 'lib2to3',
-        'distutils', 'setuptools',
+        'sounddevice', 'pyaudio', 'vosk', 'keyboard',
     ],
     noarchive=False,
     optimize=2,
@@ -57,14 +45,9 @@ exe = EXE(
     name='OracleNeuralLink',
     debug=False,
     bootloader_ignore_signals=False,
-    strip=True,    # Eliminar símbolos de debug
-    upx=True,      # Comprimir con UPX
+    strip=True,
+    upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False, # Sin consola
-    disable_windowed_traceback=False,
-    argv_emulation=False,
-    target_arch=None,
-    codesign_identity=None,
-    entitlements_file=None,
+    console=False,
 )

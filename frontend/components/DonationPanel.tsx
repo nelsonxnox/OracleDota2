@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Heart, Bitcoin, Coffee } from "lucide-react";
+import { Check, Heart, Bitcoin, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -16,9 +16,9 @@ export default function DonationPanel() {
             icon: Check,
             color: "from-gray-600 to-gray-800",
             features: [
-                "Acceso completo al AI Coach",
-                "Análisis de partidas ilimitado",
-                "Acceso a estadísticas públicas"
+                "3 consultas diarias de IA",
+                "Análisis de perfiles básico",
+                "Estadísticas públicas"
             ],
             buttonText: "Plan Actual",
             disabled: true
@@ -31,11 +31,11 @@ export default function DonationPanel() {
             color: "from-teal-600 to-cyan-600",
             popular: true,
             features: [
-                "Apoya el mantenimiento del servidor",
-                "Badge de Donador en tu perfil",
-                "Acceso anticipado a nuevas funciones",
-                "Tu nombre en la página de créditos",
-                "Nuestro agradecimiento eterno"
+                "Hasta 20 consultas diarias",
+                "Prioridad en servidores de IA",
+                "Acceso completo a RAG 2.0",
+                "Badge VIP en perfil",
+                "Soporte prioritario"
             ],
             buttonText: "Apoyar Proyecto",
             action: () => router.push("/donate")
@@ -117,18 +117,18 @@ export default function DonationPanel() {
             <div className="max-w-4xl mx-auto px-4">
                 <div className="bg-zinc-900/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
                     <h3 className="text-xl font-bold text-center mb-4 text-zinc-300">Métodos de Donación</h3>
-                    <div className="flex justify-center gap-8 flex-wrap">
-                        <div className="text-center">
-                            <Heart className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-                            <p className="text-sm text-zinc-400">Patreon</p>
+                    <div className="flex justify-center gap-12 flex-wrap">
+                        <div className="text-center group transition-all hover:scale-110">
+                            <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20 mb-2 mx-auto">
+                                <Zap className="w-6 h-6 text-blue-500" />
+                            </div>
+                            <p className="text-[10px] text-zinc-500 font-black uppercase tracking-widest">QvaPay</p>
                         </div>
-                        <div className="text-center">
-                            <Bitcoin className="w-8 h-8 text-teal-500 mx-auto mb-2" />
-                            <p className="text-sm text-zinc-400">Crypto</p>
-                        </div>
-                        <div className="text-center">
-                            <Coffee className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-                            <p className="text-sm text-zinc-400">Ko-fi</p>
+                        <div className="text-center group transition-all hover:scale-110">
+                            <div className="w-12 h-12 bg-teal-500/10 rounded-xl flex items-center justify-center border border-teal-500/20 mb-2 mx-auto">
+                                <Bitcoin className="w-6 h-6 text-teal-500" />
+                            </div>
+                            <p className="text-[10px] text-zinc-500 font-black uppercase tracking-widest">Crypto Directo</p>
                         </div>
                     </div>
                 </div>
