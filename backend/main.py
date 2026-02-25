@@ -469,7 +469,17 @@ async def get_player_profile(account_id: str):
     """Obtiene la información básica del perfil del jugador desde OpenDota"""
     info = opendota_service.get_player_info(account_id)
     if "error" in info:
-        raise HTTPException(status_code=404, detail=info["error"])
+        # En lugar de 404 (que rompe el frontend), devolvemos un objeto vacío con mensaje.
+        # Esto ocurre cuando el perfil es privado o el ID no existe en OpenDota.
+        return {
+            "account_id": account_id,
+            "personaname": None,
+            "avatar": None,
+            "rank_tier": None,
+            "leaderboard_rank": None,
+            "private_profile": True,
+            "message": "Perfil privado o no encontrado. Activa 'Exponer datos de partidas públicas' en Dota 2."
+        }
     return info
 
 @app.get("/player/{account_id}/latest")
@@ -478,7 +488,14 @@ async def get_player_latest_matches(account_id: str):
     matches = opendota_service.get_recent_matches(account_id)
     
     if isinstance(matches, dict) and "error" in matches:
-        raise HTTPException(status_code=400, detail=matches["error"])
+        # Perfil privado o ID inválido: devolvemos lista vacía con mensaje en lugar de 400.
+        return {
+            "account_id": account_id,
+            "count": 0,
+            "matches": [],
+            "private_profile": True,
+            "message": "No se pudieron obtener las partidas. El perfil puede ser privado."
+        }
         
     return {
         "account_id": account_id,
@@ -552,31 +569,52 @@ async def get_token_status(token: str):
 @app.get("/api/player/{account_id}/stats")
 async def get_player_stats(account_id: str):
     """
-    Obtiene estadísticas reales del jugador desde OpenDota:
-    - Winrate
-    - Versatilidad (héroes únicos)
-    - Total de partidas
+    Obtiene estadísticas reales del jugador desde OpenDota.
+    Si el perfil es privado, devuelve datos disponibles en lugar de crashear.
     """
     try:
         # 1. Obtener info básica
         player_info = opendota_service.get_player_info(account_id)
         
-        # 2. Obtener estadísticas de winrate
-        wl_url = f"https://api.opendota.com/api/players/{account_id}/wl"
-        wl_response = requests.get(wl_url, timeout=10)
-        wl_data = wl_response.json()
+        # Si el perfil es privado, devolvemos un resultado parcial en lugar de 500
+        if "error" in player_info:
+            return {
+                "account_id": account_id,
+                "winrate": None,
+                "total_games": None,
+                "wins": None,
+                "losses": None,
+                "versatility": None,
+                "rank_tier": None,
+                "leaderboard_rank": None,
+                "private_profile": True,
+                "message": "Perfil privado. Activa 'Exponer datos de partidas públicas' en la configuración de Dota 2."
+            }
         
-        wins = wl_data.get("win", 0)
-        losses = wl_data.get("lose", 0)
-        total_games = wins + losses
-        winrate = (wins / total_games * 100) if total_games > 0 else 0
+        # 2. Obtener estadísticas de winrate
+        wins, losses, total_games, winrate = 0, 0, 0, 0.0
+        try:
+            wl_url = f"https://api.opendota.com/api/players/{account_id}/wl"
+            wl_response = requests.get(wl_url, timeout=10)
+            if wl_response.status_code == 200:
+                wl_data = wl_response.json()
+                wins = wl_data.get("win", 0)
+                losses = wl_data.get("lose", 0)
+                total_games = wins + losses
+                winrate = (wins / total_games * 100) if total_games > 0 else 0
+        except Exception as wl_err:
+            print(f"[STATS] WL fetch failed: {wl_err}")
         
         # 3. Obtener héroes jugados para versatilidad
-        heroes_url = f"https://api.opendota.com/api/players/{account_id}/heroes"
-        heroes_response = requests.get(heroes_url, timeout=10)
-        heroes_data = heroes_response.json()
-        
-        unique_heroes = len(heroes_data) if isinstance(heroes_data, list) else 0
+        unique_heroes = 0
+        try:
+            heroes_url = f"https://api.opendota.com/api/players/{account_id}/heroes"
+            heroes_response = requests.get(heroes_url, timeout=10)
+            if heroes_response.status_code == 200:
+                heroes_data = heroes_response.json()
+                unique_heroes = len(heroes_data) if isinstance(heroes_data, list) else 0
+        except Exception as h_err:
+            print(f"[STATS] Heroes fetch failed: {h_err}")
         
         return {
             "account_id": account_id,
@@ -586,11 +624,19 @@ async def get_player_stats(account_id: str):
             "losses": losses,
             "versatility": unique_heroes,
             "rank_tier": player_info.get("rank_tier"),
-            "leaderboard_rank": player_info.get("leaderboard_rank")
+            "leaderboard_rank": player_info.get("leaderboard_rank"),
+            "private_profile": False
         }
     except Exception as e:
         print(f"[ERROR] Failed to fetch player stats: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        # Nunca devolvemos 500 al cliente — devolvemos datos vacíos con mensaje
+        return {
+            "account_id": account_id,
+            "winrate": None,
+            "total_games": None,
+            "private_profile": True,
+            "message": f"Error al obtener estadísticas: {str(e)}"
+        }
 
 
 @app.websocket("/ws/live/{token}")
