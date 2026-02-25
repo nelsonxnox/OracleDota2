@@ -1,8 +1,43 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // ─── USERS ──────────────────────────────────────────────────────────────
+    // Cada usuario solo puede leer y escribir su propio documento.
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Sub-colección de chats: cada usuario solo accede a los suyos.
+      match /chats/{matchId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+
+        match /messages/{messageId} {
+          allow read, write: if request.auth != null && request.auth.uid == userId;
+        }
+      }
+    }
+
+    // ─── MATCHES (Cache de partidas) ────────────────────────────────────────
+    // Cualquier usuario autenticado puede LEER una partida cacheada.
+    // NADIE desde el cliente puede ESCRIBIR (solo el backend vía Admin SDK).
+    match /matches/{matchId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Solo el Admin SDK del backend puede escribir
+    }
+
+    // ─── LIVE TOKENS ────────────────────────────────────────────────────────
+    // El usuario solo puede LEER su propio token (para ver cuántas partidas le quedan).
+    // NADIE desde el cliente puede CREAR ni MODIFICAR tokens (solo el backend).
+    match /live_tokens/{tokenId} {
+      allow read: if request.auth != null
+                  && resource.data.user_id == request.auth.uid;
+      allow write: if false; // Solo el Admin SDK del backend puede crear/actualizar tokens
+    }
+
+    // ─── BLOQUEO GLOBAL ─────────────────────────────────────────────────────
+    // Cualquier colección no listada arriba queda DENEGADA por defecto.
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

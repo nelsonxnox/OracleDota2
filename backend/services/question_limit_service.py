@@ -1,9 +1,9 @@
 """
 Question Limit Service - Daily Limit System
-Handles daily question quotas for free users (3/day) and donors (20/day).
+Handles daily question quotas for free users (20/day) and donors (20/day).
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from firebase_admin import firestore
 
 # Quotas
@@ -47,23 +47,37 @@ def check_question_limit(user_id: str, db) -> dict:
         last_question_date = user_data.get("last_question_date")
         
         # Check if reset is needed (new day)
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         today = now.date()
         needs_reset = False
         
         if not last_question_date:
             needs_reset = True
         else:
-            # Handle different timestamp formats from Firebase
-            if isinstance(last_question_date, datetime):
-                last_date = last_question_date.date()
-            else:
-                # Fallback for strings or other types if necessary
-                needs_reset = True
-                last_date = None
-                
-            if last_date and last_date < today:
-                needs_reset = True
+            # Firestore puede devolver DatetimeWithNanoseconds (subclase de datetime),
+            # datetime naive (Python), o en raros casos un string ISO.
+            # Normalizamos todo a una fecha UTC comparable.
+            try:
+                if isinstance(last_question_date, datetime):
+                    # Puede ser timezone-aware (Firestore) o naive (Python)
+                    if last_question_date.tzinfo is not None:
+                        last_date = last_question_date.astimezone(timezone.utc).date()
+                    else:
+                        last_date = last_question_date.date()
+                elif isinstance(last_question_date, str):
+                    # Fallback para strings ISO almacenados manualmente
+                    parsed = datetime.fromisoformat(last_question_date.replace('Z', '+00:00'))
+                    last_date = parsed.date()
+                else:
+                    # Tipo desconocido: intentar convertir como Firestore Timestamp
+                    last_date = last_question_date.date()
+                    
+                if last_date < today:
+                    needs_reset = True
+            except Exception as ts_err:
+                print(f"[QUESTION_LIMIT] Warning: No se pudo parsear last_question_date ({type(last_question_date)}): {ts_err}. Permitiendo pregunta sin resetear.")
+                # En caso de error, NO forzamos reset para no romper el límite.
+                needs_reset = False
         
         if needs_reset:
             user_ref.update({
@@ -100,7 +114,7 @@ def increment_question_count(user_id: str, db):
         user_ref = db.collection("users").document(user_id)
         user_ref.update({
             "questions_used_today": firestore.Increment(1),
-            "last_question_date": datetime.now()
+            "last_question_date": datetime.now(timezone.utc)  # Siempre UTC para consistencia
         })
         print(f"[QUESTION_LIMIT] Incremented count for {user_id}")
     except Exception as e:

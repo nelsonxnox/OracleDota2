@@ -7,10 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sparkles, User, Mail, Lock, ArrowLeft, Gamepad2, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
-import { auth, db } from "@/lib/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import TermsModal from "@/components/TermsModal";
+
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -198,7 +196,7 @@ export default function RegisterPage() {
                             </label>
                         </div>
 
-                        <div className="pt-4">
+                        <div className="pt-4 space-y-3">
                             <Button
                                 type="submit"
                                 disabled={loading || !termsAccepted}
@@ -206,6 +204,19 @@ export default function RegisterPage() {
                             >
                                 {loading ? "Creando cuenta..." : termsAccepted ? "Registrarse" : "Acepta los términos primero"}
                             </Button>
+
+                            {loading && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -4 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20"
+                                >
+                                    <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
+                                    <p className="text-xs text-amber-400/90 font-medium text-center">
+                                        Esto puede tardar entre <span className="font-bold text-amber-300">30 y 40 segundos</span> mientras el servidor despierta. ¡No cierres la página!
+                                    </p>
+                                </motion.div>
+                            )}
                         </div>
                     </form>
 
