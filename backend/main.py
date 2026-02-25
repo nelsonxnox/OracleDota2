@@ -24,11 +24,14 @@ load_dotenv(dotenv_path)
 app = FastAPI(title="OracleDota Backend", version="1.2.0")
 
 # --- CORS ---
-# allow_origins=["*"] + allow_credentials=True es rechazado por los navegadores (CORS spec).
-# Leemos los orígenes permitidos desde la variable de entorno CORS_ORIGINS.
-# En Render, establece CORS_ORIGINS=https://tu-proyecto.pages.dev,https://oracledota.com
-# Para desarrollo local, el fallback incluye localhost:3000.
-_raw_origins = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:3001")
+# Orígenes permitidos: producción en Cloudflare + desarrollo local.
+# Se puede sobreescribir con la variable de entorno CORS_ORIGINS (lista separada por comas).
+_DEFAULT_ORIGINS = (
+    "https://oracledota.pages.dev,"   # Cloudflare Pages (producción)
+    "http://localhost:3000,"
+    "http://localhost:3001"
+)
+_raw_origins = os.getenv("CORS_ORIGINS", _DEFAULT_ORIGINS)
 ALLOWED_ORIGINS = [o.strip() for o in _raw_origins.split(",") if o.strip()]
 
 app.add_middleware(
