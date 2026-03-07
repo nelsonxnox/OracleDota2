@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Send, Sparkles, Loader2, Zap, Ghost, Eye, X, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
+import { Send, Sparkles, Loader2, Zap, Ghost, Eye, X, Mic, MicOff, Volume2, VolumeX, ThumbsUp, ThumbsDown } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { API_BASE } from "@/lib/api";
@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
 interface Message {
     role: "user" | "assistant";
     content: string;
+    feedback?: "good" | "bad";
 }
 
 interface ChatInterfaceProps {
@@ -24,7 +25,7 @@ interface ChatInterfaceProps {
 export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = false }: ChatInterfaceProps) {
     const { user } = useAuth();
     const [messages, setMessages] = useState<Message[]>([
-        { role: "assistant", content: "Los hilos del destino han sido revelados. Soy el Oráculo. ¿Deseas saber por qué el trono de tus aliados se convirtió en cenizas, o qué guerrero fue bendecido por la fortuna?" }
+        { role: "assistant", content: "Bienvenido. Soy ORACLE, tu coach de Dota 2 en versión beta. Puedo ayudarte a analizar tus partidas y mejorar tu juego. Ten en cuenta que aún estoy en desarrollo y puedo cometer errores, así que si algo no te parece correcto, no dudes en pedirme que lo revise." }
     ]);
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
@@ -164,6 +165,29 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = 
         }
     };
 
+    const handleFeedback = async (messageIndex: number, feedback: "good" | "bad") => {
+        // Get the message and the preceding user question if available
+        const msg = messages[messageIndex];
+        const precedingUserMsg = messages.slice(0, messageIndex).reverse().find(m => m.role === "user");
+
+        // Optimistic UI update
+        setMessages(prev => prev.map((m, i) => i === messageIndex ? { ...m, feedback } : m));
+
+        try {
+            await axios.post(`${API_BASE}/chat/feedback`, {
+                user_id: user?.uid || "guest",
+                match_id: matchId,
+                message_content: msg.content,
+                feedback,
+                question: precedingUserMsg?.content || ""
+            });
+        } catch (error) {
+            console.error("[FEEDBACK] Error sending feedback:", error);
+            // Revert on error
+            setMessages(prev => prev.map((m, i) => i === messageIndex ? { ...m, feedback: undefined } : m));
+        }
+    };
+
     return (
         <>
             {/* FLOATING ACTION BUTTON */}
@@ -251,6 +275,43 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = 
                                             )}
                                             {msg.content}
                                         </div>
+                                        {msg.role === "assistant" && (
+                                            <div className="flex items-center gap-1 px-1">
+                                                <button
+                                                    disabled={!!msg.feedback}
+                                                    onClick={() => handleFeedback(i, "good")}
+                                                    title="Respuesta útil"
+                                                    className={cn(
+                                                        "p-1.5 rounded-lg transition-all",
+                                                        msg.feedback === "good"
+                                                            ? "text-emerald-400 bg-emerald-400/10"
+                                                            : "text-zinc-600 hover:text-emerald-400 hover:bg-emerald-400/10",
+                                                        msg.feedback && msg.feedback !== "good" && "opacity-30 cursor-not-allowed"
+                                                    )}
+                                                >
+                                                    <ThumbsUp size={12} />
+                                                </button>
+                                                <button
+                                                    disabled={!!msg.feedback}
+                                                    onClick={() => handleFeedback(i, "bad")}
+                                                    title="Respuesta incorrecta"
+                                                    className={cn(
+                                                        "p-1.5 rounded-lg transition-all",
+                                                        msg.feedback === "bad"
+                                                            ? "text-rose-400 bg-rose-400/10"
+                                                            : "text-zinc-600 hover:text-rose-400 hover:bg-rose-400/10",
+                                                        msg.feedback && msg.feedback !== "bad" && "opacity-30 cursor-not-allowed"
+                                                    )}
+                                                >
+                                                    <ThumbsDown size={12} />
+                                                </button>
+                                                {msg.feedback && (
+                                                    <span className="text-[9px] text-zinc-600 ml-1">
+                                                        {msg.feedback === "good" ? "¡Gracias!" : "Gracias por el aviso"}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        )}
                                         <span className="text-[9px] font-bold uppercase text-zinc-600 px-1">{msg.role === "user" ? "Tú" : "Oráculo"}</span>
                                     </div>
                                 ))}

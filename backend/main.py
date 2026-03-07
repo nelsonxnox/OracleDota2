@@ -78,6 +78,13 @@ class AuthResponse(BaseModel):
     message: str = None
     userData: dict = None
 
+class FeedbackRequest(BaseModel):
+    user_id: str
+    match_id: str
+    message_content: str  # Fragment of the message to identify it
+    feedback: str  # "good" or "bad"
+    question: str = ""  # The user question that prompted the response
+
 # --- ROUTES ---
 
 @app.post("/api/auth/register", response_model=AuthResponse)
@@ -415,6 +422,31 @@ async def get_match_history(match_id: str, user_id: str):
     """Retrieve chat history for a specific user and match"""
     history = firebase_service.get_chat_history(user_id, match_id)
     return ChatHistoryResponse(history=history)
+
+@app.post("/chat/feedback")
+async def submit_chat_feedback(request: FeedbackRequest):
+    """Save user feedback (good/bad) for an AI response to Firestore.
+    This data can be used for future model fine-tuning or analysis."""
+    if request.feedback not in ("good", "bad"):
+        raise HTTPException(status_code=400, detail="Feedback must be 'good' or 'bad'")
+    
+    try:
+        db = firebase_service.get_db()
+        if db:
+            feedback_data = {
+                "user_id": request.user_id,
+                "match_id": request.match_id,
+                "question": request.question,
+                "message_snippet": request.message_content[:200],  # Store first 200 chars
+                "feedback": request.feedback,
+                "timestamp": datetime.now().isoformat()
+            }
+            db.collection("chat_feedback").add(feedback_data)
+            print(f"[FEEDBACK] User {request.user_id} rated response '{request.feedback}' for match {request.match_id}")
+        return {"status": "ok", "feedback": request.feedback}
+    except Exception as e:
+        print(f"[FEEDBACK] Error saving feedback: {e}")
+        raise HTTPException(status_code=500, detail="Failed to save feedback")
 
 @app.get("/health")
 def health_check():

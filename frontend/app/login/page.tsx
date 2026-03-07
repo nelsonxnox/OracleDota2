@@ -201,8 +201,21 @@ function LoginContent() {
                             disabled={loading}
                             className="w-full bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-bold tracking-widest uppercase py-6 shadow-[0_0_20px_rgba(220,38,38,0.3)]"
                         >
-                            {loading ? "Cargando..." : "Iniciar Sesión"} <ArrowRight className="ml-2 h-4 w-4" />
+                            {loading ? "Verificando..." : "Iniciar Sesión"} <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
+
+                        {loading && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -4 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20"
+                            >
+                                <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
+                                <p className="text-xs text-amber-400/90 font-medium text-center">
+                                    Esto puede tardar entre <span className="font-bold text-amber-300">30 y 40 segundos</span> mientras el servidor despierta. ¡No cierres la página!
+                                </p>
+                            </motion.div>
+                        )}
                     </form>
 
                     <div className="relative">
