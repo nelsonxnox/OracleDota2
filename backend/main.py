@@ -152,7 +152,7 @@ async def login_user(request: LoginRequest):
     }
     
     try:
-        response = requests.post(url, json=payload)
+        response = requests.post(url, json=payload, timeout=10)
         data = response.json()
         
         if response.status_code != 200:
