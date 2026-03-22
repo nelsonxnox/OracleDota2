@@ -118,6 +118,16 @@ def get_match_data(match_id: str) -> Dict:
     except Exception as e:
         return {"error": f"Request failed: {str(e)}"}
 
+def request_parse(match_id: str) -> Dict:
+    """Requests OpenDota to parse the replay for a match."""
+    url = f"https://api.opendota.com/api/request/{match_id}"
+    try:
+        response = requests.post(url, timeout=10)
+        response.raise_for_status()
+        return {"status": "success", "data": response.json()} # usually {"job": {"jobId": 123}}
+    except Exception as e:
+        return {"error": f"Failed to request parse: {e}"}
+
 def process_match_data(match_data: Dict) -> Dict:
     """
     Extracts and structures key information from OpenDota match data.
@@ -438,7 +448,376 @@ def summarize_items(item_log: List[Dict]) -> str:
         print(f"[RECOVERY] summarize_items failed: {e}")
         return "Resumen de items no disponible."
 
+
+# =====================================================================
+# 🔴 PHASE 1 — STRATEGIC INTELLIGENCE FUNCTIONS
+# =====================================================================
+
+# Items considered "key" for the timeline (cost > ~2000 gold)
+_KEY_ITEMS_FOR_TIMELINE = {
+    "blink", "black_king_bar", "battle_fury", "maelstrom", "radiance",
+    "dagon", "orchid", "manta", "aghanims_scepter", "aghanims_shard",
+    "heart", "butterfly", "satanic", "assault", "refresher", "mjollnir",
+    "linken_sphere", "sphere", "nullifier", "bloodthorn", "swift_blink",
+    "overwhelming_blink", "arcane_blink", "moon_shard", "skadi",
+    "abyssal_blade", "desolator", "ethereal_blade", "scythe",
+    "sheepstick", "pike", "dragon_lance", "sange_and_yasha",
+    "kaya_and_sange", "yasha_and_kaya", "diffusal_blade", "echo_sabre",
+    "skull_basher", "basher", "octarine", "shivas_guard", "shiva",
+    "pipe", "crimson_guard", "lotus_orb", "blade_mail", "soul_booster",
+    "hood_of_defiance", "hood", "solar_crest", "mekansm", "guardian",
+    "ultimate_scepter", "travel_boots", "travel_boots_2", "platemail",
+    "perseverance", "ultimate", "aether_lens", "spirit_vessel",
+    "wraith_pact", "pavise", "boots_of_bearing", "khanda",
+    "gleipnir", "disperser", "parasma", "dawnbreaker", "harpoon"
+}
+
+_OBJECTIVE_TYPES_FOR_TIMELINE = {
+    "CHAT_MESSAGE_ROSHAN_KILL", "CHAT_MESSAGE_TOWER_KILL",
+    "building_kill", "CHAT_MESSAGE_AEGIS_STOLEN"
+}
+
+
+def generate_timeline(processed_data: Dict, target_player_slot: int = None) -> str:
+    """
+    Generates a unified chronological event timeline from processed match data.
+    This is the primary structured context feed for the AI coach.
+
+    If target_player_slot is given, death events are limited to that player + all teamfights.
+    Otherwise includes all relevant deaths.
+
+    Returns a formatted multi-line string sorted by game time.
+    """
+    events = []  # List of (time_seconds, label_str)
+
+    meta = processed_data.get("metadata", {})
+    players = processed_data.get("players", [])
+    teamfights = processed_data.get("teamfights", [])
+    objectives = meta.get("objectives", [])
+
+    hero_names = get_hero_names()
+
+    # --- 1. OBJECTIVES (Roshan / Towers) ---
+    for obj in objectives:
+        o_type = obj.get("type", "")
+        o_time = obj.get("time", 0)
+        if o_type in _OBJECTIVE_TYPES_FOR_TIMELINE:
+            team_owner = obj.get("team", None)
+            key = obj.get("key", "")
+            m, s = divmod(o_time, 60)
+            label = o_type.replace("CHAT_MESSAGE_", "").replace("_", " ")
+            team_str = ""
+            if team_owner == 2:
+                team_str = " [Radiant]"
+            elif team_owner == 3:
+                team_str = " [Dire]"
+            events.append((o_time, f"[{m:02d}:{s:02d}] 🏰 OBJETIVO — {label}{team_str}"))
+
+    # --- 2. TEAMFIGHTS ---
+    sorted_fights = sorted(teamfights, key=lambda x: x.get("deaths", 0), reverse=True)[:5]
+    for tf in sorted_fights:
+        t = tf.get("start", 0)  # already in seconds from process_match_data? No — check: in process it does //60
+        # NOTE: process_match_data converts to minutes. We need to store raw seconds.
+        # We work with what we have: start is in minutes post-processing.
+        t_min = tf.get("start", 0)  # minutes
+        t_sec = t_min * 60
+        deaths = tf.get("deaths", 0)
+        m, s = t_min, 0
+        events.append((t_sec, f"[{m:02d}:00] ⚔️ PELEA — {deaths} muertes"))
+
+    # --- 3. KEY ITEM PURCHASES per player ---
+    for p in players:
+        is_target = (target_player_slot is None or p.get("player_slot") == target_player_slot)
+        if not is_target:
+            continue
+
+        hero = p.get("hero_name", "?")
+        for purchase in p.get("full_item_log", []):
+            item_key = purchase.get("item", "").lower().replace(" ", "_")
+            t_min = purchase.get("time", 0)
+            t_sec = t_min * 60
+            # Check against key items set (partial match)
+            if any(ki in item_key for ki in _KEY_ITEMS_FOR_TIMELINE):
+                m = t_min
+                clean_name = purchase.get("item", item_key)
+                events.append((t_sec, f"[{m:02d}:00] 🛒 COMPRA — {hero}: {clean_name}"))
+
+    # --- 4. DEATHS of target player ---
+    for p in players:
+        is_target = (target_player_slot is None or p.get("player_slot") == target_player_slot)
+        if not is_target:
+            continue
+
+        hero = p.get("hero_name", "?")
+        for death in p.get("deaths_with_vision", []):
+            t_min = death.get("time", 0)
+            t_sec = t_min * 60
+            vision_str = "sin visión" if not death.get("has_vision") else "con visión"
+            events.append((t_sec, f"[{t_min:02d}:xx] 💀 MUERTE — {hero} ({vision_str})"))
+
+    # Sort by time
+    events.sort(key=lambda x: x[0])
+
+    if not events:
+        return "LÍNEA DE TIEMPO: Sin eventos relevantes registrados."
+
+    lines = ["LÍNEA DE TIEMPO DE EVENTOS CLAVE:"]
+    lines += [e[1] for e in events]
+    return "\n".join(lines)
+
+
+def detect_opportunity_windows(processed_data: Dict) -> str:
+    """
+    Detects teamfights won by a team that were NOT followed by an objective within 90 seconds.
+    Returns a formatted string of missed opportunity windows for the AI prompt.
+    """
+    teamfights = processed_data.get("teamfights", [])
+    objectives = processed_data.get("metadata", {}).get("objectives", [])
+
+    if not teamfights or not objectives:
+        return ""
+
+    # Build list of objective timestamps (in seconds)
+    obj_times = []
+    for obj in objectives:
+        if obj.get("type") in _OBJECTIVE_TYPES_FOR_TIMELINE:
+            obj_times.append(obj.get("time", 0))
+
+    missed_windows = []
+    WINDOW_SECONDS = 90
+
+    for tf in sorted(teamfights, key=lambda x: x.get("start", 0)):
+        tf_start_min = tf.get("start", 0)  # minutes (post process_match_data)
+        tf_end_min = tf.get("end", tf_start_min)
+        deaths = tf.get("deaths", 0)
+
+        if deaths < 2:
+            continue  # Skip minor skirmishes
+
+        tf_end_sec = tf_end_min * 60
+
+        # Check if any objective was taken within WINDOW_SECONDS after fight ended
+        capitalized = any(
+            tf_end_sec <= obj_t <= tf_end_sec + WINDOW_SECONDS
+            for obj_t in obj_times
+        )
+
+        if not capitalized:
+            missed_windows.append(
+                f"  ⚠️ Pelea @ {tf_start_min}m ({deaths} muertes) → "
+                f"Ningún objetivo en los {WINDOW_SECONDS}s siguientes. VENTANA DESAPROVECHADA."
+            )
+
+    if not missed_windows:
+        return "VENTANAS DE OPORTUNIDAD: Todas las peleas importantes fueron capitalizadas con objetivos. ✅"
+
+    result = ["VENTANAS DE OPORTUNIDAD DESAPROVECHADAS (Pelea ganada sin objetivo posterior):"]
+    result += missed_windows
+    return "\n".join(result)
+
+
+# Hero role archetypes for draft context (hero internal names, lowercase)
+_LATE_GAME_CARRIES = {
+    "antimage", "medusa", "morphling", "spectre", "terrorblade",
+    "faceless_void", "phantom_lancer", "luna", "alchemist", "naga_siren",
+    "lifestealer", "sven", "wraith_king", "bloodseeker"
+}
+_EARLY_AGGRESSION = {
+    "axe", "dragon_knight", "bristleback", "centaur", "mars",
+    "pudge", "slark", "chaos_knight", "lycan", "undying", "clinkz"
+}
+_PUSH_HEROES = {
+    "pugna", "broodmother", "treant", "leshrac", "shadow_shaman",
+    "chen", "warlock", "death_prophet", "tinker", "nature_prophet"
+}
+_TEAMFIGHT_HEROES = {
+    "enigma", "magnus", "tidehunter", "earthshaker", "amorphous",
+    "wombo", "disruptor", "sand_king", "dark_seer", "invoker",
+    "jakiro", "witch_doctor"
+}
+
+
+def generate_draft_context(picks_bans: List[Dict], hero_names_cache: Dict = None) -> str:
+    """
+    Analyzes picks_bans to generate win-condition context for both teams.
+    Must be injected FIRST in the AI prompt before any stats.
+    Returns a formatted string or empty string if no picks_bans available.
+    """
+    if not picks_bans:
+        return ""
+
+    if hero_names_cache is None:
+        hero_names_cache = get_hero_names()
+
+    radiant_picks = []
+    dire_picks = []
+    radiant_bans = []
+    dire_bans = []
+
+    for pb in picks_bans:
+        hero_id = pb.get("hero_id")
+        hero_info = hero_names_cache.get(hero_id, {})
+        if isinstance(hero_info, dict):
+            name = hero_info.get("localized_name", f"Hero {hero_id}")
+            internal = hero_info.get("name", "").replace("npc_dota_hero_", "").lower()
+        else:
+            name = str(hero_info) if hero_info else f"Hero {hero_id}"
+            internal = ""
+
+        is_pick = pb.get("is_pick", False)
+        team_num = pb.get("team", 0)  # 0=Radiant, 1=Dire
+
+        if is_pick:
+            if team_num == 0:
+                radiant_picks.append((name, internal))
+            else:
+                dire_picks.append((name, internal))
+        else:
+            if team_num == 0:
+                radiant_bans.append(name)
+            else:
+                dire_bans.append(name)
+
+    def _classify_team(picks):
+        """Return a list of strategic traits for a team based on their picks."""
+        traits = []
+        internals = [p[1] for p in picks]
+
+        late_count = sum(1 for i in internals if i in _LATE_GAME_CARRIES)
+        push_count = sum(1 for i in internals if i in _PUSH_HEROES)
+        aggro_count = sum(1 for i in internals if i in _EARLY_AGGRESSION)
+        tf_count = sum(1 for i in internals if i in _TEAMFIGHT_HEROES)
+
+        if late_count >= 2:
+            traits.append("late game (necesita alargar la partida)")
+        if push_count >= 2:
+            traits.append("push rápido de torres")
+        if aggro_count >= 2:
+            traits.append("agresión temprana (picos al lv 6-11)")
+        if tf_count >= 2:
+            traits.append("teamfight masiva (fights agrupadas)")
+        if not traits:
+            traits.append("composición flexible/mixta")
+
+        return traits
+
+    radiant_traits = _classify_team(radiant_picks)
+    dire_traits = _classify_team(dire_picks)
+
+    radiant_names = ", ".join(p[0] for p in radiant_picks) or "N/A"
+    dire_names = ", ".join(p[0] for p in dire_picks) or "N/A"
+
+    lines = [
+        "=== ANÁLISIS DE DRAFT (LEE ESTO PRIMERO) ===",
+        f"Radiant picks: {radiant_names}",
+        f"  → Condición de victoria: {' + '.join(radiant_traits)}",
+        f"Dire picks: {dire_names}",
+        f"  → Condición de victoria: {' + '.join(dire_traits)}",
+        "",
+        "INSTRUCCIÓN: Inicia tu análisis estableciendo estas condiciones de victoria "
+        "ANTES de mencionar cualquier estadística numérica.",
+        "=== FIN DEL ANÁLISIS DE DRAFT ===",
+    ]
+    return "\n".join(lines)
+
+
+def filter_high_impact_deaths(players: List[Dict], objectives: List[Dict]) -> Dict[int, List[Dict]]:
+    """
+    Filters each player's deaths_with_vision log to only include high-impact deaths.
+
+    A death is high-impact if ANY of:
+    - Occurred ≤60s before an enemy took an objective (tower/Roshan)
+    - Player had an active kill streak (kill_streaks field is non-empty)
+    - Player had 0 buybacks at that point
+    - Died without vision (already in deaths_with_vision)
+
+    Returns dict: player_slot -> [filtered death dicts with added 'impact_reason']
+    """
+    WINDOW_BEFORE_OBJ = 60  # seconds
+
+    # Build objective timestamp list (in seconds; objectives store raw seconds)
+    obj_times = [
+        obj.get("time", 0)
+        for obj in objectives
+        if obj.get("type") in _OBJECTIVE_TYPES_FOR_TIMELINE
+    ]
+
+    result: Dict[int, List[Dict]] = {}
+
+    for p in players:
+        slot = p.get("player_slot", -1)
+        deaths = p.get("deaths_with_vision", [])
+        buybacks = p.get("buybacks", 0)
+        kill_streaks = p.get("kill_streaks", {})
+        has_active_streak = bool(kill_streaks)  # non-empty = had at least one streak
+
+        filtered = []
+        for d in deaths:
+            t_min = d.get("time", 0)
+            t_sec = t_min * 60
+            reasons = []
+
+            # Condition 1: died before an objective
+            for obj_t in obj_times:
+                if t_sec <= obj_t <= t_sec + WINDOW_BEFORE_OBJ:
+                    mins_before = (obj_t - t_sec) // 60
+                    secs_before = (obj_t - t_sec) % 60
+                    reasons.append(
+                        f"murió {mins_before}m{secs_before:02d}s antes de que el enemigo tomara un objetivo"
+                    )
+                    break
+
+            # Condition 2: had a kill streak
+            if has_active_streak:
+                reasons.append("tenía racha de kills activa")
+
+            # Condition 3: buybacks exhausted
+            if buybacks == 0:
+                reasons.append("sin buyback disponible")
+
+            # Condition 4: died without vision (can always flag)
+            if not d.get("has_vision"):
+                reasons.append("sin visión en la zona")
+
+            if reasons:
+                enriched = dict(d)
+                enriched["impact_reason"] = " | ".join(reasons)
+                filtered.append(enriched)
+
+        if filtered:
+            result[slot] = filtered
+
+    return result
+
+
+def format_high_impact_deaths_for_prompt(
+    filtered_deaths: Dict[int, List[Dict]],
+    players: List[Dict],
+) -> str:
+    """Converts the output of filter_high_impact_deaths into a prompt-ready string."""
+    if not filtered_deaths:
+        return ""
+
+    # Build slot -> hero_name map
+    slot_to_hero = {p.get("player_slot"): p.get("hero_name", "?") for p in players}
+
+    lines = ["MUERTES DE ALTO IMPACTO (Solo las que determinaron el resultado):"]
+    for slot, deaths in filtered_deaths.items():
+        hero = slot_to_hero.get(slot, f"Slot {slot}")
+        for d in deaths:
+            t_min = d.get("time", 0)
+            reason = d.get("impact_reason", "")
+            lines.append(f"  💀 {hero} @ {t_min:02d}m → {reason}")
+
+    return "\n".join(lines)
+
+
+# =====================================================================
+# END PHASE 1 FUNCTIONS
+# =====================================================================
+
 def generate_ai_context(data: Dict, deep_mode: bool = False) -> str:
+
     """
     Generates context in two layers:
     Base (Cheap): Basic stats, final build, team comp.

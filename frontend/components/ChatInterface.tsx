@@ -32,6 +32,10 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = 
     const [isListening, setIsListening] = useState(false);
     const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
 
+    // Parse Status State
+    const [isParsing, setIsParsing] = useState(false);
+    const [parseMessage, setParseMessage] = useState("Conectando con el Oráculo...");
+
     // Window State
     const [windowSize, setWindowSize] = useState({ width: 450, height: 600 });
     const constraintsRef = useRef(null);
@@ -61,11 +65,25 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = 
         }
     }, [messages, shouldAutoScroll]);
 
-    // Initial load history
+    // Initial load history & Parse Status Check
     useEffect(() => {
         if (isOpen) {
             const timeout = setTimeout(scrollToBottom, 100);
-            const loadHistory = async () => {
+            const loadData = async () => {
+                // 1. Check Parse Status
+                try {
+                    const parseRes = await axios.get(`${API_BASE}/match/${matchId}/parse_status`);
+                    if (parseRes.data.status === "pending") {
+                        setIsParsing(true);
+                        setParseMessage("Analizando repetición en OpenDota\nEsto puede tomar hasta 2 minutos...");
+                    } else {
+                        setIsParsing(false);
+                    }
+                } catch (e) {
+                    console.error("Parse check error:", e);
+                }
+
+                // 2. Load History
                 if (!user?.uid) return;
                 try {
                     const res = await axios.get(`${API_BASE}/chat/history/${matchId}`, {
@@ -78,10 +96,33 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = 
                     console.error("Error loading history:", e);
                 }
             };
-            loadHistory();
+            loadData();
             return () => clearTimeout(timeout);
         }
     }, [isOpen, user, matchId]); // Removed messages dependency to prevent excessive reloading
+
+    // Polling for Parse Status
+    useEffect(() => {
+        if (!isOpen || !isParsing) return;
+
+        const interval = setInterval(async () => {
+            try {
+                const res = await axios.get(`${API_BASE}/match/${matchId}/parse_status`);
+                if (res.data.status === "complete") {
+                    setIsParsing(false);
+                    clearInterval(interval);
+                    setMessages(prev => [...prev, {
+                        role: "assistant",
+                        content: "✅ Análisis completo. La repetición ha sido leída. ¿Qué deseas saber sobre esta partida?"
+                    }]);
+                }
+            } catch (e) {
+                console.error("Polling error:", e);
+            }
+        }, 15000); // Check every 15 seconds
+
+        return () => clearInterval(interval);
+    }, [isOpen, isParsing, matchId]);
 
     // ... (Speech Recognition logic remains similar, simplified for brevity in this update structure)
     // Initialize Speech Recognition
@@ -326,24 +367,34 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton = 
 
                             {/* INPUT AREA */}
                             <div className="p-4 bg-black/20 border-t border-white/5 shrink-0" onPointerDown={(e) => e.stopPropagation()}>
-                                <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex gap-2">
-                                    <Button
-                                        type="button"
-                                        onClick={toggleListening}
-                                        className={cn("h-10 w-10 shrink-0 rounded-xl", isListening ? "bg-red-500/20 text-red-500" : "bg-zinc-800 text-zinc-400")}
-                                    >
-                                        {isListening ? <Mic size={18} className="animate-pulse" /> : <MicOff size={18} />}
-                                    </Button>
-                                    <Input
-                                        value={input}
-                                        onChange={(e) => setInput(e.target.value)}
-                                        placeholder="Consulta al Oráculo..."
-                                        className="bg-black/40 border-white/10 text-sm h-10 rounded-xl focus-visible:ring-teal-500/50"
-                                    />
-                                    <Button type="submit" disabled={!input.trim() || loading} className="h-10 w-10 shrink-0 bg-teal-600 hover:bg-teal-500 text-white rounded-xl">
-                                        <Send size={18} />
-                                    </Button>
-                                </form>
+                                {isParsing ? (
+                                    <div className="flex flex-col items-center justify-center p-3 rounded-xl bg-teal-900/20 border border-teal-500/20 gap-2">
+                                        <Loader2 className="w-5 h-5 text-teal-400 animate-spin" />
+                                        <p className="text-xs text-teal-300 text-center whitespace-pre-wrap font-medium">
+                                            {parseMessage}
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex gap-2">
+                                        <Button
+                                            type="button"
+                                            onClick={toggleListening}
+                                            className={cn("h-10 w-10 shrink-0 rounded-xl", isListening ? "bg-red-500/20 text-red-500" : "bg-zinc-800 text-zinc-400")}
+                                        >
+                                            {isListening ? <Mic size={18} className="animate-pulse" /> : <MicOff size={18} />}
+                                        </Button>
+                                        <Input
+                                            value={input}
+                                            onChange={(e) => setInput(e.target.value)}
+                                            placeholder="Consulta al Oráculo..."
+                                            className="bg-black/40 border-white/10 text-sm h-10 rounded-xl focus-visible:ring-teal-500/50 flex-1"
+                                            disabled={loading}
+                                        />
+                                        <Button type="submit" disabled={!input.trim() || loading} className="h-10 w-10 shrink-0 bg-teal-600 hover:bg-teal-500 text-white rounded-xl transition-colors">
+                                            <Send size={18} />
+                                        </Button>
+                                    </form>
+                                )}
                             </div>
 
                             {/* RESIZE HANDLE */}

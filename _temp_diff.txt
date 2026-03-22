@@ -1,0 +1,716 @@
+﻿diff --git a/backend/knowledge/rag_engine_v2.py b/backend/knowledge/rag_engine_v2.py
+index 7e6325e..56c8d06 100644
+--- a/backend/knowledge/rag_engine_v2.py
++++ b/backend/knowledge/rag_engine_v2.py
+@@ -49,7 +49,7 @@ class OracleRAGLite:
+         if not query_words:
+             return ""
+ 
+-        scored_docs = []
++        scored_docs = [] 
+         for doc in self.documents:
+             # Score based on how many query words appear in the document text
+             doc_text_lower = doc['text'].lower()
+diff --git a/backend/main.py b/backend/main.py
+index da3e054..29d4735 100644
+--- a/backend/main.py
++++ b/backend/main.py
+@@ -314,6 +314,7 @@ async def get_match_details(match_id: str, background_tasks: BackgroundTasks):
+         except Exception as e:
+             print(f"[ERROR] Failed to save match {match_id} to DB: {e}")
+             
++        data["parse_status"] = "pending" if data.get("metadata", {}).get("partial_data") else "complete"
+         return data
+         
+     except HTTPException:
+@@ -324,6 +325,29 @@ async def get_match_details(match_id: str, background_tasks: BackgroundTasks):
+         traceback.print_exc()
+         raise HTTPException(status_code=500, detail="Internal processing error")
+ 
++@app.get("/match/{match_id}/parse_status")
++async def get_parse_status(match_id: str):
++    """Polling endpoint to check if match has finished parsing on OpenDota."""
++    try:
++        raw = opendota_service.get_match_data(match_id)
++        if "error" in raw:
++            return {"status": "error", "message": raw["error"]}
++        
++        is_partial = raw.get("version") is None
++        if is_partial:
++            return {"status": "pending"}
++        
++        # If it's now fully parsed, process it and update our DB cache
++        try:
++            data = opendota_service.process_match_data(raw)
++            firebase_service.save_match_to_db(match_id, data)
++        except Exception as db_e:
++            print(f"[CACHE] Could not update db after parsing {match_id}: {db_e}")
++            
++        return {"status": "complete"}
++    except Exception as e:
++        return {"status": "error", "message": str(e)}
++
+ @app.post("/chat", response_model=ChatResponse)
+ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTasks):
+     """Chat with the AI Coach (Optimized)"""
+@@ -396,7 +420,23 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
+     
+     # 5. AI Call
+     # Generate context from match data
+-    context_list = [opendota_service.generate_ai_context(data, deep_mode=is_complex)]
++    
++    # --- PHASE 1 INTELLIGENCE UPGRADES ---
++    timeline_str = opendota_service.generate_timeline(data)
++    opp_windows_str = opendota_service.detect_opportunity_windows(data)
++    deaths_dict = opendota_service.filter_high_impact_deaths(
++        data.get("players", []), 
++        data.get("metadata", {}).get("objectives", [])
++    )
++    deaths_str = opendota_service.format_high_impact_deaths_for_prompt(deaths_dict, data.get("players", []))
++    
++    picks_bans = data.get("metadata", {}).get("picks_bans", [])
++    draft_context_str = opendota_service.generate_draft_context(picks_bans)
++
++    context_list = [
++        opendota_service.generate_ai_context(data, deep_mode=is_complex),
++        f"\n\n{timeline_str}\n\n{opp_windows_str}\n\n{deaths_str}"
++    ]
+     
+     # 5.5 Advanced Stratz Context (if complex and key exists)
+     if is_complex and os.getenv("STRATZ_API_KEY"):
+@@ -406,8 +446,14 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
+             
+     context = "\n".join(context_list)
+     
+-    # Call Oracle with history
+-    response = oracle.ask_oracle(context, query, match_id=match_id, external_history=history)
++    # Call Oracle with history and draft context
++    response = oracle.ask_oracle(
++        context, 
++        query, 
++        match_id=match_id, 
++        external_history=history,
++        draft_context=draft_context_str
++    )
+     
+     # ASYNC: Save Assistant Response (Legacy support)
+     background_tasks.add_task(firebase_service.save_chat_message, user_id, match_id, "assistant", response)
+diff --git a/backend/services/ai_coach.py b/backend/services/ai_coach.py
+index 7cea3fa..1a11c77 100644
+--- a/backend/services/ai_coach.py
++++ b/backend/services/ai_coach.py
+@@ -76,16 +76,33 @@ PROTOCOLO DE COMUNICACI├ôN:
+ 4. IDIOMA: Espa├▒ol.
+ 5. HONESTIDAD: Si los datos son insuficientes o la pregunta es ambigua, dilo claramente y pide m├ís informaci├│n.
+ 
+-C├ôMO COMUNICAR LOS ERRORES (con ejemplos constructivos):
++=== ESTRUCTURA DE FEEDBACK OBLIGATORIA ===
++Cada vez que identifiques un error de un jugador, DEBES usar EXACTAMENTE esta estructura de tres partes:
+ 
+-En vez de se├▒alar el error de forma negativa, ofrece la soluci├│n:
+-"Tu farm en el minuto 25 estuvo por debajo del promedio ideal para ese h├®roe. Trabajar en los last hits durante la fase de l├¡neas puede marcar una gran diferencia."
++Parte 1 ÔÇö RECONOCIMIENTO DE LA DIFICULTAD: Reconoce el contexto que hizo dif├¡cil la situaci├│n.
++  Ejemplo: "Tu l├¡nea fue complicada con la presi├│n constante del Viper enemigo."
+ 
+-"Esa muerte ocurri├│ porque no hab├¡a visi├│n del r├¡o en ese momento. Antes de cruzar zonas sin wards, comprueba si hay enemigos con posici├│n desconocida en el mapa."
++Parte 2 ÔÇö EL ERROR CON TIMESTAMP: Identifica el momento exacto del error usando el timestamp del replay.
++  Ejemplo: "Sin embargo, en el minuto 14:30, forzaste una pelea en la jungla en lugar de rotar a la l├¡nea opuesta que estaba libre."
+ 
+-"Con tres muertes por controles en cadena, el BKB ser├¡a el ├¡tem clave para este momento de la partida. Te dar├¡a inmunidad m├ígica para posicionarte mejor en las peleas."
++Parte 3 ÔÇö LA SOLUCI├ôN CONCRETA: Da una acci├│n espec├¡fica y accionable para la pr├│xima vez.
++  Ejemplo: "La pr├│xima vez en esa situaci├│n, rota a la torre Tier 1 aliada que estaba sin presi├│n enemiga. Esa rotaci├│n habr├¡a equivalido a 300 de oro de torre y presi├│n de mapa."
+ 
+-"Tu mid necesitaba apoyo en ese momento. Rotar a ayudar cuando un carril est├í bajo presi├│n es una de las jugadas de mayor impacto que puedes hacer."
++PROHIBICIONES ABSOLUTAS ÔÇö NUNCA USES ESTAS FRASES GEN├ëRICAS:
++- "necesitas mejorar tu farmeo" (sin dar minuto exacto y contexto)
++- "deber├¡as wardear m├ís" (sin especificar d├│nde y cu├índo)
++- "tienes que jugar m├ís seguro" (sin dar la situaci├│n concreta)
++- "tu itemizaci├│n no fue la mejor" (sin decir qu├® ├¡tem y en qu├® momento)
++- Cualquier consejo que NO se pueda llevar al replay para verificarlo.
++
++=== REGLA DE PRIORIDAD DE AN├üLISIS ===
++Si recibes datos de DRAFT (picks y condiciones de victoria), DEBES comenzar tu an├ílisis estableciendo las condiciones de victoria de AMBOS equipos ANTES de mencionar cualquier estad├¡stica num├®rica. El draft es el contexto que da significado a todos los n├║meros.
++
++=== REGLA DE TIMESTAMPS ===
++Cuando dispongas de una L├ìNEA DE TIEMPO DE EVENTOS CLAVE en los datos, DEBES referenciar los minutos exactos del replay al mencionar eventos espec├¡ficos. Formato: "En el minuto XX:YY de tu replay..." Esto permite al jugador ir directamente a ese momento para aprender visualmente.
++
++=== REGLA DE VENTANAS DESAPROVECHADAS ===
++Si recibes datos de VENTANAS DE OPORTUNIDAD DESAPROVECHADAS, menciona al menos una en tu an├ílisis si es relevante. Explica qu├® objetivo era tomable, por qu├® era el momento correcto, y qu├® habr├¡a significado tenerlo.
+ 
+ M├ôDULOS T├üCTICOS (conocimiento s├│lido, presentaci├│n clara y constructiva):
+ 
+@@ -96,16 +113,16 @@ B. FASE DE L├ìNEAS (minutos 0 a 10):
+ Control de Lotos, Runas de Sabidur├¡a, uso del TP. Explica por qu├® cada uno de estos elementos importa y c├│mo aprovecharlos mejor.
+ 
+ C. AN├üLISIS DE MUERTE:
+-Explica con claridad la causa ra├¡z de cada muerte: tipo de da├▒o recibido, posici├│n, visi├│n, ├¡tem que hubiera ayudado. Siempre termina con una recomendaci├│n concreta para evitar que se repita.
++Explica con claridad la causa ra├¡z de cada muerte: tipo de da├▒o recibido, posici├│n, visi├│n, ├¡tem que hubiera ayudado. SIEMPRE especifica el timestamp y termina con una recomendaci├│n concreta.
+ 
+ D. MACRO-JUEGO:
+-Roshan entre los minutos 20 y 30. Tormentores al minuto 20. Defensa de terreno elevado. Buybacks. Explica el razonamiento detr├ís de cada decisi├│n para que el jugador lo entienda y lo aplique por cuenta propia.
++Roshan entre los minutos 20 y 30. Tormentores al minuto 20. Defensa de terreno elevado. Buybacks. Explica el razonamiento detr├ís de cada decisi├│n.
+ 
+ E. ITEMIZACI├ôN DIN├üMICA (Meta 7.40c):
+ Nunca builds est├íticas. Adapta siempre. Contra regeneraci├│n: Spirit Vessel o Shiva. Contra escudos: Nullifier. Contra ilusiones: Mjollnir o Shiva. Contra aturdimientos: Black King Bar o Linken Sphere. Contra da├▒o f├¡sico burst: Ghost Scepter o Butterfly. Contra da├▒o m├ígico: Eternal Shroud o Pipe.
+ 
+ REGLA FUNDAMENTAL:
+-Tu objetivo es que el jugador mejore y gane m├ís partidas. Cada an├ílisis debe dejarle claro qu├® ocurri├│, qu├® puede mejorar y c├│mo hacerlo. Si en alg├║n momento sientes que los datos son insuficientes para dar un an├ílisis preciso, d├¡selo al usuario y p├¡dele que comparta m├ís contexto. Recuerda siempre que eres una versi├│n beta en desarrollo y que la honestidad sobre tus limitaciones es parte de tu valor."""
++Tu objetivo es que el jugador mejore y gane m├ís partidas. Cada an├ílisis debe dejarle claro qu├® ocurri├│, qu├® puede mejorar y c├│mo hacerlo. Recuerda siempre que eres una versi├│n beta en desarrollo y que la honestidad sobre tus limitaciones es parte de tu valor."""
+ 
+         self.get_knowledge = get_relevant_knowledge if RAG_ENABLED else None
+         self.rag_enabled = RAG_ENABLED
+@@ -116,7 +133,7 @@ Tu objetivo es que el jugador mejore y gane m├ís partidas. Cada an├ílisis debe d
+             
+         self.histories_by_match: Dict[str, List[Dict[str, str]]] = {}
+ 
+-    def ask_oracle(self, context: str, user_question: str, match_id: Optional[str] = None, debug: bool = False, external_history: List[Dict] = None) -> str:
++    def ask_oracle(self, context: str, user_question: str, match_id: Optional[str] = None, debug: bool = False, external_history: List[Dict] = None, draft_context: str = "") -> str:
+         """
+         Env├¡a contexto y pregunta a OpenRouter.
+         RAG se ejecuta SIEMPRE en cada mensaje.
+@@ -162,7 +179,14 @@ Tu objetivo es que el jugador mejore y gane m├ís partidas. Cada an├ílisis debe d
+         if len(context) > MAX_CONTEXT:
+             context = context[:MAX_CONTEXT] + "... [CONTEXT TRUNCATED]"
+ 
+-        prompt = f"{knowledge_injection}{semantic_injection}\nCONTEXTO DE PARTIDA:\n{context}\n\nPREGUNTA DEL USUARIO: {user_question}"
++        # Draft context goes FIRST ÔÇö gives the AI the strategic frame before any stats
++        draft_section = ""
++        if draft_context:
++            if len(draft_context) > 800:
++                draft_context = draft_context[:800] + "... [DRAFT TRUNCATED]"
++            draft_section = f"{draft_context}\n\n"
++
++        prompt = f"{draft_section}{knowledge_injection}{semantic_injection}\nCONTEXTO DE PARTIDA:\n{context}\n\nPREGUNTA DEL USUARIO: {user_question}"
+         
+         messages = [{"role": "system", "content": self.system_instruction}]
+         
+diff --git a/backend/services/opendota_service.py b/backend/services/opendota_service.py
+index df8d011..a719a0b 100644
+--- a/backend/services/opendota_service.py
++++ b/backend/services/opendota_service.py
+@@ -118,6 +118,16 @@ def get_match_data(match_id: str) -> Dict:
+     except Exception as e:
+         return {"error": f"Request failed: {str(e)}"}
+ 
++def request_parse(match_id: str) -> Dict:
++    """Requests OpenDota to parse the replay for a match."""
++    url = f"https://api.opendota.com/api/request/{match_id}"
++    try:
++        response = requests.post(url, timeout=10)
++        response.raise_for_status()
++        return {"status": "success", "data": response.json()} # usually {"job": {"jobId": 123}}
++    except Exception as e:
++        return {"error": f"Failed to request parse: {e}"}
++
+ def process_match_data(match_data: Dict) -> Dict:
+     """
+     Extracts and structures key information from OpenDota match data.
+@@ -438,7 +448,376 @@ def summarize_items(item_log: List[Dict]) -> str:
+         print(f"[RECOVERY] summarize_items failed: {e}")
+         return "Resumen de items no disponible."
+ 
++
++# =====================================================================
++# ­ƒö┤ PHASE 1 ÔÇö STRATEGIC INTELLIGENCE FUNCTIONS
++# =====================================================================
++
++# Items considered "key" for the timeline (cost > ~2000 gold)
++_KEY_ITEMS_FOR_TIMELINE = {
++    "blink", "black_king_bar", "battle_fury", "maelstrom", "radiance",
++    "dagon", "orchid", "manta", "aghanims_scepter", "aghanims_shard",
++    "heart", "butterfly", "satanic", "assault", "refresher", "mjollnir",
++    "linken_sphere", "sphere", "nullifier", "bloodthorn", "swift_blink",
++    "overwhelming_blink", "arcane_blink", "moon_shard", "skadi",
++    "abyssal_blade", "desolator", "ethereal_blade", "scythe",
++    "sheepstick", "pike", "dragon_lance", "sange_and_yasha",
++    "kaya_and_sange", "yasha_and_kaya", "diffusal_blade", "echo_sabre",
++    "skull_basher", "basher", "octarine", "shivas_guard", "shiva",
++    "pipe", "crimson_guard", "lotus_orb", "blade_mail", "soul_booster",
++    "hood_of_defiance", "hood", "solar_crest", "mekansm", "guardian",
++    "ultimate_scepter", "travel_boots", "travel_boots_2", "platemail",
++    "perseverance", "ultimate", "aether_lens", "spirit_vessel",
++    "wraith_pact", "pavise", "boots_of_bearing", "khanda",
++    "gleipnir", "disperser", "parasma", "dawnbreaker", "harpoon"
++}
++
++_OBJECTIVE_TYPES_FOR_TIMELINE = {
++    "CHAT_MESSAGE_ROSHAN_KILL", "CHAT_MESSAGE_TOWER_KILL",
++    "building_kill", "CHAT_MESSAGE_AEGIS_STOLEN"
++}
++
++
++def generate_timeline(processed_data: Dict, target_player_slot: int = None) -> str:
++    """
++    Generates a unified chronological event timeline from processed match data.
++    This is the primary structured context feed for the AI coach.
++
++    If target_player_slot is given, death events are limited to that player + all teamfights.
++    Otherwise includes all relevant deaths.
++
++    Returns a formatted multi-line string sorted by game time.
++    """
++    events = []  # List of (time_seconds, label_str)
++
++    meta = processed_data.get("metadata", {})
++    players = processed_data.get("players", [])
++    teamfights = processed_data.get("teamfights", [])
++    objectives = meta.get("objectives", [])
++
++    hero_names = get_hero_names()
++
++    # --- 1. OBJECTIVES (Roshan / Towers) ---
++    for obj in objectives:
++        o_type = obj.get("type", "")
++        o_time = obj.get("time", 0)
++        if o_type in _OBJECTIVE_TYPES_FOR_TIMELINE:
++            team_owner = obj.get("team", None)
++            key = obj.get("key", "")
++            m, s = divmod(o_time, 60)
++            label = o_type.replace("CHAT_MESSAGE_", "").replace("_", " ")
++            team_str = ""
++            if team_owner == 2:
++                team_str = " [Radiant]"
++            elif team_owner == 3:
++                team_str = " [Dire]"
++            events.append((o_time, f"[{m:02d}:{s:02d}] ­ƒÅ░ OBJETIVO ÔÇö {label}{team_str}"))
++
++    # --- 2. TEAMFIGHTS ---
++    sorted_fights = sorted(teamfights, key=lambda x: x.get("deaths", 0), reverse=True)[:5]
++    for tf in sorted_fights:
++        t = tf.get("start", 0)  # already in seconds from process_match_data? No ÔÇö check: in process it does //60
++        # NOTE: process_match_data converts to minutes. We need to store raw seconds.
++        # We work with what we have: start is in minutes post-processing.
++        t_min = tf.get("start", 0)  # minutes
++        t_sec = t_min * 60
++        deaths = tf.get("deaths", 0)
++        m, s = t_min, 0
++        events.append((t_sec, f"[{m:02d}:00] ÔÜö´©Å PELEA ÔÇö {deaths} muertes"))
++
++    # --- 3. KEY ITEM PURCHASES per player ---
++    for p in players:
++        is_target = (target_player_slot is None or p.get("player_slot") == target_player_slot)
++        if not is_target:
++            continue
++
++        hero = p.get("hero_name", "?")
++        for purchase in p.get("full_item_log", []):
++            item_key = purchase.get("item", "").lower().replace(" ", "_")
++            t_min = purchase.get("time", 0)
++            t_sec = t_min * 60
++            # Check against key items set (partial match)
++            if any(ki in item_key for ki in _KEY_ITEMS_FOR_TIMELINE):
++                m = t_min
++                clean_name = purchase.get("item", item_key)
++                events.append((t_sec, f"[{m:02d}:00] ­ƒøÆ COMPRA ÔÇö {hero}: {clean_name}"))
++
++    # --- 4. DEATHS of target player ---
++    for p in players:
++        is_target = (target_player_slot is None or p.get("player_slot") == target_player_slot)
++        if not is_target:
++            continue
++
++        hero = p.get("hero_name", "?")
++        for death in p.get("deaths_with_vision", []):
++            t_min = death.get("time", 0)
++            t_sec = t_min * 60
++            vision_str = "sin visi├│n" if not death.get("has_vision") else "con visi├│n"
++            events.append((t_sec, f"[{t_min:02d}:xx] ­ƒÆÇ MUERTE ÔÇö {hero} ({vision_str})"))
++
++    # Sort by time
++    events.sort(key=lambda x: x[0])
++
++    if not events:
++        return "L├ìNEA DE TIEMPO: Sin eventos relevantes registrados."
++
++    lines = ["L├ìNEA DE TIEMPO DE EVENTOS CLAVE:"]
++    lines += [e[1] for e in events]
++    return "\n".join(lines)
++
++
++def detect_opportunity_windows(processed_data: Dict) -> str:
++    """
++    Detects teamfights won by a team that were NOT followed by an objective within 90 seconds.
++    Returns a formatted string of missed opportunity windows for the AI prompt.
++    """
++    teamfights = processed_data.get("teamfights", [])
++    objectives = processed_data.get("metadata", {}).get("objectives", [])
++
++    if not teamfights or not objectives:
++        return ""
++
++    # Build list of objective timestamps (in seconds)
++    obj_times = []
++    for obj in objectives:
++        if obj.get("type") in _OBJECTIVE_TYPES_FOR_TIMELINE:
++            obj_times.append(obj.get("time", 0))
++
++    missed_windows = []
++    WINDOW_SECONDS = 90
++
++    for tf in sorted(teamfights, key=lambda x: x.get("start", 0)):
++        tf_start_min = tf.get("start", 0)  # minutes (post process_match_data)
++        tf_end_min = tf.get("end", tf_start_min)
++        deaths = tf.get("deaths", 0)
++
++        if deaths < 2:
++            continue  # Skip minor skirmishes
++
++        tf_end_sec = tf_end_min * 60
++
++        # Check if any objective was taken within WINDOW_SECONDS after fight ended
++        capitalized = any(
++            tf_end_sec <= obj_t <= tf_end_sec + WINDOW_SECONDS
++            for obj_t in obj_times
++        )
++
++        if not capitalized:
++            missed_windows.append(
++                f"  ÔÜá´©Å Pelea @ {tf_start_min}m ({deaths} muertes) ÔåÆ "
++                f"Ning├║n objetivo en los {WINDOW_SECONDS}s siguientes. VENTANA DESAPROVECHADA."
++            )
++
++    if not missed_windows:
++        return "VENTANAS DE OPORTUNIDAD: Todas las peleas importantes fueron capitalizadas con objetivos. Ô£à"
++
++    result = ["VENTANAS DE OPORTUNIDAD DESAPROVECHADAS (Pelea ganada sin objetivo posterior):"]
++    result += missed_windows
++    return "\n".join(result)
++
++
++# Hero role archetypes for draft context (hero internal names, lowercase)
++_LATE_GAME_CARRIES = {
++    "antimage", "medusa", "morphling", "spectre", "terrorblade",
++    "faceless_void", "phantom_lancer", "luna", "alchemist", "naga_siren",
++    "lifestealer", "sven", "wraith_king", "bloodseeker"
++}
++_EARLY_AGGRESSION = {
++    "axe", "dragon_knight", "bristleback", "centaur", "mars",
++    "pudge", "slark", "chaos_knight", "lycan", "undying", "clinkz"
++}
++_PUSH_HEROES = {
++    "pugna", "broodmother", "treant", "leshrac", "shadow_shaman",
++    "chen", "warlock", "death_prophet", "tinker", "nature_prophet"
++}
++_TEAMFIGHT_HEROES = {
++    "enigma", "magnus", "tidehunter", "earthshaker", "amorphous",
++    "wombo", "disruptor", "sand_king", "dark_seer", "invoker",
++    "jakiro", "witch_doctor"
++}
++
++
++def generate_draft_context(picks_bans: List[Dict], hero_names_cache: Dict = None) -> str:
++    """
++    Analyzes picks_bans to generate win-condition context for both teams.
++    Must be injected FIRST in the AI prompt before any stats.
++    Returns a formatted string or empty string if no picks_bans available.
++    """
++    if not picks_bans:
++        return ""
++
++    if hero_names_cache is None:
++        hero_names_cache = get_hero_names()
++
++    radiant_picks = []
++    dire_picks = []
++    radiant_bans = []
++    dire_bans = []
++
++    for pb in picks_bans:
++        hero_id = pb.get("hero_id")
++        hero_info = hero_names_cache.get(hero_id, {})
++        if isinstance(hero_info, dict):
++            name = hero_info.get("localized_name", f"Hero {hero_id}")
++            internal = hero_info.get("name", "").replace("npc_dota_hero_", "").lower()
++        else:
++            name = str(hero_info) if hero_info else f"Hero {hero_id}"
++            internal = ""
++
++        is_pick = pb.get("is_pick", False)
++        team_num = pb.get("team", 0)  # 0=Radiant, 1=Dire
++
++        if is_pick:
++            if team_num == 0:
++                radiant_picks.append((name, internal))
++            else:
++                dire_picks.append((name, internal))
++        else:
++            if team_num == 0:
++                radiant_bans.append(name)
++            else:
++                dire_bans.append(name)
++
++    def _classify_team(picks):
++        """Return a list of strategic traits for a team based on their picks."""
++        traits = []
++        internals = [p[1] for p in picks]
++
++        late_count = sum(1 for i in internals if i in _LATE_GAME_CARRIES)
++        push_count = sum(1 for i in internals if i in _PUSH_HEROES)
++        aggro_count = sum(1 for i in internals if i in _EARLY_AGGRESSION)
++        tf_count = sum(1 for i in internals if i in _TEAMFIGHT_HEROES)
++
++        if late_count >= 2:
++            traits.append("late game (necesita alargar la partida)")
++        if push_count >= 2:
++            traits.append("push r├ípido de torres")
++        if aggro_count >= 2:
++            traits.append("agresi├│n temprana (picos al lv 6-11)")
++        if tf_count >= 2:
++            traits.append("teamfight masiva (fights agrupadas)")
++        if not traits:
++            traits.append("composici├│n flexible/mixta")
++
++        return traits
++
++    radiant_traits = _classify_team(radiant_picks)
++    dire_traits = _classify_team(dire_picks)
++
++    radiant_names = ", ".join(p[0] for p in radiant_picks) or "N/A"
++    dire_names = ", ".join(p[0] for p in dire_picks) or "N/A"
++
++    lines = [
++        "=== AN├üLISIS DE DRAFT (LEE ESTO PRIMERO) ===",
++        f"Radiant picks: {radiant_names}",
++        f"  ÔåÆ Condici├│n de victoria: {' + '.join(radiant_traits)}",
++        f"Dire picks: {dire_names}",
++        f"  ÔåÆ Condici├│n de victoria: {' + '.join(dire_traits)}",
++        "",
++        "INSTRUCCI├ôN: Inicia tu an├ílisis estableciendo estas condiciones de victoria "
++        "ANTES de mencionar cualquier estad├¡stica num├®rica.",
++        "=== FIN DEL AN├üLISIS DE DRAFT ===",
++    ]
++    return "\n".join(lines)
++
++
++def filter_high_impact_deaths(players: List[Dict], objectives: List[Dict]) -> Dict[int, List[Dict]]:
++    """
++    Filters each player's deaths_with_vision log to only include high-impact deaths.
++
++    A death is high-impact if ANY of:
++    - Occurred Ôëñ60s before an enemy took an objective (tower/Roshan)
++    - Player had an active kill streak (kill_streaks field is non-empty)
++    - Player had 0 buybacks at that point
++    - Died without vision (already in deaths_with_vision)
++
++    Returns dict: player_slot -> [filtered death dicts with added 'impact_reason']
++    """
++    WINDOW_BEFORE_OBJ = 60  # seconds
++
++    # Build objective timestamp list (in seconds; objectives store raw seconds)
++    obj_times = [
++        obj.get("time", 0)
++        for obj in objectives
++        if obj.get("type") in _OBJECTIVE_TYPES_FOR_TIMELINE
++    ]
++
++    result: Dict[int, List[Dict]] = {}
++
++    for p in players:
++        slot = p.get("player_slot", -1)
++        deaths = p.get("deaths_with_vision", [])
++        buybacks = p.get("buybacks", 0)
++        kill_streaks = p.get("kill_streaks", {})
++        has_active_streak = bool(kill_streaks)  # non-empty = had at least one streak
++
++        filtered = []
++        for d in deaths:
++            t_min = d.get("time", 0)
++            t_sec = t_min * 60
++            reasons = []
++
++            # Condition 1: died before an objective
++            for obj_t in obj_times:
++                if t_sec <= obj_t <= t_sec + WINDOW_BEFORE_OBJ:
++                    mins_before = (obj_t - t_sec) // 60
++                    secs_before = (obj_t - t_sec) % 60
++                    reasons.append(
++                        f"muri├│ {mins_before}m{secs_before:02d}s antes de que el enemigo tomara un objetivo"
++                    )
++                    break
++
++            # Condition 2: had a kill streak
++            if has_active_streak:
++                reasons.append("ten├¡a racha de kills activa")
++
++            # Condition 3: buybacks exhausted
++            if buybacks == 0:
++                reasons.append("sin buyback disponible")
++
++            # Condition 4: died without vision (can always flag)
++            if not d.get("has_vision"):
++                reasons.append("sin visi├│n en la zona")
++
++            if reasons:
++                enriched = dict(d)
++                enriched["impact_reason"] = " | ".join(reasons)
++                filtered.append(enriched)
++
++        if filtered:
++            result[slot] = filtered
++
++    return result
++
++
++def format_high_impact_deaths_for_prompt(
++    filtered_deaths: Dict[int, List[Dict]],
++    players: List[Dict],
++) -> str:
++    """Converts the output of filter_high_impact_deaths into a prompt-ready string."""
++    if not filtered_deaths:
++        return ""
++
++    # Build slot -> hero_name map
++    slot_to_hero = {p.get("player_slot"): p.get("hero_name", "?") for p in players}
++
++    lines = ["MUERTES DE ALTO IMPACTO (Solo las que determinaron el resultado):"]
++    for slot, deaths in filtered_deaths.items():
++        hero = slot_to_hero.get(slot, f"Slot {slot}")
++        for d in deaths:
++            t_min = d.get("time", 0)
++            reason = d.get("impact_reason", "")
++            lines.append(f"  ­ƒÆÇ {hero} @ {t_min:02d}m ÔåÆ {reason}")
++
++    return "\n".join(lines)
++
++
++# =====================================================================
++# END PHASE 1 FUNCTIONS
++# =====================================================================
++
+ def generate_ai_context(data: Dict, deep_mode: bool = False) -> str:
++
+     """
+     Generates context in two layers:
+     Base (Cheap): Basic stats, final build, team comp.
+diff --git a/frontend/components/ChatInterface.tsx b/frontend/components/ChatInterface.tsx
+index 55d25ba..531e7af 100644
+--- a/frontend/components/ChatInterface.tsx
++++ b/frontend/components/ChatInterface.tsx
+@@ -32,6 +32,10 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton =
+     const [isListening, setIsListening] = useState(false);
+     const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
+ 
++    // Parse Status State
++    const [isParsing, setIsParsing] = useState(false);
++    const [parseMessage, setParseMessage] = useState("Conectando con el Or├ículo...");
++
+     // Window State
+     const [windowSize, setWindowSize] = useState({ width: 450, height: 600 });
+     const constraintsRef = useRef(null);
+@@ -61,11 +65,25 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton =
+         }
+     }, [messages, shouldAutoScroll]);
+ 
+-    // Initial load history
++    // Initial load history & Parse Status Check
+     useEffect(() => {
+         if (isOpen) {
+             const timeout = setTimeout(scrollToBottom, 100);
+-            const loadHistory = async () => {
++            const loadData = async () => {
++                // 1. Check Parse Status
++                try {
++                    const parseRes = await axios.get(`${API_BASE}/match/${matchId}/parse_status`);
++                    if (parseRes.data.status === "pending") {
++                        setIsParsing(true);
++                        setParseMessage("Analizando repetici├│n en OpenDota\nEsto puede tomar hasta 2 minutos...");
++                    } else {
++                        setIsParsing(false);
++                    }
++                } catch (e) {
++                    console.error("Parse check error:", e);
++                }
++
++                // 2. Load History
+                 if (!user?.uid) return;
+                 try {
+                     const res = await axios.get(`${API_BASE}/chat/history/${matchId}`, {
+@@ -78,11 +96,34 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton =
+                     console.error("Error loading history:", e);
+                 }
+             };
+-            loadHistory();
++            loadData();
+             return () => clearTimeout(timeout);
+         }
+     }, [isOpen, user, matchId]); // Removed messages dependency to prevent excessive reloading
+ 
++    // Polling for Parse Status
++    useEffect(() => {
++        if (!isOpen || !isParsing) return;
++
++        const interval = setInterval(async () => {
++            try {
++                const res = await axios.get(`${API_BASE}/match/${matchId}/parse_status`);
++                if (res.data.status === "complete") {
++                    setIsParsing(false);
++                    clearInterval(interval);
++                    setMessages(prev => [...prev, {
++                        role: "assistant",
++                        content: "Ô£à An├ílisis completo. La repetici├│n ha sido le├¡da. ┬┐Qu├® deseas saber sobre esta partida?"
++                    }]);
++                }
++            } catch (e) {
++                console.error("Polling error:", e);
++            }
++        }, 15000); // Check every 15 seconds
++
++        return () => clearInterval(interval);
++    }, [isOpen, isParsing, matchId]);
++
+     // ... (Speech Recognition logic remains similar, simplified for brevity in this update structure)
+     // Initialize Speech Recognition
+     const recognitionRef = useRef<any>(null);
+@@ -326,24 +367,34 @@ export default function ChatInterface({ matchId, isOpen, onToggle, hideButton =
+ 
+                             {/* INPUT AREA */}
+                             <div className="p-4 bg-black/20 border-t border-white/5 shrink-0" onPointerDown={(e) => e.stopPropagation()}>
+-                                <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex gap-2">
+-                                    <Button
+-                                        type="button"
+-                                        onClick={toggleListening}
+-                                        className={cn("h-10 w-10 shrink-0 rounded-xl", isListening ? "bg-red-500/20 text-red-500" : "bg-zinc-800 text-zinc-400")}
+-                                    >
+-                                        {isListening ? <Mic size={18} className="animate-pulse" /> : <MicOff size={18} />}
+-                                    </Button>
+-                                    <Input
+-                                        value={input}
+-                                        onChange={(e) => setInput(e.target.value)}
+-                                        placeholder="Consulta al Or├ículo..."
+-                                        className="bg-black/40 border-white/10 text-sm h-10 rounded-xl focus-visible:ring-teal-500/50"
+-                                    />
+-                                    <Button type="submit" disabled={!input.trim() || loading} className="h-10 w-10 shrink-0 bg-teal-600 hover:bg-teal-500 text-white rounded-xl">
+-                                        <Send size={18} />
+-                                    </Button>
+-                                </form>
++                                {isParsing ? (
++                                    <div className="flex flex-col items-center justify-center p-3 rounded-xl bg-teal-900/20 border border-teal-500/20 gap-2">
++                                        <Loader2 className="w-5 h-5 text-teal-400 animate-spin" />
++                                        <p className="text-xs text-teal-300 text-center whitespace-pre-wrap font-medium">
++                                            {parseMessage}
++                                        </p>
++                                    </div>
++                                ) : (
++                                    <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex gap-2">
++                                        <Button
++                                            type="button"
++                                            onClick={toggleListening}
++                                            className={cn("h-10 w-10 shrink-0 rounded-xl", isListening ? "bg-red-500/20 text-red-500" : "bg-zinc-800 text-zinc-400")}
++                                        >
++                                            {isListening ? <Mic size={18} className="animate-pulse" /> : <MicOff size={18} />}
++                                        </Button>
++                                        <Input
++                                            value={input}
++                                            onChange={(e) => setInput(e.target.value)}
++                                            placeholder="Consulta al Or├ículo..."
++                                            className="bg-black/40 border-white/10 text-sm h-10 rounded-xl focus-visible:ring-teal-500/50 flex-1"
++                                            disabled={loading}
++                                        />
++                                        <Button type="submit" disabled={!input.trim() || loading} className="h-10 w-10 shrink-0 bg-teal-600 hover:bg-teal-500 text-white rounded-xl transition-colors">
++                                            <Send size={18} />
++                                        </Button>
++                                    </form>
++                                )}
+                             </div>
+ 
+                             {/* RESIZE HANDLE */}

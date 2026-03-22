@@ -49,7 +49,7 @@ class OracleRAGLite:
         if not query_words:
             return ""
 
-        scored_docs = []
+        scored_docs = [] 
         for doc in self.documents:
             # Score based on how many query words appear in the document text
             doc_text_lower = doc['text'].lower()

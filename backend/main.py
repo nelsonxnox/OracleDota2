@@ -314,6 +314,7 @@ async def get_match_details(match_id: str, background_tasks: BackgroundTasks):
         except Exception as e:
             print(f"[ERROR] Failed to save match {match_id} to DB: {e}")
             
+        data["parse_status"] = "pending" if data.get("metadata", {}).get("partial_data") else "complete"
         return data
         
     except HTTPException:
@@ -323,6 +324,29 @@ async def get_match_details(match_id: str, background_tasks: BackgroundTasks):
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail="Internal processing error")
+
+@app.get("/match/{match_id}/parse_status")
+async def get_parse_status(match_id: str):
+    """Polling endpoint to check if match has finished parsing on OpenDota."""
+    try:
+        raw = opendota_service.get_match_data(match_id)
+        if "error" in raw:
+            return {"status": "error", "message": raw["error"]}
+        
+        is_partial = raw.get("version") is None
+        if is_partial:
+            return {"status": "pending"}
+        
+        # If it's now fully parsed, process it and update our DB cache
+        try:
+            data = opendota_service.process_match_data(raw)
+            firebase_service.save_match_to_db(match_id, data)
+        except Exception as db_e:
+            print(f"[CACHE] Could not update db after parsing {match_id}: {db_e}")
+            
+        return {"status": "complete"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTasks):
@@ -396,7 +420,23 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
     
     # 5. AI Call
     # Generate context from match data
-    context_list = [opendota_service.generate_ai_context(data, deep_mode=is_complex)]
+    
+    # --- PHASE 1 INTELLIGENCE UPGRADES ---
+    timeline_str = opendota_service.generate_timeline(data)
+    opp_windows_str = opendota_service.detect_opportunity_windows(data)
+    deaths_dict = opendota_service.filter_high_impact_deaths(
+        data.get("players", []), 
+        data.get("metadata", {}).get("objectives", [])
+    )
+    deaths_str = opendota_service.format_high_impact_deaths_for_prompt(deaths_dict, data.get("players", []))
+    
+    picks_bans = data.get("metadata", {}).get("picks_bans", [])
+    draft_context_str = opendota_service.generate_draft_context(picks_bans)
+
+    context_list = [
+        opendota_service.generate_ai_context(data, deep_mode=is_complex),
+        f"\n\n{timeline_str}\n\n{opp_windows_str}\n\n{deaths_str}"
+    ]
     
     # 5.5 Advanced Stratz Context (if complex and key exists)
     if is_complex and os.getenv("STRATZ_API_KEY"):
@@ -406,8 +446,14 @@ async def chat_with_oracle(request: ChatRequest, background_tasks: BackgroundTas
             
     context = "\n".join(context_list)
     
-    # Call Oracle with history
-    response = oracle.ask_oracle(context, query, match_id=match_id, external_history=history)
+    # Call Oracle with history and draft context
+    response = oracle.ask_oracle(
+        context, 
+        query, 
+        match_id=match_id, 
+        external_history=history,
+        draft_context=draft_context_str
+    )
     
     # ASYNC: Save Assistant Response (Legacy support)
     background_tasks.add_task(firebase_service.save_chat_message, user_id, match_id, "assistant", response)
